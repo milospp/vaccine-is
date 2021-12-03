@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
+    xmlns="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"></xs:import>
+    
+    <xs:element name="potvrdaVakcinacije">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sifraPotvrde" type="xs:string"></xs:element>
+                <xs:element name="podaciVakcinisanog" type="licniPodaci"/>
+                <xs:element name="podaciVakcinacije" type="vakcinacijaPodaci"/>
+                <xs:element name="QRKod"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="licniPodaci">
+        <xs:sequence>
+            <xs:element name="ime" type="zaj:STime"/>
+            <xs:element name="prezime" type="zaj:STprezime"/>
+            <xs:element name="pol" type="zaj:STpol"/>
+            <xs:element name="jmbg" type="zaj:STjmbg"/>
+            <xs:element name="datumRodjenja" type="zaj:STdatum"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="vakcinacijaPodaci">
+        <xs:sequence>
+            <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                <xs:element name="datumDavanjaDoze" type="zaj:STdatum"/>
+                <xs:element name="brojSerije">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="nazivVakcine">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:element name="zdravstvenaUstanova">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="datumIzdavanjaPotvrde" type="zaj:STdatum"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

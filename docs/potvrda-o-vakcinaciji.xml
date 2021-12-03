@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pov:potvrdaVakcinacije
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji ../schemas/potvrda-o-vakcinaciji.xsd"
+    xmlns:pov = "http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
+    >
+    <pov:sifraPotvrde>1WEAWD181E</pov:sifraPotvrde>
+    <pov:podaciVakcinisanog>
+        <pov:ime>Душан</pov:ime>
+        <pov:prezime>Ердељан</pov:prezime>
+        <pov:pol>Мушко</pov:pol>
+        <pov:jmbg>0102998152031</pov:jmbg>
+        <pov:datumRodjenja>1998-02-01</pov:datumRodjenja>
+    </pov:podaciVakcinisanog>
+    
+    <pov:podaciVakcinacije>
+        <pov:datumDavanjaDoze>2021-11-01</pov:datumDavanjaDoze>
+        <pov:brojSerije>1</pov:brojSerije>
+        <pov:nazivVakcine>Fajzer</pov:nazivVakcine>
+        <pov:datumDavanjaDoze>2021-11-22</pov:datumDavanjaDoze>
+        <pov:brojSerije>2</pov:brojSerije>
+        <pov:nazivVakcine>Fajzer</pov:nazivVakcine>
+        <pov:zdravstvenaUstanova>Дом здравља Нови Сад</pov:zdravstvenaUstanova>
+        <pov:datumIzdavanjaPotvrde>2021-11-26</pov:datumIzdavanjaPotvrde>
+    </pov:podaciVakcinacije>
+    
+    <pov:QRKod></pov:QRKod>
+</pov:potvrdaVakcinacije>
+
