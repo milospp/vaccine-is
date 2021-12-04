@@ -9,7 +9,7 @@
     <xs:element name="potvrdaVakcinacije">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="sifraPotvrde" type="xs:string"></xs:element>
+                <xs:element name="sifraPotvrde" type="xs:string"/>
                 <xs:element name="podaciVakcinisanog" type="licniPodaci"/>
                 <xs:element name="podaciVakcinacije" type="vakcinacijaPodaci"/>
                 <xs:element name="QRKod"/>
@@ -31,28 +31,10 @@
         <xs:sequence>
             <xs:sequence maxOccurs="unbounded" minOccurs="1">
                 <xs:element name="datumDavanjaDoze" type="zaj:STdatum"/>
-                <xs:element name="brojSerije">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:int">
-                            <xs:minInclusive value="1"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="nazivVakcine">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element name="brojSerije" type="zaj:STbrojDoze"/>
+                <xs:element name="nazivVakcine" type="zaj:STvrstaVakcine"/>
             </xs:sequence>
-            <xs:element name="zdravstvenaUstanova">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="zdravstvenaUstanova" type="zaj:STimeUstanove"/>
             <xs:element name="datumIzdavanjaPotvrde" type="zaj:STdatum"/>
         </xs:sequence>
     </xs:complexType>

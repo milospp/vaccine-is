@@ -2,26 +2,26 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="http://www.ftn.uns.ac.rs/zajednicka"
     xmlns="http://www.ftn.uns.ac.rs/zajednicka">
-    
+
     <xs:simpleType name="STime">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STprezime">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STpol">
         <xs:restriction base="xs:string">
             <xs:minLength value="5"/>
             <xs:maxLength value="6"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STjmbg">
         <xs:restriction base="xs:string">
             <xs:pattern
@@ -29,38 +29,87 @@
             />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STdatum">
         <xs:restriction base="xs:date"/>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STemail">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"/>
+            <xs:pattern
+                value="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"
+            />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STmobilni">
         <xs:restriction base="xs:string">
-            <xs:pattern value="06[0-9]{7,8}"></xs:pattern>
+            <xs:pattern value="06[0-9]{7,8}"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STfiksni">
         <xs:restriction base="xs:string">
-            <xs:pattern value="0[1-3][0-9](0)?[0-9]{6,7}"></xs:pattern>
+            <xs:pattern value="0[1-3][0-9](0)?[0-9]{6,7}"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STlokacija">
         <xs:restriction base="xs:string">
             <xs:minLength value="2"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STbrPasosa">
         <xs:restriction base="xs:string">
             <xs:minLength value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="STvrstaVakcine">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Pfizer-BioNTech"/>
+            <xs:enumeration value="Sputnik V (Gamaleya истраживачки центар)"/>
+            <xs:enumeration value="Sinopharm"/>
+            <xs:enumeration value="AstraZeneca"/>
+            <xs:enumeration value="Moderna"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="STbrojDoze">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="STimeUstanove">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="opcijeOdabirVakcine">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Било која"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STodabirVakcine">
+        <xs:union memberTypes="STvrstaVakcine opcijeOdabirVakcine"/>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STdavalacKrvi">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Да"/>
+            <xs:enumeration value="Не"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STstatusDrzavljanstva">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Држављанин Републике Србије"/>
+            <xs:enumeration value="Страни држављанин са боравком у РС"/>
+            <xs:enumeration value="Страни држављанин без боравка у РС"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

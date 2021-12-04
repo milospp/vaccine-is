@@ -3,7 +3,7 @@
 <inter:interesovanje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.ftn.uns.ac.rs/interesovanje ../schemas/interesovanje.xsd"
     xmlns:inter = "http://www.ftn.uns.ac.rs/interesovanje">
-    <inter:drzavljaninSrbije/>
+    <inter:drzavljanstvo>Држављанин Републике Србије</inter:drzavljanstvo>
     <inter:jmbg>0102998152031</inter:jmbg>
     <inter:ime>Иван</inter:ime>
     <inter:prezime>Мршуља</inter:prezime>
@@ -11,6 +11,6 @@
     <inter:brojMobilnog>0631234156</inter:brojMobilnog>
     <inter:brojFiksnog>011123456</inter:brojFiksnog>
     <inter:lokacijaPrimanja>Нови Сад</inter:lokacijaPrimanja>
-    <inter:sinopharm/>
-    <inter:nijeDavalacKrvi/>
+    <inter:nazivVakcine>Sinopharm</inter:nazivVakcine>
+    <inter:davalacKrvi>Да</inter:davalacKrvi>
 </inter:interesovanje>

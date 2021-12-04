@@ -6,11 +6,7 @@
     <xs:element name="interesovanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:choice>
-                    <xs:element fixed="Држављанин Републике Сррбије" name="drzavljaninSrbije"/>
-                    <xs:element fixed="Страни држављанин са боравком у РС" name="straniSaBoravkom"/>
-                    <xs:element fixed="Страни држављанин без боравка у РС" name="straniBezBoravka"/>
-                </xs:choice>
+                <xs:element name="drzavljanstvo" type="zaj:STstatusDrzavljanstva"/>
                 <xs:element name="jmbg" type="zaj:STjmbg"/>
                 <xs:element name="ime" type="zaj:STime"/>
                 <xs:element name="prezime" type="zaj:STprezime"/>
@@ -18,18 +14,8 @@
                 <xs:element name="brojMobilnog" type="zaj:STmobilni"/>
                 <xs:element name="brojFiksnog" type="zaj:STfiksni"/>
                 <xs:element name="lokacijaPrimanja" type="zaj:STlokacija"/>
-                <xs:choice>
-                    <xs:element fixed="Pfizer-BioNTech" name="fajzer"/>
-                    <xs:element fixed="Sputnik V (Gamaleya истраживачки центар)" name="sputnik"/>
-                    <xs:element fixed="Sinopharm" name="sinopharm"/>
-                    <xs:element fixed="AstraZeneca" name="astra"/>
-                    <xs:element fixed="Moderna" name="moderna"/>
-                    <xs:element fixed="Било која" name="biloKoja"/>
-                </xs:choice>
-                <xs:choice>
-                    <xs:element fixed="Да" name="davalacKrvi"/>
-                    <xs:element fixed="Не" name="nijeDavalacKrvi"/>
-                </xs:choice>
+                <xs:element name="nazivVakcine" type="zaj:STodabirVakcine"/>
+                <xs:element name="davalacKrvi" type="zaj:STdavalacKrvi"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -16,10 +16,10 @@
     <pov:podaciVakcinacije>
         <pov:datumDavanjaDoze>2021-11-01</pov:datumDavanjaDoze>
         <pov:brojSerije>1</pov:brojSerije>
-        <pov:nazivVakcine>Fajzer</pov:nazivVakcine>
+        <pov:nazivVakcine>Pfizer-BioNTech</pov:nazivVakcine>
         <pov:datumDavanjaDoze>2021-11-22</pov:datumDavanjaDoze>
         <pov:brojSerije>2</pov:brojSerije>
-        <pov:nazivVakcine>Fajzer</pov:nazivVakcine>
+        <pov:nazivVakcine>Pfizer-BioNTech</pov:nazivVakcine>
         <pov:zdravstvenaUstanova>Дом здравља Нови Сад</pov:zdravstvenaUstanova>
         <pov:datumIzdavanjaPotvrde>2021-11-26</pov:datumIzdavanjaPotvrde>
     </pov:podaciVakcinacije>
