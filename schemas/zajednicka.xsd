@@ -111,6 +111,12 @@
             <xs:minInclusive value="1"/>
         </xs:restriction>
     </xs:simpleType>
+    
+    <xs:simpleType name="STbrojInteresovanja">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="STimeUstanove">
         <xs:restriction base="xs:string">

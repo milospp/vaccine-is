@@ -4,7 +4,7 @@
     xmlns="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     
-    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"></xs:import>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
     
     <xs:element name="potvrdaVakcinacije">
         <xs:complexType>
