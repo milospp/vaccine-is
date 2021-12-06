@@ -33,17 +33,17 @@
     <xs:simpleType name="STdatum">
         <xs:restriction base="xs:date"/>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STdatumVrijeme">
         <xs:restriction base="xs:dateTime"/>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STizdavacIme">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STustanovaIme">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
@@ -97,7 +97,7 @@
             <xs:enumeration value="Moderna"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STvrstaTesta">
         <xs:restriction base="xs:string">
             <xs:enumeration value="SARS-CoV-2 RT Real-time PCR"/>
@@ -111,7 +111,7 @@
             <xs:minInclusive value="1"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STbrojInteresovanja">
         <xs:restriction base="xs:int">
             <xs:minInclusive value="0"/>
@@ -129,18 +129,18 @@
             <xs:enumeration value="Било која"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STodabirVakcine">
         <xs:union memberTypes="STvrstaVakcine opcijeOdabirVakcine"/>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STdavalacKrvi">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Да"/>
             <xs:enumeration value="Не"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="STstatusDrzavljanstva">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Држављанин Републике Србије"/>
@@ -148,10 +148,10 @@
             <xs:enumeration value="Страни држављанин без боравка у РС"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:notation name="jpeg" public="image/gif" system="view.exe"/>
     <xs:notation name="gif" public="image/jpeg" system="view.exe"/>
-    
+
     <xs:complexType name="STqrKod">
         <xs:attribute name="type">
             <xs:simpleType>
@@ -162,34 +162,43 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
-      
-    <xs:complexType name="STpodaciVakcinisanog">
+
+    <xs:complexType name="STpersonalniPodaci">
         <xs:sequence>
             <xs:element name="ime" type="STime"/>
             <xs:element name="prezime" type="STprezime"/>
             <xs:element name="pol" type="STpol"/>
-            <xs:element name="jmbg" type="STjmbg"/>
             <xs:element name="datumRodjenja" type="STdatum"/>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:complexType name="STpodnosilacZahtjeva">
+
+    <xs:complexType name="STpodaciVakcinisanog">
         <xs:complexContent>
-            <xs:extension base="STpodaciVakcinisanog">
+            <xs:extension base="STpersonalniPodaci">
                 <xs:sequence>
-                    <xs:element name="brojPasosa" type="STbrPasosa"></xs:element>
+                    <xs:element name="jmbg" type="STjmbg"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
+    <xs:complexType name="STpodnosilacZahtjeva">
+        <xs:complexContent>
+            <xs:extension base="STpodaciVakcinisanog">
+                <xs:sequence>
+                    <xs:element name="brojPasosa" type="STbrPasosa"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="STmjestoDatum">
         <xs:sequence>
             <xs:element name="lokacija" type="STlokacija"/>
-            <xs:element name="datum" type="STdatum"></xs:element>
+            <xs:element name="datum" type="STdatum"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="STvakcinacijaPodaci">
         <xs:sequence>
             <xs:element name="datumDavanjaDoze" type="STdatum"/>
@@ -198,7 +207,7 @@
             <xs:element name="zdravstvenaUstanova" type="STimeUstanove"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="STvakcinacijaPodaciPotvrda">
         <xs:sequence>
             <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -207,12 +216,57 @@
             <xs:element name="datumIzdavanjaPotvrde" type="STdatum"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="STvakcinacijaPodaciSertifikat">
-        <xs:choice maxOccurs="unbounded" minOccurs="2">
+        <xs:sequence maxOccurs="unbounded" minOccurs="2">
             <xs:element name="vakcinaPodaci" type="STvakcinacijaPodaci"/>
             <xs:element name="proizvodjac" type="xs:string"/>
             <xs:element name="serijaVakcine" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="STvrstaDrzavljanstva">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element name="drzavljanstvoSrbije" fixed="Република Србија"/>
+                <xs:element name="jmbg" type="STjmbg"/>
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element name="stranoDrzavljanstvo" default="Страно држављанство"/>
+                <xs:choice>
+                    <xs:element name="brojPasosa" type="STbrPasosa"/>
+                    <xs:element name="EBS" type="STbrPasosa"/>
+                </xs:choice>
+            </xs:sequence>
         </xs:choice>
     </xs:complexType>
+    
+    <xs:simpleType name="STradniStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="запослен"/>
+            <xs:enumeration value="незапослен"/>
+            <xs:enumeration value="пензионер"/>
+            <xs:enumeration value="ученик"/>
+            <xs:enumeration value="студент"/>
+            <xs:enumeration value="дете"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STzanimanje">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="здравствена заштита"/>
+            <xs:enumeration value="социјална заштита"/>
+            <xs:enumeration value="просвјета"/>
+            <xs:enumeration value="МУП"/>
+            <xs:enumeration value="Војска РС"/>
+            <xs:enumeration value="друго"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STekstremitet">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Десна рука"/>
+            <xs:enumeration value="Лијева рука"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
