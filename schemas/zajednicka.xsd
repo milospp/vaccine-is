@@ -33,6 +33,22 @@
     <xs:simpleType name="STdatum">
         <xs:restriction base="xs:date"/>
     </xs:simpleType>
+    
+    <xs:simpleType name="STdatumVrijeme">
+        <xs:restriction base="xs:dateTime"/>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STizdavacIme">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STustanovaIme">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="STemail">
         <xs:restriction base="xs:string">
@@ -66,6 +82,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="STbrSertifikata">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="STvrstaVakcine">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Pfizer-BioNTech"/>
@@ -73,6 +95,14 @@
             <xs:enumeration value="Sinopharm"/>
             <xs:enumeration value="AstraZeneca"/>
             <xs:enumeration value="Moderna"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="STvrstaTesta">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SARS-CoV-2 RT Real-time PCR"/>
+            <xs:enumeration value="SARS-CoV-2 Ag-RDT (Antigen Rapid Detection test)"/>
+            <xs:enumeration value="SARS-CoV-2 RBD S-Protein Immunoglobulin G (lgG) test"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -112,4 +142,71 @@
             <xs:enumeration value="Страни држављанин без боравка у РС"/>
         </xs:restriction>
     </xs:simpleType>
+    
+    <xs:notation name="jpeg" public="image/gif" system="view.exe"/>
+    <xs:notation name="gif" public="image/jpeg" system="view.exe"/>
+    
+    <xs:complexType name="STqrKod">
+        <xs:attribute name="type">
+            <xs:simpleType>
+                <xs:restriction base="xs:NOTATION">
+                    <xs:enumeration value="gif"/>
+                    <xs:enumeration value="jpeg"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+      
+    <xs:complexType name="STpodaciVakcinisanog">
+        <xs:sequence>
+            <xs:element name="ime" type="STime"/>
+            <xs:element name="prezime" type="STprezime"/>
+            <xs:element name="pol" type="STpol"/>
+            <xs:element name="jmbg" type="STjmbg"/>
+            <xs:element name="datumRodjenja" type="STdatum"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="STpodnosilacZahtjeva">
+        <xs:complexContent>
+            <xs:extension base="STpodaciVakcinisanog">
+                <xs:sequence>
+                    <xs:element name="brojPasosa" type="STbrPasosa"></xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="STmjestoDatum">
+        <xs:sequence>
+            <xs:element name="lokacija" type="STlokacija"/>
+            <xs:element name="datum" type="STdatum"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="STvakcinacijaPodaci">
+        <xs:sequence>
+            <xs:element name="datumDavanjaDoze" type="STdatum"/>
+            <xs:element name="brojSerije" type="STbrojDoze"/>
+            <xs:element name="nazivVakcine" type="STvrstaVakcine"/>
+            <xs:element name="zdravstvenaUstanova" type="STimeUstanove"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="STvakcinacijaPodaciPotvrda">
+        <xs:sequence>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="vakcinaPodaci" type="STvakcinacijaPodaci"/>
+            </xs:sequence>
+            <xs:element name="datumIzdavanjaPotvrde" type="STdatum"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="STvakcinacijaPodaciSertifikat">
+        <xs:choice maxOccurs="unbounded" minOccurs="2">
+            <xs:element name="vakcinaPodaci" type="STvakcinacijaPodaci"/>
+            <xs:element name="proizvodjac" type="xs:string"/>
+            <xs:element name="serijaVakcine" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
 </xs:schema>

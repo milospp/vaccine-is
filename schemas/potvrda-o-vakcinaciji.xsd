@@ -10,32 +10,10 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="sifraPotvrde" type="xs:string"/>
-                <xs:element name="podaciVakcinisanog" type="licniPodaci"/>
-                <xs:element name="podaciVakcinacije" type="vakcinacijaPodaci"/>
-                <xs:element name="QRKod"/>
+                <xs:element name="podaciVakcinisanog" type="zaj:STpodaciVakcinisanog"/>
+                <xs:element name="podaciVakcinacije" type="zaj:STvakcinacijaPodaciPotvrda"/>
+                <xs:element name="QRKod" type="zaj:STqrKod"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    
-    <xs:complexType name="licniPodaci">
-        <xs:sequence>
-            <xs:element name="ime" type="zaj:STime"/>
-            <xs:element name="prezime" type="zaj:STprezime"/>
-            <xs:element name="pol" type="zaj:STpol"/>
-            <xs:element name="jmbg" type="zaj:STjmbg"/>
-            <xs:element name="datumRodjenja" type="zaj:STdatum"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:complexType name="vakcinacijaPodaci">
-        <xs:sequence>
-            <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                <xs:element name="datumDavanjaDoze" type="zaj:STdatum"/>
-                <xs:element name="brojSerije" type="zaj:STbrojDoze"/>
-                <xs:element name="nazivVakcine" type="zaj:STvrstaVakcine"/>
-            </xs:sequence>
-            <xs:element name="zdravstvenaUstanova" type="zaj:STimeUstanove"/>
-            <xs:element name="datumIzdavanjaPotvrde" type="zaj:STdatum"/>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

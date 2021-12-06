@@ -3,32 +3,15 @@
     targetNamespace="http://www.ftn.uns.ac.rs/zahtjevSertifikata"
     xmlns="http://www.ftn.uns.ac.rs/zahtjevSertifikata"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">    
-    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"></xs:import>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
 
     <xs:element name="zahtjev">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="podnosilac" type="podnosilacZahtjeva"/>
+                <xs:element name="podnosilac" type="zaj:STpodnosilacZahtjeva"/>
                 <xs:element name="razlog" type="xs:string"/>
-                <xs:element name="mjestoDatum" type="mjestoIdatum"/>
+                <xs:element name="mjestoDatum" type="zaj:STmjestoDatum"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    
-    <xs:complexType name="podnosilacZahtjeva">
-        <xs:sequence>
-            <xs:element name="ime" type="zaj:STime"/>
-            <xs:element name="prezime" type="zaj:STprezime"/>
-            <xs:element name="pol" type="zaj:STpol"/>
-            <xs:element name="jmbg" type="zaj:STjmbg"/>
-            <xs:element name="brojPasosa" type="zaj:STbrPasosa"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:complexType name="mjestoIdatum">
-        <xs:sequence>
-            <xs:element name="lokacija" type="zaj:STlokacija"/>
-            <xs:element name="datum" type="zaj:STdatum"></xs:element>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

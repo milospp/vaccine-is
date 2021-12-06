@@ -1,3 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<sertifikat:zeleniSertifikat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../schemas/digitalni-sertifikat.xsd"
+    xmlns:sertifikat = "http://www.ftn.uns.ac.rs/digitalni-sertifikat"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
+    >    
+    <sertifikat:qrKod/>
+    
+    <sertifikat:infoSertifikata>
+        <sertifikat:brojSertifikata>5156159</sertifikat:brojSertifikata>
+        <sertifikat:datumVrijemeIzdavanja>2021-11-29T09:00:00</sertifikat:datumVrijemeIzdavanja>
+        <sertifikat:izdavacSertifikata>Институт за јавно здравље Србије "Др Милан Јовановић Батут"</sertifikat:izdavacSertifikata>
+        <sertifikat:infoDigitalnogPotpisa>
+            <sertifikat:nazivUstanove>Влада РС, Канцеларија за...</sertifikat:nazivUstanove>
+            <sertifikat:adresaUstanove>Немањина 11, Београд</sertifikat:adresaUstanove>
+            <sertifikat:datumIzdavanja>2021-11-29</sertifikat:datumIzdavanja>
+        </sertifikat:infoDigitalnogPotpisa>
+    </sertifikat:infoSertifikata>
+    
+    <sertifikat:podaciVakcinisanog>
+        <zaj:ime>Зоран</zaj:ime>
+        <zaj:prezime>Јанков</zaj:prezime>
+        <zaj:pol>Мушко</zaj:pol>
+        <zaj:jmbg>0306999159784</zaj:jmbg>
+        <zaj:datumRodjenja>1999-06-03</zaj:datumRodjenja>
+        <zaj:brojPasosa>008490806</zaj:brojPasosa>
+    </sertifikat:podaciVakcinisanog>
+    
+    
+    <sertifikat:vakcinacija>
+        <zaj:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-01</zaj:datumDavanjaDoze>
+            <zaj:brojSerije>1</zaj:brojSerije>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+        </zaj:vakcinaPodaci>
+        <zaj:proizvodjac>BIONTECH MANUFACTURING GMBH</zaj:proizvodjac>
+        <zaj:serijaVakcine>A465G5</zaj:serijaVakcine>
+        
+        <zaj:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-22</zaj:datumDavanjaDoze>
+            <zaj:brojSerije>2</zaj:brojSerije>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+        </zaj:vakcinaPodaci>
+        <zaj:proizvodjac>BIONTECH MANUFACTURING GMBH</zaj:proizvodjac>
+        <zaj:serijaVakcine>B875G5</zaj:serijaVakcine>
+    </sertifikat:vakcinacija>
+    
+    
+    <sertifikat:test>
+        <sertifikat:vrstaTesta>SARS-CoV-2 Ag-RDT (Antigen Rapid Detection test)</sertifikat:vrstaTesta>
+        <sertifikat:vrstaUzorka>Врста 1</sertifikat:vrstaUzorka>
+        <sertifikat:proizvodjacTesta>Произвођач 1</sertifikat:proizvodjacTesta>
+        <sertifikat:datumVremeUzorkovanja>2021-11-29T09:00:00</sertifikat:datumVremeUzorkovanja>
+        <sertifikat:datumVremeRezultata>2021-11-29T09:00:00</sertifikat:datumVremeRezultata>
+        <sertifikat:rezultat>Позитиван</sertifikat:rezultat>
+        <sertifikat:laboratorija>Лабораторија 1</sertifikat:laboratorija>
+    </sertifikat:test>
+</sertifikat:zeleniSertifikat>
 

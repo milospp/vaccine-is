@@ -3,27 +3,35 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji ../schemas/potvrda-o-vakcinaciji.xsd"
     xmlns:pov = "http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
     >
     <pov:sifraPotvrde>1WEAWD181E</pov:sifraPotvrde>
     <pov:podaciVakcinisanog>
-        <pov:ime>Душан</pov:ime>
-        <pov:prezime>Ердељан</pov:prezime>
-        <pov:pol>Мушко</pov:pol>
-        <pov:jmbg>0102998152031</pov:jmbg>
-        <pov:datumRodjenja>1998-02-01</pov:datumRodjenja>
+        <zaj:ime>Душан</zaj:ime>
+        <zaj:prezime>Ердељан</zaj:prezime>
+        <zaj:pol>Мушко</zaj:pol>
+        <zaj:jmbg>0102998152031</zaj:jmbg>
+        <zaj:datumRodjenja>1998-02-01</zaj:datumRodjenja>
     </pov:podaciVakcinisanog>
     
     <pov:podaciVakcinacije>
-        <pov:datumDavanjaDoze>2021-11-01</pov:datumDavanjaDoze>
-        <pov:brojSerije>1</pov:brojSerije>
-        <pov:nazivVakcine>Pfizer-BioNTech</pov:nazivVakcine>
-        <pov:datumDavanjaDoze>2021-11-22</pov:datumDavanjaDoze>
-        <pov:brojSerije>2</pov:brojSerije>
-        <pov:nazivVakcine>Pfizer-BioNTech</pov:nazivVakcine>
-        <pov:zdravstvenaUstanova>Дом здравља Нови Сад</pov:zdravstvenaUstanova>
-        <pov:datumIzdavanjaPotvrde>2021-11-26</pov:datumIzdavanjaPotvrde>
+        <zaj:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-01</zaj:datumDavanjaDoze>
+            <zaj:brojSerije>1</zaj:brojSerije>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+        </zaj:vakcinaPodaci>
+        
+        <zaj:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-22</zaj:datumDavanjaDoze>
+            <zaj:brojSerije>2</zaj:brojSerije>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+        </zaj:vakcinaPodaci>
+        
+        <zaj:datumIzdavanjaPotvrde>2021-11-26</zaj:datumIzdavanjaPotvrde>
     </pov:podaciVakcinacije>
     
-    <pov:QRKod></pov:QRKod>
+    <pov:QRKod/> <!-- atribut type -->
 </pov:potvrdaVakcinacije>
 
