@@ -44,31 +44,35 @@
     
     
     <obrazac:evidencijaVakcinacije>
-        <obrazac:ustanova>
-            <obrazac:nazivUstanove>Дом здравља Нови Сад</obrazac:nazivUstanove>
+        <obrazac:zdravstvenaUstanova>
+            <obrazac:nazivZdravstveneUstanove>Дом здравља Нови Сад</obrazac:nazivZdravstveneUstanove>
             <obrazac:vakcinacijskiPunkt>123</obrazac:vakcinacijskiPunkt>
-        </obrazac:ustanova>
+        </obrazac:zdravstvenaUstanova>
         <obrazac:podaciLjekara>
             <obrazac:ime>Предраг</obrazac:ime>
             <obrazac:prezime>Кон</obrazac:prezime>
             <obrazac:brojTelefona>0631561558</obrazac:brojTelefona>
         </obrazac:podaciLjekara>
         <obrazac:podaciVakcinacija>
-            <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
-            <obrazac:datumDavanjaVakcine>2021-11-01</obrazac:datumDavanjaVakcine>
-            <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
-            <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
-            <obrazac:serijaVakcine>1591118</obrazac:serijaVakcine>
-            <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
-            <obrazac:nezeljenaReakcija>Алергија на чоколаду</obrazac:nezeljenaReakcija>
+            <obrazac:vakcinacija>
+                <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
+                <obrazac:datumDavanjaVakcine>2021-11-01</obrazac:datumDavanjaVakcine>
+                <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
+                <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
+                <obrazac:serijaVakcine>1591118</obrazac:serijaVakcine>
+                <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
+                <obrazac:nezeljenaReakcija>Алергија на чоколаду</obrazac:nezeljenaReakcija>
+            </obrazac:vakcinacija>
             
-            <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
-            <obrazac:datumDavanjaVakcine>2021-11-22</obrazac:datumDavanjaVakcine>
-            <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
-            <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
-            <obrazac:serijaVakcine>711455</obrazac:serijaVakcine>
-            <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
-            <obrazac:nezeljenaReakcija>Температура након једења чварака</obrazac:nezeljenaReakcija>
+            <obrazac:vakcinacija>
+                <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
+                <obrazac:datumDavanjaVakcine>2021-11-22</obrazac:datumDavanjaVakcine>
+                <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
+                <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
+                <obrazac:serijaVakcine>711455</obrazac:serijaVakcine>
+                <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
+                <obrazac:nezeljenaReakcija>Температура након једења чварака</obrazac:nezeljenaReakcija>
+            </obrazac:vakcinacija>
             
             <obrazac:privremeneKontraindikacije>
                 <obrazac:kontraindikacija>

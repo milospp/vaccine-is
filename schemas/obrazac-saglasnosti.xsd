@@ -101,10 +101,10 @@
     
     <xs:complexType name="CTevidencijaVakcinacije">
         <xs:sequence>
-            <xs:element name="ustanova">
+            <xs:element name="zdravstvenaUstanova">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="nazivUstanove" type="zaj:STnazivZdravstveneUstanove"/>
+                        <xs:element name="nazivZdravstveneUstanove" type="zaj:STnazivZdravstveneUstanove"/>
                         <xs:element name="vakcinacijskiPunkt"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -123,21 +123,27 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:sequence maxOccurs="unbounded">
-                            <xs:element name="nazivVakcine" type="zaj:STtipVakcine"/>
-                            <xs:element name="datumDavanjaVakcine" type="zaj:STdatum"/>
-                            <xs:element name="nacinDavanjaVakcine" type="xs:string"/>
-                            <xs:element name="ekstremitet">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="Десна рука"/>
-                                        <xs:enumeration value="Лијева рука"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
+                            <xs:element name="vakcinacija">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="nazivVakcine" type="zaj:STtipVakcine"/>
+                                        <xs:element name="datumDavanjaVakcine" type="zaj:STdatum"/>
+                                        <xs:element name="nacinDavanjaVakcine" type="xs:string"/>
+                                        <xs:element name="ekstremitet">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="Десна рука"/>
+                                                    <xs:enumeration value="Лијева рука"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="serijaVakcine"/>
+                                        <xs:element name="proizvodjac" type="xs:string"/>
+                                        <xs:element name="nezeljenaReakcija" type="xs:string" minOccurs="0"/>
+                                        <xs:element name="potpisLjekara" minOccurs="0"></xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
                             </xs:element>
-                            <xs:element name="serijaVakcine"/>
-                            <xs:element name="proizvodjac" type="xs:string"/>
-                            <xs:element name="nezeljenaReakcija" type="xs:string" minOccurs="0"/>
-                            <xs:element name="potpisLjekara" minOccurs="0"></xs:element>
                         </xs:sequence>
                         <xs:element minOccurs="0" name="privremeneKontraindikacije">
                             <xs:complexType>
