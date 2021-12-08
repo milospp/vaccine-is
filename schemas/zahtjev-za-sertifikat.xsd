@@ -8,9 +8,16 @@
     <xs:element name="zahtjev">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="podnosilac" type="zaj:STpodnosilacZahtjeva"/>
+                <xs:element name="podnosilac" type="zaj:CTpodnosilacZahtjeva"/>
                 <xs:element name="razlog" type="xs:string"/>
-                <xs:element name="mjestoDatum" type="zaj:STmjestoDatum"/>
+                <xs:element name="mjestoDatum">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lokacija" type="zaj:STlokacija"/>
+                            <xs:element name="datum" type="zaj:STdatum"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -1,0 +1,19 @@
+ftn.uns.sc.rs
+
+interesovanje za prijem vakcine
+    interesovanje/dokId
+
+obrazac saglasnosti za imunizaciju
+    obrazacSaglasnosti/dokId
+
+zahtjev za sertifikat
+    zahtjevSertifikat/dokId
+
+potvrda o vakcinaciji
+    potvrdaVakcinacije/dokId
+
+izvjestaj o imunizaciju
+    izvjestaj/izvjestajId
+
+digitalni sertifikat
+    digitalniSertifikat/dokId

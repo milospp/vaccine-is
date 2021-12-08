@@ -8,13 +8,13 @@
         <zaj:ime>Димитрије</zaj:ime>
         <zaj:prezime>Каранфиловић</zaj:prezime>
         <zaj:pol>Мушко</zaj:pol>
-        <zaj:jmbg>0102998152031</zaj:jmbg>
         <zaj:datumRodjenja>1998-02-01</zaj:datumRodjenja>
+        <zaj:jmbg>0102998152031</zaj:jmbg>
         <zaj:brojPasosa>008490806</zaj:brojPasosa>
     </zah:podnosilac>
     <zah:razlog>Разлог за подношење захтјева је тај да ....</zah:razlog>
     <zah:mjestoDatum>
-        <zaj:lokacija>Нови Сад</zaj:lokacija>
-        <zaj:datum>2021-12-01</zaj:datum>
+        <zah:lokacija>Нови Сад</zah:lokacija>
+        <zah:datum>2021-12-01</zah:datum>
     </zah:mjestoDatum>
 </zah:zahtjev>

@@ -14,31 +14,41 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="brojInteresovanjaImunizacija" type="zaj:STbrojInteresovanja"/>
+                <xs:element name="brojInteresovanjaImunizacija" type="zaj:STpozitivanBroj"/>
                 <xs:element name="sertifikatInfo">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="brojZahtjeva" type="zaj:STbrojInteresovanja"/>
-                            <xs:element name="izdatoZahtjeva" type="zaj:STbrojInteresovanja"/>
+                            <xs:element name="brojZahtjeva" type="zaj:STpozitivanBroj"/>
+                            <xs:element name="izdatoZahtjeva" type="zaj:STpozitivanBroj"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="brojDoza" type="zaj:STbrojDoze"/>
                 <xs:element name="dozeVakcinaInfo">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="brojDoza" type="zaj:STbrojInteresovanja"/>
-                            <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                                <xs:element name="redniBrojDoze" type="zaj:STbrojInteresovanja"/>
-                                <xs:element name="brojDatihDoza" type="zaj:STbrojInteresovanja"/>
-                            </xs:sequence>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="dozaInfo">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="redniBrojDoze" type="zaj:STbrojDoze"/>
+                                        <xs:element name="brojDatihDoza" type="zaj:STbrojDoze"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="raspodjelaDoza">
                     <xs:complexType>
                         <xs:sequence maxOccurs="unbounded">
-                            <xs:element name="nazivProizvodjaca" type="zaj:STizdavacIme"/>
-                            <xs:element name="brojDoza" type="zaj:STbrojInteresovanja"/>
+                            <xs:element name="tipVakcineInfo">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="nazivProizvodjaca" type="xs:string"/>
+                                        <xs:element name="brojDoza" type="zaj:STbrojDoze"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

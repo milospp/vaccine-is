@@ -6,8 +6,8 @@
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     
     <obrazac:drzavljanstvo>
-        <zaj:stranoDrzavljanstvo>BIH</zaj:stranoDrzavljanstvo>
-        <zaj:brojPasosa>008490806</zaj:brojPasosa>
+        <obrazac:stranoDrzavljanstvo>BIH</obrazac:stranoDrzavljanstvo>
+        <obrazac:brojPasosa>008490806</obrazac:brojPasosa>
     </obrazac:drzavljanstvo>
     
     <obrazac:podaciPacijenta>
@@ -19,16 +19,16 @@
         <obrazac:podaciMjesta>
             <obrazac:mjestoRodjenja>Зрењанин</obrazac:mjestoRodjenja>
             <obrazac:adresa>
-                <obrazac:ulica>Сарајевска</obrazac:ulica>
-                <obrazac:broj>14</obrazac:broj>
+                <zaj:ulica>Сарајевска</zaj:ulica>
+                <zaj:broj>14</zaj:broj>
             </obrazac:adresa>
             <obrazac:mjestoNaselje>Аеродромско насеље</obrazac:mjestoNaselje>
             <obrazac:opstinaGrad>Зрењанин</obrazac:opstinaGrad>
         </obrazac:podaciMjesta>
         <obrazac:kontaktPodaci>
-            <obrazac:fiksniTelefon>023154684</obrazac:fiksniTelefon>
-            <obrazac:mobilniTelefon>0658919849</obrazac:mobilniTelefon>
-            <obrazac:imejl>cppanic@yahoo.com</obrazac:imejl>
+            <zaj:fiksniTelefon>023154684</zaj:fiksniTelefon>
+            <zaj:mobilniTelefon>0658919849</zaj:mobilniTelefon>
+            <zaj:email>cppanic@yahoo.com</zaj:email>
         </obrazac:kontaktPodaci>
         <obrazac:radniStatus>незапослен</obrazac:radniStatus>
         <obrazac:zanimanjeZaposlenog>друго</obrazac:zanimanjeZaposlenog>
@@ -44,8 +44,10 @@
     
     
     <obrazac:evidencijaVakcinacije>
-        <obrazac:nazivUstanove>Дом здравља Нови Сад</obrazac:nazivUstanove>
-        <obrazac:vakcinacijskiPunkt>123</obrazac:vakcinacijskiPunkt>
+        <obrazac:ustanova>
+            <obrazac:nazivUstanove>Дом здравља Нови Сад</obrazac:nazivUstanove>
+            <obrazac:vakcinacijskiPunkt>123</obrazac:vakcinacijskiPunkt>
+        </obrazac:ustanova>
         <obrazac:podaciLjekara>
             <obrazac:ime>Предраг</obrazac:ime>
             <obrazac:prezime>Кон</obrazac:prezime>
@@ -67,6 +69,14 @@
             <obrazac:serijaVakcine>711455</obrazac:serijaVakcine>
             <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
             <obrazac:nezeljenaReakcija>Температура након једења чварака</obrazac:nezeljenaReakcija>
+            
+            <obrazac:privremeneKontraindikacije>
+                <obrazac:kontraindikacija>
+                    <obrazac:datumUtvrdjivanja>2021-11-25</obrazac:datumUtvrdjivanja>
+                    <obrazac:dijagnoza>Алергија на сланину</obrazac:dijagnoza>
+                </obrazac:kontraindikacija>
+            </obrazac:privremeneKontraindikacije>
+            <obrazac:odlukaKomisije>Не</obrazac:odlukaKomisije>
         </obrazac:podaciVakcinacija>
     </obrazac:evidencijaVakcinacije>
 </obrazac:saglasnost>
