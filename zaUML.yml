@@ -1,0 +1,78 @@
+registracija
+    - GRADJANIN popunjava formu registracije i salje zahtjev za registraciju na sistem
+    - SISTEM validira pristigle podatke
+    - SISTEM uspjesno registruje novog GRADJANINA i salje obavjestenje putem el poste
+
+kreiranje dokumenta interesovanja za prijem vakcine
+    - GRADJANIN se prijavljuje na portal
+    - ukoliko nije primio prvu dozu
+        - pristupa formi koju treba da ispuni da bi podnio interesovanje za prijem vakcine
+        - nakon ispunjavanja forme podnosi interesovanje..
+        - dobija reakciju SISTEM putem el poste da je interesovanje uspjesno zabiljezeno
+        - SISTEM mu dodjeljuje slobodan termin
+            - u narednih 7 dana
+            - ili cim postoji slobodan termin
+            - ili dovoljna kolicina doza vakcine
+    - ako je primio prvu
+        - moze da pregleda dok interesovanja
+        - skine
+    - ako nije primio a interesovanje u toku (nije jos dobio termin)
+        - moze da izmjeni dok interesovanja
+        - skine
+        - pregleda
+    
+kreiranje saglasnosti za imunizaciju
+    - ukoliko je GRADJANIN dobio termin za prijem vakcine (svaka doza)
+        - unosi informacije u formu
+        - podnosi saglasnost za sprovodjenje ..
+        - reakcija SISTEM o uspjesnom prihvatanju saglasnosti
+    - GRADJANIN je popunio saglasnost
+        - ZDRAVSTVENI RADNIK vakcinise GRADJANINA
+          - popunjava drugi dio obrasca saglasnosti
+        - smanjuje se dostupna kolicina te vakcine
+
+digitalni zeleni sertifikat
+    - GRADJANIN ne posjeduje sertifikat
+      - GRADJANIN unosi podatke u formu zahtjeva
+      - SISTEM vraca poruku o uspjesnom slanju zahtjeva
+      - jedan od SLUZBENIKA
+        - prihvata zahtjev
+          - GRADJANINU na portalu postaje dostupan sertifikat
+            - koji moze da skida i pregleda
+          - salje se el posta GRADJANINU da je prihvacen zahtjev i uz to zakacen sertifikat u xhtml i pdf formatu ili linkovi za njihovo preuzimanje
+        - odbija zahtjev
+          - navodi razlog odbijanja
+          - salje se el posta GRADJANINU da je odbijen i razlog uz to
+    - posjeduje
+      - preuzimanje u pdf i xhtml formatu
+      - pregledanje
+
+potvrda vakcinacije
+    - GRADJANIN (ako je dobio potvrdu)
+      - pregledanje 
+      - preuzimanje
+    - ZDRAVSTVENI RADNIK
+      - dobija formu za potvrdu vakcinacije GRADJANINA
+      - ispuni formu i izda je
+    - SISTEM
+      - validira formu
+      - dodjeljuje automatski termin za sljedecu dozu
+        - vrijeme koje treba da prodje (zavisno od tipa vakcine i rednog broja doze)
+    
+izvjestaj o imunizaciji
+    - SLUZBENIK unosi zeljeni period za izvjestaj
+    - SISTEM priprema dokument, skuplja podatke potrebne za njegovo generisanje
+    - SISTEM vraca izvjestaj koji SLUZBENIK pregleda i izdaje
+
+azuriranje/evidencija dostupnih vakcina
+    - kada dodju nove kolicine, SLUZBENIK azurira kolicinu
+    - pregleda stanje
+
+rukovanje dokumentacijom odredjenog GRADJANINA
+    - SLUZBENIK moze da pronadje dokumentaciju odredjenog gradjanina
+      - pregleda
+      - preuzima
+      - osnovna pretraga (tekst unos - pretraga nad svim dokumentima)
+      - napredna pretraga (po metapodacima, vise metapodataka..)
+      - link na ref dokumente
+      - pronalazenje svih koji ref na dok
