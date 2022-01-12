@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zah:zahtjev xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zahtjevSertifikata ../schemas/zahtjev-za-sertifikat.xsd"
+    xmlns:zah = "http://www.ftn.uns.ac.rs/zahtjevSertifikata"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <zah:podnosilac>
+        <zaj:ime>Димитрије</zaj:ime>
+        <zaj:prezime>Каранфиловић</zaj:prezime>
+        <zaj:pol>Мушко</zaj:pol>
+        <zaj:datumRodjenja>1998-02-01</zaj:datumRodjenja>
+        <zaj:jmbg>0102998152031</zaj:jmbg>
+        <zaj:brojPasosa>008490806</zaj:brojPasosa>
+    </zah:podnosilac>
+    <zah:razlog>Разлог за подношење захтјева је тај да ....</zah:razlog>
+    <zah:mjestoDatum>
+        <zah:lokacija>Нови Сад</zah:lokacija>
+        <zah:datum>2021-12-01</zah:datum>
+    </zah:mjestoDatum>
+</zah:zahtjev>
