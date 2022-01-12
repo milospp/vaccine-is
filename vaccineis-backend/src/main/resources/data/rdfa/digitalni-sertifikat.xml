@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sertifikat:zeleniSertifikat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../xsd/digitalni-sertifikat.xsd"
+    xmlns:sertifikat = "http://www.ftn.uns.ac.rs/digitalni-sertifikat"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
+    brojSertifikata="645155" datumVrijemeIzdavanja="2021-11-22T09:00:00">    
+    <sertifikat:qrKod/>
+    
+    <sertifikat:podaciVakcinisanog>
+        <zaj:ime>Зоран</zaj:ime>
+        <zaj:prezime>Јанков</zaj:prezime>
+        <zaj:pol>Мушко</zaj:pol>
+        <zaj:datumRodjenja>1999-06-03</zaj:datumRodjenja>
+        <zaj:jmbg>0306999159784</zaj:jmbg>
+        <zaj:brojPasosa>008490806</zaj:brojPasosa>
+    </sertifikat:podaciVakcinisanog>
+    
+    <sertifikat:vakcinacija>
+        <sertifikat:doza>
+            <sertifikat:vakcinaPodaci>
+                <zaj:datumDavanjaDoze>2021-11-01</zaj:datumDavanjaDoze>
+                <zaj:brojDoze>1</zaj:brojDoze>
+                <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+                <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+            </sertifikat:vakcinaPodaci>
+            <sertifikat:proizvodjac>BIONTECH MANUFACTURING GMBH</sertifikat:proizvodjac>
+            <sertifikat:serijaVakcine>A465G5</sertifikat:serijaVakcine>
+        </sertifikat:doza>
+        
+        <sertifikat:doza>
+            <sertifikat:vakcinaPodaci>
+                <zaj:datumDavanjaDoze>2021-11-22</zaj:datumDavanjaDoze>
+                <zaj:brojDoze>2</zaj:brojDoze>
+                <zaj:nazivVakcine>Sinopharm</zaj:nazivVakcine>
+                <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+            </sertifikat:vakcinaPodaci>
+            <sertifikat:proizvodjac>BIONTECH MANUFACTURING GMBH</sertifikat:proizvodjac>
+            <sertifikat:serijaVakcine>B875G5</sertifikat:serijaVakcine>
+        </sertifikat:doza>
+    </sertifikat:vakcinacija>
+    
+    <sertifikat:testovi>
+        <sertifikat:test>
+            <sertifikat:tipTesta>SARS-CoV-2 Ag-RDT (Antigen Rapid Detection test)</sertifikat:tipTesta>
+            <sertifikat:vrstaUzorka>Врста 1</sertifikat:vrstaUzorka>
+            <sertifikat:proizvodjacTesta>Произвођач 1</sertifikat:proizvodjacTesta>
+            <sertifikat:datumVremeUzorkovanja>2021-11-29T09:00:00</sertifikat:datumVremeUzorkovanja>
+            <sertifikat:datumVremeRezultata>2021-11-29T09:00:00</sertifikat:datumVremeRezultata>
+            <sertifikat:rezultat>Позитиван</sertifikat:rezultat>
+            <sertifikat:laboratorija>Лабораторија 1</sertifikat:laboratorija>
+        </sertifikat:test>
+    </sertifikat:testovi>
+    
+    <sertifikat:infoSertifikata>
+        <sertifikat:izdavacSertifikata>Институт за јавно здравље Србије "Др Милан Јовановић Батут"</sertifikat:izdavacSertifikata>
+        <sertifikat:digitalniPotpis>
+            <sertifikat:nazivUstanove>Влада РС, Канцеларија за...</sertifikat:nazivUstanove>
+            <sertifikat:adresaUstanove>
+                <zaj:ulica>Немањина 11</zaj:ulica>
+                <zaj:broj>Београд</zaj:broj>
+            </sertifikat:adresaUstanove>
+            <sertifikat:datumIzdavanja>2021-11-29</sertifikat:datumIzdavanja>
+        </sertifikat:digitalniPotpis>
+    </sertifikat:infoSertifikata>
+</sertifikat:zeleniSertifikat>
+

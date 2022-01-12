@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<obrazac:saglasnost xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/obrazac-saglasnosti ../schemas/obrazac-saglasnosti.xsd"
+    xmlns:obrazac = "http://www.ftn.uns.ac.rs/obrazac-saglasnosti"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    
+    <obrazac:drzavljanstvo>
+        <obrazac:stranoDrzavljanstvo>BIH</obrazac:stranoDrzavljanstvo>
+        <obrazac:brojPasosa>008490806</obrazac:brojPasosa>
+    </obrazac:drzavljanstvo>
+    
+    <obrazac:podaciPacijenta>
+        <zaj:ime>Милош</zaj:ime>
+        <zaj:prezime>Панић</zaj:prezime>
+        <zaj:pol>Женско</zaj:pol>
+        <zaj:datumRodjenja>1999-06-25</zaj:datumRodjenja>
+        <obrazac:imeRoditelja>Мајка</obrazac:imeRoditelja>
+        <obrazac:podaciMjesta>
+            <obrazac:mjestoRodjenja>Зрењанин</obrazac:mjestoRodjenja>
+            <obrazac:adresa>
+                <zaj:ulica>Сарајевска</zaj:ulica>
+                <zaj:broj>14</zaj:broj>
+            </obrazac:adresa>
+            <obrazac:mjestoNaselje>Аеродромско насеље</obrazac:mjestoNaselje>
+            <obrazac:opstinaGrad>Зрењанин</obrazac:opstinaGrad>
+        </obrazac:podaciMjesta>
+        <obrazac:kontaktPodaci>
+            <zaj:fiksniTelefon>023154684</zaj:fiksniTelefon>
+            <zaj:mobilniTelefon>0658919849</zaj:mobilniTelefon>
+            <zaj:email>cppanic@yahoo.com</zaj:email>
+        </obrazac:kontaktPodaci>
+        <obrazac:radniStatus>незапослен</obrazac:radniStatus>
+        <obrazac:zanimanjeZaposlenog>друго</obrazac:zanimanjeZaposlenog>
+        <obrazac:socijalnaZastita>
+            <obrazac:nijeKorisnikSocijalnog/>
+        </obrazac:socijalnaZastita>
+        <obrazac:izjavaSaglasnosti>
+            <obrazac:saglasan/>
+            <obrazac:imeLijeka>Pfizer-BioNTech</obrazac:imeLijeka>
+        </obrazac:izjavaSaglasnosti>
+        <obrazac:datumSaglasnosti>2021-11-30</obrazac:datumSaglasnosti>
+    </obrazac:podaciPacijenta>
+    
+    
+    <obrazac:evidencijaVakcinacije>
+        <obrazac:zdravstvenaUstanova>
+            <obrazac:nazivZdravstveneUstanove>Дом здравља Нови Сад</obrazac:nazivZdravstveneUstanove>
+            <obrazac:vakcinacijskiPunkt>123</obrazac:vakcinacijskiPunkt>
+        </obrazac:zdravstvenaUstanova>
+        <obrazac:podaciLjekara>
+            <obrazac:ime>Предраг</obrazac:ime>
+            <obrazac:prezime>Кон</obrazac:prezime>
+            <obrazac:brojTelefona>0631561558</obrazac:brojTelefona>
+        </obrazac:podaciLjekara>
+        <obrazac:podaciVakcinacija>
+            <obrazac:vakcinacija>
+                <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
+                <obrazac:datumDavanjaVakcine>2021-11-01</obrazac:datumDavanjaVakcine>
+                <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
+                <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
+                <obrazac:serijaVakcine>1591118</obrazac:serijaVakcine>
+                <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
+                <obrazac:nezeljenaReakcija>Алергија на чоколаду</obrazac:nezeljenaReakcija>
+            </obrazac:vakcinacija>
+            
+            <obrazac:vakcinacija>
+                <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
+                <obrazac:datumDavanjaVakcine>2021-11-22</obrazac:datumDavanjaVakcine>
+                <obrazac:nacinDavanjaVakcine>ИМ</obrazac:nacinDavanjaVakcine>
+                <obrazac:ekstremitet>Лијева рука</obrazac:ekstremitet>
+                <obrazac:serijaVakcine>711455</obrazac:serijaVakcine>
+                <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
+                <obrazac:nezeljenaReakcija>Температура након једења чварака</obrazac:nezeljenaReakcija>
+            </obrazac:vakcinacija>
+            
+            <obrazac:privremeneKontraindikacije>
+                <obrazac:kontraindikacija>
+                    <obrazac:datumUtvrdjivanja>2021-11-25</obrazac:datumUtvrdjivanja>
+                    <obrazac:dijagnoza>Алергија на сланину</obrazac:dijagnoza>
+                </obrazac:kontraindikacija>
+            </obrazac:privremeneKontraindikacije>
+            <obrazac:odlukaKomisije>Не</obrazac:odlukaKomisije>
+        </obrazac:podaciVakcinacija>
+    </obrazac:evidencijaVakcinacije>
+</obrazac:saglasnost>
