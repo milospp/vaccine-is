@@ -8,13 +8,13 @@ import vaccineisbackend.db.ExistManager;
 import java.util.UUID;
 
 @Repository
-public class InteresovanjeRepository {
-    private String collectionId = "db/interesovanja";
+public class ZahtevSertifikataRepository {
+    private String collectionId = "db/zahteviSertifikata";
 
     @Autowired
     private ExistManager existManager;
 
-    public void saveInteresovanje(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void saveZahtevSertifikata(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), text);
     }
 
