@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<izv:izvjestaj
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/izvjestaj ../schemas/izvjestaj-o-imunizaciji.xsd"
+    xmlns:izv = "http://www.ftn.uns.ac.rs/izvjestaj"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    
+    <izv:period>
+        <izv:pocetakPerioda>2021-08-01</izv:pocetakPerioda>
+        <izv:krajPerioda>2021-09-01</izv:krajPerioda>
+    </izv:period>
+    
+    <izv:brojInteresovanjaImunizacija>2758</izv:brojInteresovanjaImunizacija>
+    
+    <izv:sertifikatInfo>
+        <izv:brojZahtjeva>453</izv:brojZahtjeva>
+        <izv:izdatoZahtjeva>428</izv:izdatoZahtjeva>
+    </izv:sertifikatInfo>
+    
+    <izv:brojDoza>3225</izv:brojDoza>
+    
+    <izv:dozeVakcinaInfo>
+        <izv:dozaInfo>
+            <izv:redniBrojDoze>1</izv:redniBrojDoze>
+            <izv:brojDatihDoza>1789</izv:brojDatihDoza>
+        </izv:dozaInfo>  
+        
+        <izv:dozaInfo>
+            <izv:redniBrojDoze>2</izv:redniBrojDoze>
+            <izv:brojDatihDoza>1276</izv:brojDatihDoza>
+        </izv:dozaInfo> 
+        
+        <izv:dozaInfo>
+            <izv:redniBrojDoze>3</izv:redniBrojDoze>
+            <izv:brojDatihDoza>160</izv:brojDatihDoza>
+        </izv:dozaInfo> 
+    </izv:dozeVakcinaInfo>
+    
+    <izv:raspodjelaDoza>
+        <izv:tipVakcineInfo>
+            <izv:nazivProizvodjaca>Pfizer, BioNTech</izv:nazivProizvodjaca>
+            <izv:brojDoza>1625</izv:brojDoza>
+        </izv:tipVakcineInfo>
+        
+        <izv:tipVakcineInfo>
+            <izv:nazivProizvodjaca>Sinopharm</izv:nazivProizvodjaca>
+            <izv:brojDoza>1100</izv:brojDoza>
+        </izv:tipVakcineInfo>
+        
+        <izv:tipVakcineInfo>
+            <izv:nazivProizvodjaca>Sputnik V</izv:nazivProizvodjaca>
+            <izv:brojDoza>356</izv:brojDoza>
+        </izv:tipVakcineInfo>
+        
+        <izv:tipVakcineInfo>
+            <izv:nazivProizvodjaca>AstraZeneca, Oxford</izv:nazivProizvodjaca>
+            <izv:brojDoza>144</izv:brojDoza>
+        </izv:tipVakcineInfo>
+    </izv:raspodjelaDoza>
+    
+    <izv:datumIzdavanjaIzvjestaja>2022-09-11</izv:datumIzdavanjaIzvjestaja>
+</izv:izvjestaj>
+

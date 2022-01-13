@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inter:interesovanje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/interesovanje ../schemas/interesovanje.xsd"
+    xmlns:inter = "http://www.ftn.uns.ac.rs/interesovanje"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <inter:licneInformacije>
+        <inter:drzavljanstvo>Држављанин Републике Србије</inter:drzavljanstvo>
+        <inter:jmbg>0102998152031</inter:jmbg>
+        <inter:ime>Иван</inter:ime>
+        <inter:prezime>Мршуља</inter:prezime>
+        <inter:kontakt>
+            <zaj:fiksniTelefon>011123456</zaj:fiksniTelefon>
+            <zaj:mobilniTelefon>0631234156</zaj:mobilniTelefon>
+            <zaj:email>mrki@gmail.com</zaj:email>
+        </inter:kontakt>
+    </inter:licneInformacije>
+    <inter:lokacijaPrimanja>Нови Сад</inter:lokacijaPrimanja>
+    <inter:nazivVakcine>Sinopharm</inter:nazivVakcine>
+    <inter:davalacKrvi>Да</inter:davalacKrvi>
+    <inter:datum>2021-11-23</inter:datum>
+</inter:interesovanje>
