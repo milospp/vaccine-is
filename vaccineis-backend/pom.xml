@@ -126,24 +126,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb22-plugin</artifactId>
-				<version>0.14.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>${project.basedir}\src\main\resources\static\xsd</schemaDirectory>
-					<schemaIncludes>
-						<include>*.xsd </include>
-					</schemaIncludes>
-				</configuration>
-			</plugin>
 
 		</plugins>
 	</build>
