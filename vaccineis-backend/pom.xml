@@ -144,19 +144,6 @@
 					</schemaIncludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.9</source>
-					<target>1.9</target>
-					<compilerArgs>
-						<!-- Few examples ... only pick the ones needed -->
-						<arg>--add-exports</arg><arg>java.xml/com.sun.org.apache.xalan.internal.xsltc.trax=ALL-UNNAMED</arg>
-						<arg>--add-exports</arg><arg>java.xml/com.sun.org.apache.xerces.internal.impl.dtd=ALL-UNNAMED</arg>
-						<arg>--add-exports</arg><arg>java.xml/com.sun.org.apache.xerces.internal.xni.parser=ALL-UNNAMED</arg>
-					</compilerArgs>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>
