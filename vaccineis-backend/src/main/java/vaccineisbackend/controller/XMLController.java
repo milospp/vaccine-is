@@ -1,12 +1,15 @@
 package vaccineisbackend.controller;
 
 import lombok.AllArgsConstructor;
+import org.exist.http.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xmldb.api.base.XMLDBException;
 import vaccineisbackend.service.XMLService;
+
+import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
@@ -26,6 +29,13 @@ public class XMLController {
     public ResponseEntity<Void> addIzvestaj(@RequestBody String izvjestaj) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         xmlService.saveIzvestajFileFromString(izvjestaj);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping(value="/rdfUpis")
+    public ResponseEntity<Void> upisRdfBaza() throws IOException {
+        xmlService.writeToRdfDatabase();
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

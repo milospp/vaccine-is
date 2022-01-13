@@ -4,8 +4,11 @@ import org.springframework.stereotype.Service;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import vaccineisbackend.model.izvjestaj.Izvjestaj;
+import vaccineisbackend.rdf.FusekiWriter;
 import vaccineisbackend.repository.*;
+import vaccineisbackend.util.AuthenticationUtilities;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @Service
@@ -28,6 +31,9 @@ public class XMLService {
         this.obrazacSaglasnostiRepository = obrazacSaglasnostiRepository;
         this.potvrdaOVakcinacijiRepository = potvrdaOVakcinacijiRepository;
         this.zahtevSertifikataRepository = zahtevSertifikataRepository;
+    }
+    public void writeToRdfDatabase() throws IOException {
+        FusekiWriter.run(AuthenticationUtilities.loadProperties());
     }
 
     public Object findIzvestaji() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
