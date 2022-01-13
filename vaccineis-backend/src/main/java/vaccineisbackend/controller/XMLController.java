@@ -15,7 +15,7 @@ public class XMLController {
 
     private final XMLService xmlService;
 
-    @GetMapping(value = "/izvestaj")
+    @GetMapping(value = "/izvestaj", consumes = "*/*")
     public ResponseEntity<String> getIzvestaj() throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
 
