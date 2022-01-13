@@ -1,8 +1,12 @@
 package vaccineisbackend.service;
 
 import org.springframework.stereotype.Service;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
+import vaccineisbackend.model.izvjestaj.Izvjestaj;
 import vaccineisbackend.repository.*;
+
+import java.util.Collection;
 
 @Service
 public class XMLService {
@@ -24,6 +28,16 @@ public class XMLService {
         this.obrazacSaglasnostiRepository = obrazacSaglasnostiRepository;
         this.potvrdaOVakcinacijiRepository = potvrdaOVakcinacijiRepository;
         this.zahtevSertifikataRepository = zahtevSertifikataRepository;
+    }
+
+    public Object findIzvestaji() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+         ResourceSet izvestaji = izvestajRepository.findAll();
+         return izvestaji.getResource(0).getContent();
+    }
+
+    public Object findDigitlniSertifikat() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ResourceSet izvestaji = digitalniSertifikatRepository.findAll();
+        return izvestaji.getResource(0).getContent();
     }
 
     public void saveDigitalniSertifikatFileFromString(String text) throws XMLDBException, ClassNotFoundException,

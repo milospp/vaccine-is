@@ -1,73 +1,78 @@
 package vaccineisbackend.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
+import org.springframework.web.bind.annotation.*;
 import org.xmldb.api.base.XMLDBException;
-import vaccineisbackend.model.DocumentEntity;
 import vaccineisbackend.service.XMLService;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping(value = "api/xml", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/xml", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 public class XMLController {
 
-    private XMLService xmlService;
+    private final XMLService xmlService;
 
-    public XMLController(XMLService xmlService) {
-        super();
-        this.xmlService = xmlService;
+    @GetMapping(value = "/izvestaj")
+    public ResponseEntity<String> getIzvestaj() throws XMLDBException,
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        return new ResponseEntity<>(xmlService.findIzvestaji().toString(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/izvestaj")
-    public ResponseEntity<Void> addIzvestaj(@RequestBody DocumentEntity doc) throws XMLDBException,
+    public ResponseEntity<Void> addIzvestaj(@RequestBody String izvjestaj) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        System.out.println(doc.getText());
-        xmlService.saveIzvestajFileFromString(doc.getText());
+        xmlService.saveIzvestajFileFromString(izvjestaj);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PostMapping("/digitalniSertifikat")
-    public ResponseEntity<Void> addDDigitalniSertifikat(@RequestBody DocumentEntity doc) throws XMLDBException,
+    @GetMapping("/digitalniSertifikat")
+    public ResponseEntity<String> getDDigitalniSertifikat() throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        xmlService.saveDigitalniSertifikatFileFromString(doc.getText());
+
+        return new ResponseEntity<>(xmlService.findDigitlniSertifikat().toString(), HttpStatus.OK);
+    }
+
+    @PostMapping("/digitalniSertifikat")
+    public ResponseEntity<Void> addDDigitalniSertifikat(@RequestBody String digitalniSertifikat) throws XMLDBException,
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
+        xmlService.saveDigitalniSertifikatFileFromString(digitalniSertifikat);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("/interesovanje")
-    public ResponseEntity<Void> addInteresovanje(@RequestBody DocumentEntity doc) throws XMLDBException,
+    public ResponseEntity<Void> addInteresovanje(@RequestBody String interesovanje) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        xmlService.saveInteresovanjeFileFromString(doc.getText());
+        xmlService.saveInteresovanjeFileFromString(interesovanje);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("/obrazacSaglasnosti")
-    public ResponseEntity<Void> addObrazacSaglasnosti(@RequestBody DocumentEntity doc) throws XMLDBException,
+    public ResponseEntity<Void> addObrazacSaglasnosti(@RequestBody String obrazacSaglasnosti) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        xmlService.saveObrazacSaglasnostiFileFromString(doc.getText());
+        xmlService.saveObrazacSaglasnostiFileFromString(obrazacSaglasnosti);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("/potvrdaOVakcinaciji")
-    public ResponseEntity<Void> addPotvrdaOVakcinaciji(@RequestBody DocumentEntity doc) throws XMLDBException,
+    public ResponseEntity<Void> addPotvrdaOVakcinaciji(@RequestBody String potvrdaVakcinacije) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        xmlService.savePotvrdaOVakcinacijiFileFromString(doc.getText());
+        xmlService.savePotvrdaOVakcinacijiFileFromString(potvrdaVakcinacije);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("/zahtevSertifikata")
-    public ResponseEntity<Void> addZahtevSertifikata(@RequestBody DocumentEntity doc) throws XMLDBException,
+    public ResponseEntity<Void> addZahtevSertifikata(@RequestBody String zahtjev) throws XMLDBException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
-        xmlService.saveZahtevSertifikataFileFromString(doc.getText());
+        xmlService.saveZahtevSertifikataFileFromString(zahtjev);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
