@@ -1,71 +1,68 @@
 package vaccineisbackend.service;
 
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
-import vaccineisbackend.model.izvjestaj.Izvjestaj;
 import vaccineisbackend.rdf.FusekiWriter;
 import vaccineisbackend.repository.*;
 import vaccineisbackend.util.AuthenticationUtilities;
 
 import java.io.IOException;
-import java.util.Collection;
 
 @Service
 public class XMLService {
 
-    private final DigitalniSertifikatRepository digitalniSertifikatRepository;
-    private final IzvestajRepository izvestajRepository;
-    private final ObrazacSaglasnostiRepository obrazacSaglasnostiRepository;
-    private final PotvrdaOVakcinacijiRepository potvrdaOVakcinacijiRepository;
-    private final ZahtevSertifikataRepository zahtevSertifikataRepository;
+    private final ExistDigitalniSertifikatRepository existDigitalniSertifikatRepository;
+    private final ExistIzvestajRepository existIzvestajRepository;
+    private final ExistObrazacSaglasnostiRepository existObrazacSaglasnostiRepository;
+    private final ExistPotvrdaOVakcinacijiRepository existPotvrdaOVakcinacijiRepository;
+    private final ExistZahtevSertifikataRepository existZahtevSertifikataRepository;
 
-    public XMLService(DigitalniSertifikatRepository digitalniSertifikatRepository, IzvestajRepository izvestajRepository, ObrazacSaglasnostiRepository
-            obrazacSaglasnostiRepository, PotvrdaOVakcinacijiRepository potvrdaOVakcinacijiRepository,
-                      ZahtevSertifikataRepository zahtevSertifikataRepository) {
-        this.digitalniSertifikatRepository = digitalniSertifikatRepository;
-        this.izvestajRepository = izvestajRepository;
-        this.obrazacSaglasnostiRepository = obrazacSaglasnostiRepository;
-        this.potvrdaOVakcinacijiRepository = potvrdaOVakcinacijiRepository;
-        this.zahtevSertifikataRepository = zahtevSertifikataRepository;
+    public XMLService(ExistDigitalniSertifikatRepository existDigitalniSertifikatRepository, ExistIzvestajRepository existIzvestajRepository, ExistObrazacSaglasnostiRepository
+            existObrazacSaglasnostiRepository, ExistPotvrdaOVakcinacijiRepository existPotvrdaOVakcinacijiRepository,
+                      ExistZahtevSertifikataRepository existZahtevSertifikataRepository) {
+        this.existDigitalniSertifikatRepository = existDigitalniSertifikatRepository;
+        this.existIzvestajRepository = existIzvestajRepository;
+        this.existObrazacSaglasnostiRepository = existObrazacSaglasnostiRepository;
+        this.existPotvrdaOVakcinacijiRepository = existPotvrdaOVakcinacijiRepository;
+        this.existZahtevSertifikataRepository = existZahtevSertifikataRepository;
     }
     public void writeToRdfDatabase() throws IOException {
         FusekiWriter.run(AuthenticationUtilities.loadProperties());
     }
 
-    public Object findIzvestaji() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-         ResourceSet izvestaji = izvestajRepository.findAll();
-         return izvestaji.getResource(0).getContent();
-    }
+//    public Object findIzvestaji() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//         ResourceSet izvestaji = existIzvestajRepository.findAll();
+//         return izvestaji.getResource(0).getContent();
+//    }
 
-    public Object findDigitlniSertifikat() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        ResourceSet izvestaji = digitalniSertifikatRepository.findAll();
-        return izvestaji.getResource(0).getContent();
-    }
+//    public Object findDigitlniSertifikat() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//        ResourceSet izvestaji = existDigitalniSertifikatRepository.findAll();
+//        return izvestaji.getResource(0).getContent();
+//    }
 
     public void saveDigitalniSertifikatFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        digitalniSertifikatRepository.saveDigitalniSertifikat(text);
+        existDigitalniSertifikatRepository.saveDigitalniSertifikat(text);
     }
 
     public void saveIzvestajFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        izvestajRepository.saveIzvestaj(text);
+        existIzvestajRepository.saveIzvestaj(text);
     }
 
     public void saveObrazacSaglasnostiFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        obrazacSaglasnostiRepository.saveObrazacSaglasnosti(text);
+        existObrazacSaglasnostiRepository.saveObrazacSaglasnosti(text);
     }
 
     public void savePotvrdaOVakcinacijiFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        potvrdaOVakcinacijiRepository.savePotvrdaOVakcinaciji(text);
+        existPotvrdaOVakcinacijiRepository.savePotvrdaOVakcinaciji(text);
     }
 
     public void saveZahtevSertifikataFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        zahtevSertifikataRepository.saveZahtevSertifikata(text);
+        existZahtevSertifikataRepository.saveZahtevSertifikata(text);
     }
 
 }

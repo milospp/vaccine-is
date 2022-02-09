@@ -1,18 +1,16 @@
 package vaccineisbackend.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import vaccineisbackend.db.ExistManager;
-import vaccineisbackend.model.CollectionId;
 import vaccineisbackend.model.interesovanje.Interesovanje;
 import vaccineisbackend.service.MarshallingService;
 
-@Service
-public class InteresovanjeRepository extends CRUDRepositoryImpl<Interesovanje> {
+@Repository
+public class ExistInteresovanjeRepository extends CRUDRepositoryImpl<Interesovanje> {
 
     @Autowired
-    public InteresovanjeRepository(ExistManager existManager, MarshallingService marshallingService) {
+    public ExistInteresovanjeRepository(ExistManager existManager, MarshallingService marshallingService) {
         super("db/interesovanje", existManager, marshallingService);
     }
 

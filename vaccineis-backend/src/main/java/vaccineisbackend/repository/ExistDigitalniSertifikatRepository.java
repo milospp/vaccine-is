@@ -5,21 +5,26 @@ import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import vaccineisbackend.db.ExistManager;
+import vaccineisbackend.model.digitalni_sertifikat.ZeleniSertifikat;
+import vaccineisbackend.service.MarshallingService;
 
 import java.util.UUID;
 
 @Repository
-public class DigitalniSertifikatRepository {
-    private String collectionId = "db/digitalniSertifikati";
+public class ExistDigitalniSertifikatRepository extends  CRUDRepositoryImpl<ZeleniSertifikat>{
 
     @Autowired
-    private ExistManager existManager;
+    public ExistDigitalniSertifikatRepository(ExistManager existManager, MarshallingService marshallingService) {
+        super("db/digitalniSertifikati", existManager, marshallingService);
+    }
 
     public void saveDigitalniSertifikat(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), text);
     }
 
-    public ResourceSet findAll() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        return existManager.retrieve(collectionId, "/");
+    @Override
+    protected Class getEntityClass() {
+        return ZeleniSertifikat.class;
     }
+
 }

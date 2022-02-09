@@ -54,7 +54,7 @@ public class ExistManager {
 
     public Collection getOrCreateCollection(String collectionUri, int pathOffset) throws XMLDBException {
         Collection col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
-        System.out.println(collectionUri);
+//        System.out.println(collectionUri);
         if (col == null) {
             if (collectionUri.startsWith("/")) {
                 collectionUri = collectionUri.substring(1);

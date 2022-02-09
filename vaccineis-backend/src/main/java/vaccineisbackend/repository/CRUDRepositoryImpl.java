@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 public abstract class CRUDRepositoryImpl<T> implements CRUDRepository<T> {
 
-    private final String collectionId;
+    protected final String collectionId;
     protected final ExistManager existManager;
     protected final MarshallingService marshallingService;
 
