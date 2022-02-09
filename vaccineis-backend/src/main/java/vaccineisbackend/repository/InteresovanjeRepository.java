@@ -1,21 +1,23 @@
 package vaccineisbackend.repository;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.xmldb.api.base.XMLDBException;
+import org.springframework.stereotype.Service;
 import vaccineisbackend.db.ExistManager;
+import vaccineisbackend.model.CollectionId;
+import vaccineisbackend.model.interesovanje.Interesovanje;
+import vaccineisbackend.service.MarshallingService;
 
-import java.util.UUID;
-
-@Repository
-public class InteresovanjeRepository {
-    private String collectionId = "db/interesovanja";
+@Service
+public class InteresovanjeRepository extends CRUDRepositoryImpl<Interesovanje> {
 
     @Autowired
-    private ExistManager existManager;
-
-    public void saveInteresovanje(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), text);
+    public InteresovanjeRepository(ExistManager existManager, MarshallingService marshallingService) {
+        super("db/interesovanje", existManager, marshallingService);
     }
 
+    @Override
+    protected Class<Interesovanje> getEntityClass() {
+        return Interesovanje.class;
+    }
 }

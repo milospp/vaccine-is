@@ -15,18 +15,15 @@ import java.util.Collection;
 public class XMLService {
 
     private final DigitalniSertifikatRepository digitalniSertifikatRepository;
-    private final InteresovanjeRepository interesovanjeRepository;
     private final IzvestajRepository izvestajRepository;
     private final ObrazacSaglasnostiRepository obrazacSaglasnostiRepository;
     private final PotvrdaOVakcinacijiRepository potvrdaOVakcinacijiRepository;
     private final ZahtevSertifikataRepository zahtevSertifikataRepository;
 
-    public XMLService(DigitalniSertifikatRepository digitalniSertifikatRepository, InteresovanjeRepository
-            interesovanjeRepository, IzvestajRepository izvestajRepository, ObrazacSaglasnostiRepository
+    public XMLService(DigitalniSertifikatRepository digitalniSertifikatRepository, IzvestajRepository izvestajRepository, ObrazacSaglasnostiRepository
             obrazacSaglasnostiRepository, PotvrdaOVakcinacijiRepository potvrdaOVakcinacijiRepository,
                       ZahtevSertifikataRepository zahtevSertifikataRepository) {
         this.digitalniSertifikatRepository = digitalniSertifikatRepository;
-        this.interesovanjeRepository = interesovanjeRepository;
         this.izvestajRepository = izvestajRepository;
         this.obrazacSaglasnostiRepository = obrazacSaglasnostiRepository;
         this.potvrdaOVakcinacijiRepository = potvrdaOVakcinacijiRepository;
@@ -49,11 +46,6 @@ public class XMLService {
     public void saveDigitalniSertifikatFileFromString(String text) throws XMLDBException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
         digitalniSertifikatRepository.saveDigitalniSertifikat(text);
-    }
-
-    public void saveInteresovanjeFileFromString(String text) throws XMLDBException, ClassNotFoundException,
-            InstantiationException, IllegalAccessException {
-        interesovanjeRepository.saveInteresovanje(text);
     }
 
     public void saveIzvestajFileFromString(String text) throws XMLDBException, ClassNotFoundException,

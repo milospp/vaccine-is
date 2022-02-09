@@ -1,40 +1,44 @@
 package vaccineisbackend.service;
 
+import org.springframework.stereotype.Service;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 
+@Service
 public class MarshallingService {
 
-    public <T> T unmarshall(Class<T> clazz, String packagePath, String inputFilePath) {
+    public <T> T unmarshall(String xmlString, Class<T> clazz) {
         try {
-            JAXBContext context = JAXBContext.newInstance(packagePath);
-
+            JAXBContext context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            return clazz.cast(unmarshaller.unmarshal(new File(inputFilePath)));
+
+            StringReader stringReader = new StringReader(xmlString);
+            var unmarshalledObject = unmarshaller.unmarshal(stringReader);
+            return clazz.cast(unmarshalledObject);
         } catch (JAXBException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public <T> void marshall(Class<T> clazz, String packagePath, String outputFilePath) {
+    public <T> String marshall(T object, Class<T> clazz) {
         try {
-            JAXBContext context = JAXBContext.newInstance(packagePath);
+            JAXBContext context = JAXBContext.newInstance(clazz);
 
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            T object = clazz.newInstance();
-            marshaller.marshal(object, System.out);
-            marshaller.marshal(object, new FileOutputStream(outputFilePath));
-
-        } catch (JAXBException | FileNotFoundException | IllegalAccessException | InstantiationException e) {
+            StringWriter stringWriter = new StringWriter();
+            marshaller.marshal(object, stringWriter);
+            return stringWriter.toString();
+        } catch (JAXBException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }
