@@ -2,9 +2,13 @@ package vaccineisbackend.service;
 
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
+import vaccineisbackend.digitalni_sertifikat.repository.ExistDigitalniSertifikatRepository;
+import vaccineisbackend.izvestaj.repository.ExistIzvestajRepository;
+import vaccineisbackend.obrazac_saglasnosti.repository.ExistObrazacSaglasnostiRepository;
+import vaccineisbackend.potvrda_o_vakcinaciji.repository.ExistPotvrdaOVakcinacijiRepository;
 import vaccineisbackend.rdf.FusekiWriter;
-import vaccineisbackend.repository.*;
 import vaccineisbackend.util.AuthenticationUtilities;
+import vaccineisbackend.zahtev_sertifikata.repository.ExistZahtevSertifikataRepository;
 
 import java.io.IOException;
 
