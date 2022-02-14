@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../xsd/digitalni-sertifikat.xsd"
     xmlns:sertifikat = "http://www.ftn.uns.ac.rs/digitalni-sertifikat"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
-    brojSertifikata="645155" datumVrijemeIzdavanja="2021-11-22T09:00:00">    
+    brojSertifikata="6451558/22" datumVrijemeIzdavanja="2021-11-22T09:00:00">
     <sertifikat:qrKod/>
     
     <sertifikat:podaciVakcinisanog>
@@ -34,7 +34,7 @@
                 <zaj:nazivVakcine>Sinopharm</zaj:nazivVakcine>
                 <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
             </sertifikat:vakcinaPodaci>
-            <sertifikat:proizvodjac>BIONTECH MANUFACTURING GMBH</sertifikat:proizvodjac>
+            <sertifikat:proizvodjac>SINOPHARM MANUFACTURING GMBH</sertifikat:proizvodjac>
             <sertifikat:serijaVakcine>B875G5</sertifikat:serijaVakcine>
         </sertifikat:doza>
     </sertifikat:vakcinacija>
