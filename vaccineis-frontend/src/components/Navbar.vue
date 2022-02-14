@@ -11,16 +11,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <router-link to="/" class="nav-link">Почетна</router-link>
+                <router-link :to="{ name: 'Home'}" class="nav-link">Почетна</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/исказивање-интересовања" class="nav-link">Исказивање интересовања</router-link>
+                <router-link :to="{ name: 'VaccineInterestRequest'}" class="nav-link">Исказивање интересовања</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link :to="{ name: 'DigitalGreenCertificateRequest'}" class="nav-link">Захтев за дигитални зелени сертификат</router-link>
             </li>
         </ul>
         <form class="d-flex">
-            <router-link v-if="$store.user === undefined" to="/пријава" class="nav-link">Пријава</router-link>
-            <router-link v-if="$store.user === undefined" to="/регистрација" class="btn btn-outline-primary">Регистрација</router-link>
-            <button v-else to="/одјава" @click="logout" class="btn btn-outline-primary">Одјава</button>
+            <router-link v-if="$store.user === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
+            <router-link v-if="$store.user === undefined" :to="{ name: 'Registration'}" class="btn btn-outline-primary">Регистрација</router-link>
+            <button v-else :to="{ name: 'Logout'}" @click="logout" class="btn btn-outline-primary">Одјава</button>
         </form>
         </div>
     </div>

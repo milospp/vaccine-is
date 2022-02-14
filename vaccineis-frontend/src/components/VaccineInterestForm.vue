@@ -174,7 +174,7 @@
     </div>
 
 
-    <div class="form">
+    <div class="form-group">
         <label>Да ли можете доћи у било којем термину који закаже еУправа?</label>
         <div class="checkbox-from-control">
             <input type="radio" name="specificVaccinationDateChecked" value="no" data-bind="checked: patientInformation.specificVaccinationDateChecked" class="" title=""><span>Могу доћи у било ком термину који закаже еУправа</span>

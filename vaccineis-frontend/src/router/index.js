@@ -7,23 +7,28 @@ Vue.use(VueRouter)
 const routes = [
 {
     path: "/",
-    name: "Почетна",
+    name: "Home",
     component: Home,
 },
 {
-    path: "/пријава",
+    path: encodeURI("/пријава"),
     name: "Login",
     component: () => import("@/views/Login.vue"),
 },
 {
-    path: "/регистрација",
+    path: encodeURI("/регистрација"),
     name: "Registration",
     component: () => import("@/views/Registration.vue"),
 },
 {
-    path: "/исказивање-интересовања",
+    path: encodeURI("/исказивање-интересовања"),
     name: "VaccineInterestRequest",
     component: () => import("@/views/VaccineInterestRequest.vue"),
+},
+{
+    path: encodeURI("/зелени-сертификат-захтев"),
+    name: "DigitalGreenCertificateRequest",
+    component: () => import("@/views/DigitalGreenCertificateRequest.vue"),
 }
 ];
 
