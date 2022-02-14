@@ -8,7 +8,7 @@
 
 package vaccineisportal.interesovanje.model;
 
-import vaccineisemployee.zajednicko.model.CTkontakt;
+import zajednicko.model.CTkontakt;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;

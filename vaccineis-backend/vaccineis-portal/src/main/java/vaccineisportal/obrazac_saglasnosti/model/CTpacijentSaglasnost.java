@@ -8,10 +8,10 @@
 
 package vaccineisportal.obrazac_saglasnosti.model;
 
-import vaccineisemployee.zajednicko.model.CTadresa;
-import vaccineisemployee.zajednicko.model.CTkontakt;
-import vaccineisemployee.zajednicko.model.CTlicniPodaci;
-import vaccineisemployee.zajednicko.model.STtipVakcine;
+import zajednicko.model.CTadresa;
+import zajednicko.model.CTkontakt;
+import zajednicko.model.CTlicniPodaci;
+import zajednicko.model.STtipVakcine;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;

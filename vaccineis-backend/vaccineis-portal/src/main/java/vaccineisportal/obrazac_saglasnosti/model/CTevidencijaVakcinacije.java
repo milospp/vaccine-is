@@ -8,7 +8,7 @@
 
 package vaccineisportal.obrazac_saglasnosti.model;
 
-import vaccineisemployee.zajednicko.model.STtipVakcine;
+import zajednicko.model.STtipVakcine;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;

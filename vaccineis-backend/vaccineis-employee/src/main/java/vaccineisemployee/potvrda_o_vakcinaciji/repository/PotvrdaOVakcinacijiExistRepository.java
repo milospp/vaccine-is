@@ -1,12 +1,13 @@
 package vaccineisemployee.potvrda_o_vakcinaciji.repository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
 import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
-import vaccineisemployee.zajednicko.db.ExistManager;
-import vaccineisemployee.zajednicko.repository.CRUDRepositoryImpl;
-import vaccineisemployee.zajednicko.service.MarshallingService;
+import zajednicko.db.ExistManager;
+import zajednicko.repository.CRUDRepositoryImpl;
+import zajednicko.service.MarshallingService;
 
 import java.util.UUID;
 

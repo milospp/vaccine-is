@@ -8,7 +8,7 @@
 
 package vaccineisemployee.potvrda_o_vakcinaciji.model;
 
-import vaccineisemployee.zajednicko.model.CTpodaciVakcinisanog;
+import zajednicko.model.CTpodaciVakcinisanog;
 
 import javax.xml.bind.annotation.*;
 

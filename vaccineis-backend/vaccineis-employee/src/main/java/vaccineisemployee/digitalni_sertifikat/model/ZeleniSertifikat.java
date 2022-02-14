@@ -8,7 +8,7 @@
 
 package vaccineisemployee.digitalni_sertifikat.model;
 
-import vaccineisemployee.zajednicko.model.CTpodnosilacZahtjeva;
+import zajednicko.model.CTpodnosilacZahtjeva;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;

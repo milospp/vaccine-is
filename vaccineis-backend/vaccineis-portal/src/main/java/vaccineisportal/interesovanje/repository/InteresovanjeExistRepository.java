@@ -2,10 +2,10 @@ package vaccineisportal.interesovanje.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import vaccineisemployee.interesovanje.model.Interesovanje;
-import vaccineisemployee.zajednicko.db.ExistManager;
-import vaccineisemployee.zajednicko.repository.CRUDRepositoryImpl;
-import vaccineisemployee.zajednicko.service.MarshallingService;
+import vaccineisportal.interesovanje.model.Interesovanje;
+import zajednicko.db.ExistManager;
+import zajednicko.repository.CRUDRepositoryImpl;
+import zajednicko.service.MarshallingService;
 
 @Repository
 public class InteresovanjeExistRepository extends CRUDRepositoryImpl<Interesovanje> {

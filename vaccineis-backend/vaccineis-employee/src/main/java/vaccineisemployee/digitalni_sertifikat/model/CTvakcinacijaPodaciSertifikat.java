@@ -8,7 +8,9 @@
 
 package vaccineisemployee.digitalni_sertifikat.model;
 
-import vaccineisemployee.zajednicko.model.CTvakcinacijaPodaci;
+//import vaccineisemployee.zajednicko.model.CTvakcinacijaPodaci;
+
+import zajednicko.model.CTvakcinacijaPodaci;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

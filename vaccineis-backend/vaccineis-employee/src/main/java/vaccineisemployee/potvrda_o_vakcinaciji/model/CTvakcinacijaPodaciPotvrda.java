@@ -8,7 +8,7 @@
 
 package vaccineisemployee.potvrda_o_vakcinaciji.model;
 
-import vaccineisemployee.zajednicko.model.CTvakcinacijaPodaci;
+import zajednicko.model.CTvakcinacijaPodaci;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
