@@ -11,13 +11,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <router-link to="/" class="nav-link">Home</router-link>
+                <router-link to="/" class="nav-link">Почетна</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/исказивање-интересовања" class="nav-link">Исказивање интересовања</router-link>
             </li>
         </ul>
         <form class="d-flex">
-            <router-link v-if="$store.user === undefined" to="/login" class="nav-link">Login</router-link>
-            <router-link v-if="$store.user === undefined" to="/registration" class="btn btn-outline-primary">Register</router-link>
-            <button v-else to="/logout" @click="logout" class="btn btn-outline-primary">Logout</button>
+            <router-link v-if="$store.user === undefined" to="/пријава" class="nav-link">Пријава</router-link>
+            <router-link v-if="$store.user === undefined" to="/регистрација" class="btn btn-outline-primary">Регистрација</router-link>
+            <button v-else to="/одјава" @click="logout" class="btn btn-outline-primary">Одјава</button>
         </form>
         </div>
     </div>

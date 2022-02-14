@@ -7,19 +7,24 @@ Vue.use(VueRouter)
 const routes = [
 {
     path: "/",
-    name: "Home",
+    name: "Почетна",
     component: Home,
 },
 {
-    path: "/login",
+    path: "/пријава",
     name: "Login",
     component: () => import("@/views/Login.vue"),
 },
 {
-    path: "/registration",
+    path: "/регистрација",
     name: "Registration",
     component: () => import("@/views/Registration.vue"),
 },
+{
+    path: "/исказивање-интересовања",
+    name: "VaccineInterestRequest",
+    component: () => import("@/views/VaccineInterestRequest.vue"),
+}
 ];
 
 const router = new VueRouter({
