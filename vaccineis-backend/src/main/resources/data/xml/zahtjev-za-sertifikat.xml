@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?xml-stylesheet type="text/xsl" href="../xslt/zahtjev-za-sertifikat.xsl"?>
 <zah:zahtjev xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zahtjevSertifikata ../schemas/zahtjev-za-sertifikat.xsd"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zahtjevSertifikata ../xsd/zahtjev-za-sertifikat.xsd"
     xmlns:zah = "http://www.ftn.uns.ac.rs/zahtjevSertifikata"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     <zah:podnosilac>

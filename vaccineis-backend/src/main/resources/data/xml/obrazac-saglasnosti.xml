@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <obrazac:saglasnost xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.ftn.uns.ac.rs/obrazac-saglasnosti ../schemas/obrazac-saglasnosti.xsd"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/obrazac-saglasnosti ../xsd/obrazac-saglasnosti.xsd"
     xmlns:obrazac = "http://www.ftn.uns.ac.rs/obrazac-saglasnosti"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     

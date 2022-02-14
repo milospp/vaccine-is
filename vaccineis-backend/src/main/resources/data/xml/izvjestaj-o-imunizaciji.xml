@@ -2,7 +2,7 @@
 
 <izv:izvjestaj
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.ftn.uns.ac.rs/izvjestaj ../schemas/izvjestaj-o-imunizaciji.xsd"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/izvjestaj ../xsd/izvjestaj-o-imunizaciji.xsd"
     xmlns:izv = "http://www.ftn.uns.ac.rs/izvjestaj"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     

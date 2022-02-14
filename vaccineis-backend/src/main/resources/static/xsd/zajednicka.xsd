@@ -95,6 +95,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="STserijaDoze">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="STpozitivanBroj">
         <xs:restriction base="xs:int">
             <xs:minInclusive value="0"/>
@@ -156,6 +162,7 @@
             <xs:element name="brojDoze" type="STbrojDoze"/>
             <xs:element name="nazivVakcine" type="STtipVakcine"/>
             <xs:element name="zdravstvenaUstanova" type="STnazivZdravstveneUstanove"/>
+            <xs:element name="serijaDoze" type="STserijaDoze"/>
         </xs:sequence>
     </xs:complexType>
     
