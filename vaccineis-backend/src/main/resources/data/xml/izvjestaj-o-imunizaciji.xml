@@ -40,22 +40,27 @@
     <izv:raspodjelaDoza>
         <izv:tipVakcineInfo>
             <izv:nazivProizvodjaca>Pfizer, BioNTech</izv:nazivProizvodjaca>
-            <izv:brojDoza>1625</izv:brojDoza>
+            <izv:brojDozaProizvodjac>1625</izv:brojDozaProizvodjac>
         </izv:tipVakcineInfo>
         
         <izv:tipVakcineInfo>
             <izv:nazivProizvodjaca>Sinopharm</izv:nazivProizvodjaca>
-            <izv:brojDoza>1100</izv:brojDoza>
+            <izv:brojDozaProizvodjac>1000</izv:brojDozaProizvodjac>
         </izv:tipVakcineInfo>
         
         <izv:tipVakcineInfo>
             <izv:nazivProizvodjaca>Sputnik V</izv:nazivProizvodjaca>
-            <izv:brojDoza>356</izv:brojDoza>
+            <izv:brojDozaProizvodjac>356</izv:brojDozaProizvodjac>
         </izv:tipVakcineInfo>
         
         <izv:tipVakcineInfo>
             <izv:nazivProizvodjaca>AstraZeneca, Oxford</izv:nazivProizvodjaca>
-            <izv:brojDoza>144</izv:brojDoza>
+            <izv:brojDozaProizvodjac>144</izv:brojDozaProizvodjac>
+        </izv:tipVakcineInfo>
+
+        <izv:tipVakcineInfo>
+            <izv:nazivProizvodjaca>Moderna</izv:nazivProizvodjaca>
+            <izv:brojDozaProizvodjac>100</izv:brojDozaProizvodjac>
         </izv:tipVakcineInfo>
     </izv:raspodjelaDoza>
     

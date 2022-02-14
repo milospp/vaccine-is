@@ -45,7 +45,7 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="nazivProizvodjaca" type="xs:string"/>
-                                        <xs:element name="brojDoza" type="zaj:STbrojDoze"/>
+                                        <xs:element name="brojDozaProizvodjac" type="zaj:STbrojDoze"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>

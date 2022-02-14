@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                <title>Исказивање интересовања за вакцинисање против COVID-19</title>
+                <title>ПОТВРДА О ИЗВРШЕНОЈ ВАКЦИНАЦИЈИ ПРОТИВ COVID-19</title>
                 <style type="text/css">
                     span.cls_002{font-family:"DejaVu Sans",serif;font-size:9.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
                     div.cls_002{font-family:"DejaVu Sans",serif;font-size:9.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
