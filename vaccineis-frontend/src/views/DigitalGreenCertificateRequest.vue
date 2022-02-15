@@ -39,6 +39,14 @@ export default {
     text-align: center;
 }
 
+.disclaimer {
+    border-radius: 3px;
+}
+
+.margin-none {
+    padding: 10px;
+}
+
 .modal-dialog {
     max-width: 980px;
 }

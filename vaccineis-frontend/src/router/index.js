@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
 {
-    path: "/",
+    path: encodeURI("/"),
     name: "Home",
     component: Home,
 },
@@ -29,6 +29,16 @@ const routes = [
     path: encodeURI("/зелени-сертификат-захтев"),
     name: "DigitalGreenCertificateRequest",
     component: () => import("@/views/DigitalGreenCertificateRequest.vue"),
+},
+{
+    path: encodeURI("/преглед-докумената"),
+    name: "DocumentListView",
+    component: () => import("@/views/DocumentListView.vue"),
+},
+{
+    path: encodeURI("/вакцине"),
+    name: "VaccineListView",
+    component: () => import("@/views/VaccineListView.vue"),
 }
 ];
 

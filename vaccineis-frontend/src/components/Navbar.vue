@@ -19,6 +19,12 @@
             <li class="nav-item">
                 <router-link :to="{ name: 'DigitalGreenCertificateRequest'}" class="nav-link">Захтев за дигитални зелени сертификат</router-link>
             </li>
+            <li class="nav-item">
+                <router-link :to="{ name: 'DocumentListView'}" class="nav-link">Преглед докумената</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
+            </li>
         </ul>
         <form class="d-flex">
             <router-link v-if="$store.user === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
