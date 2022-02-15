@@ -5,10 +5,14 @@
     xmlns:obrazac = "http://www.ftn.uns.ac.rs/obrazac-saglasnosti"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
     
-    <obrazac:drzavljanstvo>
+    <obrazac:drzavljanstvo vrstaDrzavljanstva="strano">
         <obrazac:stranoDrzavljanstvo>BIH</obrazac:stranoDrzavljanstvo>
         <obrazac:brojPasosa>008490806</obrazac:brojPasosa>
     </obrazac:drzavljanstvo>
+<!--    <obrazac:drzavljanstvo vrstaDrzavljanstva="srpsko">-->
+<!--        <obrazac:drzavljanstvoSrbije/>-->
+<!--        <obrazac:jmbg>1212998657894</obrazac:jmbg>-->
+<!--    </obrazac:drzavljanstvo>-->
     
     <obrazac:podaciPacijenta>
         <zaj:ime>Милош</zaj:ime>
@@ -32,11 +36,9 @@
         </obrazac:kontaktPodaci>
         <obrazac:radniStatus>незапослен</obrazac:radniStatus>
         <obrazac:zanimanjeZaposlenog>друго</obrazac:zanimanjeZaposlenog>
-        <obrazac:socijalnaZastita>
-            <obrazac:nijeKorisnikSocijalnog/>
+        <obrazac:socijalnaZastita koristiSocijalno="НЕ">
         </obrazac:socijalnaZastita>
-        <obrazac:izjavaSaglasnosti>
-            <obrazac:saglasan/>
+        <obrazac:izjavaSaglasnosti saglasan="ДА">
             <obrazac:imeLijeka>Pfizer-BioNTech</obrazac:imeLijeka>
         </obrazac:izjavaSaglasnosti>
         <obrazac:datumSaglasnosti>2021-11-30</obrazac:datumSaglasnosti>

@@ -28,6 +28,7 @@
                 </xs:choice>
             </xs:sequence>
         </xs:choice>
+        <xs:attribute name="vrstaDrzavljanstva" use="required" type="xs:string"/> <!-- srpsko, strano -->
     </xs:complexType>
     
     <xs:complexType name="CTpacijentSaglasnost">
@@ -52,23 +53,23 @@
                         <xs:complexType>
                             <xs:choice>
                                 <xs:sequence>
-                                    <xs:element name="korisnikSocijalnog" fixed="ДА"/>
                                     <xs:element name="nazivUstanove" type="zaj:STnazivZdravstveneUstanove"/>
                                     <xs:element name="sjedisteUstanove" type="zaj:STlokacija"/>
                                 </xs:sequence>
-                                <xs:element name="nijeKorisnikSocijalnog" fixed="НЕ"/>
+                                <xs:sequence/>
                             </xs:choice>
+                            <xs:attribute name="koristiSocijalno" use="required" type="xs:string"/> <!-- ДA, НE -->
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="izjavaSaglasnosti">
                         <xs:complexType>
                             <xs:choice>
                                 <xs:sequence>
-                                    <xs:element name="saglasan" fixed="САГЛАСАН САМ"/>
                                     <xs:element name="imeLijeka" type="zaj:STtipVakcine"/>
                                 </xs:sequence>
-                                <xs:element name="nesaglasan" fixed="НИСАМ САГЛАСАН"/>
+                                <xs:sequence/>
                             </xs:choice>
+                            <xs:attribute name="saglasan" use="required" type="xs:string"/> <!-- ДA, НE -->
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="datumSaglasnosti" type="zaj:STdatum"/>
@@ -140,7 +141,7 @@
                                         <xs:element name="serijaVakcine"/>
                                         <xs:element name="proizvodjac" type="xs:string"/>
                                         <xs:element name="nezeljenaReakcija" type="xs:string" minOccurs="0"/>
-                                        <xs:element name="potpisLjekara" minOccurs="0"></xs:element>
+                                        <xs:element name="potpisLjekara" minOccurs="0"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>

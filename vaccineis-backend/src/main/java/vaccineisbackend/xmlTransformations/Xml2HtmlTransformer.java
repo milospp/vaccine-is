@@ -99,7 +99,7 @@ public class Xml2HtmlTransformer {
 
         System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
 
-        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/digitalni-sertifikat.xml", "./src/main/resources/data/xslt/digitalni-sertifikat.xsl","./src/main/resources/data/gen/itext/digitalni-sertifikat.html");
+        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/obrazac-saglasnosti.xml", "./src/main/resources/data/xslt/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.html");
 
         pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
 
@@ -112,7 +112,7 @@ public class Xml2HtmlTransformer {
     "./src/main/resources/data/xml/interesovanje.xml", "./src/main/resources/data/xslt/interesovanje.xsl","./src/main/resources/data/gen/itext/interesovanje.html"
     "./src/main/resources/data/xml/digitalni-sertifikat.xml", "./src/main/resources/data/xslt/digitalni-sertifikat.xsl","./src/main/resources/data/gen/itext/digitalni-sertifikat.html"
     "./src/main/resources/data/xml/izvjestaj-o-imunizaciji.xml", "./src/main/resources/data/xslt/izvjestaj-o-imunizaciji.xsl","./src/main/resources/data/gen/itext/izvjestaj-o-imunizaciji.html"
-    "./src/main/resources/data/xml/obrazac-o-saglasnosti.xml", "./src/main/resources/data/xslt/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.html"
+    "./src/main/resources/data/xml/obrazac-saglasnosti.xml", "./src/main/resources/data/xslt/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.html"
     "./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xslt/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.html"
      */
 }

@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                <title>Извештај о имунизацији</title>
+                <title>ДИГИТАЛНИ ЗЕЛЕНИ СЕРТИФИКАТ</title>
                 <style type="text/css">
                     span.cls_004{font-family:Arial,serif;font-size:14.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
                     div.cls_004{font-family:Arial,serif;font-size:14.1px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
