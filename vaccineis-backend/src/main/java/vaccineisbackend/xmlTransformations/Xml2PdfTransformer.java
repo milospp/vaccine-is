@@ -26,11 +26,11 @@ public class Xml2PdfTransformer {
 
     private final TransformerFactory transformerFactory;
 
-    public static final String INPUT_FILE = "data/xsl-fo/bookstore.xml";
+    public static final String INPUT_FILE = "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml";
 
-    public static final String XSL_FILE = "data/xsl-fo/bookstore_fo.xsl";
+    public static final String XSL_FILE = "./src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl";
 
-    public static final String OUTPUT_FILE = "gen/fo/bookstore.pdf";
+    public static final String OUTPUT_FILE = "./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf";
 
     public Xml2PdfTransformer() throws SAXException, IOException {
 
