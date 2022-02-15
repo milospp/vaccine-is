@@ -45,6 +45,11 @@ const routes = [
     name: "ImmunizationReportRequest",
     component: () => import("@/views/ImmunizationReportRequest.vue"),
 },
+{
+    path: encodeURI("/образац-сагласности-за-имунизацију"),
+    name: "ImmunizationConsentRequest",
+    component: () => import("@/views/ImmunizationConsentRequest.vue"),
+},
 ];
 
 const router = new VueRouter({
