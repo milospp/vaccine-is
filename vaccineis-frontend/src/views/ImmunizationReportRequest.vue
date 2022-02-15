@@ -25,16 +25,4 @@ export default {
     max-width: 980px;
 }
 
-input {
-    outline: none;
-    border-radius: 5px;
-    border: none;
-    background: #d3d3d3;
-    font-family: Tahoma;
-}
-label {
-    font-family: Tahoma;
-}
-
-
 </style>
