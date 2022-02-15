@@ -2,16 +2,16 @@
 <form @submit.prevent="login">
     <div class="modal-body text-start">
         <div class="form-group">
-            <input v-model="authenticationData.username" type="text" class="form-control" placeholder="Korisnicko ime"/>
-            <div class="invalid-feedback">Invalid username.</div>
+            <input v-model="authenticationData.email" type="text" class="form-control" placeholder="Имејл"/>
+            <div class="invalid-feedback">Невалидан имејл.</div>
         </div>
         <div class="form-group">
-            <input v-model="authenticationData.password" type="password" class="form-control" placeholder="Lozinka"/>
+            <input v-model="authenticationData.password" type="password" class="form-control" placeholder="Лозинка"/>
             <div class="invalid-feedback">Invalid password.</div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Prijavi se</button>
+        <button type="submit" class="btn btn-primary">Пријави се</button>
     </div>
 </form>
 </template>
@@ -23,7 +23,7 @@ export default {
     data() {
         return {
             authenticationData: {
-                username: "",
+                email: "",
                 password: "",
             },
         };
