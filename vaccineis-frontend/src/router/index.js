@@ -39,7 +39,12 @@ const routes = [
     path: encodeURI("/вакцине"),
     name: "VaccineListView",
     component: () => import("@/views/VaccineListView.vue"),
-}
+},
+{
+    path: encodeURI("/извештај-о-имунизацији"),
+    name: "ImmunizationReportRequest",
+    component: () => import("@/views/ImmunizationReportRequest.vue"),
+},
 ];
 
 const router = new VueRouter({

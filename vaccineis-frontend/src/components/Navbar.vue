@@ -25,6 +25,10 @@
             <li class="nav-item">
                 <router-link :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
             </li>
+            <li class="nav-item">
+                <router-link :to="{ name: 'ImmunizationReportRequest'}" class="nav-link">Извештај о имунизацији</router-link>
+            </li>
+            
         </ul>
         <form class="d-flex">
             <router-link v-if="$store.user === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
