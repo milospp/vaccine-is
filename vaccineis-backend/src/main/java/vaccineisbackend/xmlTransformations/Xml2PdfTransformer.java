@@ -26,19 +26,23 @@ public class Xml2PdfTransformer {
 
     private final TransformerFactory transformerFactory;
 
-    public static final String INPUT_FILE = "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml";
+    public static String INPUT_FILE = "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml";
 
-    public static final String XSL_FILE = "./src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl";
+    public static String XSL_FILE = "./src/main/resources/data/xsl-fo/zahtjev-za-sertifikat.xsl";
 
-    public static final String OUTPUT_FILE = "./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf";
+    public static String OUTPUT_FILE = "./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf";
 
-    public Xml2PdfTransformer() throws SAXException, IOException {
+    public Xml2PdfTransformer(String inputXML, String inputXSL, String outputPDF) throws SAXException, IOException {
 
         // Initialize FOP factory object
         fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
 
         // Setup the XSLT transformer factory
         transformerFactory = new TransformerFactoryImpl();
+
+        INPUT_FILE = inputXML;
+        XSL_FILE = inputXSL;
+        OUTPUT_FILE = outputPDF;
     }
 
     private void generatePDF() throws Exception {
@@ -90,6 +94,15 @@ public class Xml2PdfTransformer {
     }
 
     public static void main(String[] args) throws Exception {
-        new Xml2PdfTransformer().generatePDF();
+        new Xml2PdfTransformer("./src/main/resources/data/xml/zahtjev-za-sertifikat.xml", "./src/main/resources/data/xsl-fo/zahtjev-za-sertifikat.xsl","./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf").generatePDF();
     }
+
+    /*
+    "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml", "./src/main/resources/data/xsl-fo/zahtjev-za-sertifikat.xsl","./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf"
+    "./src/main/resources/data/xml/interesovanje.xml", "./src/main/resources/data/xsl-fo/interesovanje.xsl","./src/main/resources/data/gen/itext/interesovanje.pdf"
+    "./src/main/resources/data/xml/digitalni-sertifikat.xml", "./src/main/resources/data/xsl-fo/digitalni-sertifikat.xsl","./src/main/resources/data/gen/itext/digitalni-sertifikat.pdf"
+    "./src/main/resources/data/xml/izvjestaj-o-imunizaciji.xml", "./src/main/resources/data/xsl-fo/izvjestaj-o-imunizaciji.xsl","./src/main/resources/data/gen/itext/izvjestaj-o-imunizaciji.pdf"
+    "./src/main/resources/data/xml/obrazac-saglasnosti.xml", "./src/main/resources/data/xsl-fo/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.pdf"
+    "./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xsl-fo/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.pdf"
+     */
 }
