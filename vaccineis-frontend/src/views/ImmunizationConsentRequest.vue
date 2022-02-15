@@ -2,12 +2,6 @@
 <div>
     <Navbar />
     <div class="modal-dialog">
-        <div>
-            <a href="#" class="button primary">Сагласност за спровођење препоручене имунизације</a>
-            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                <image href="../assets/images/batut.png" width="200" height="200" />
-            </svg>
-        </div> 
         <div class="modal-content">
             <ImmunizationConsentForm />
         </div>

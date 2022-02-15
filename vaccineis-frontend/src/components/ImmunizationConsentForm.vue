@@ -1,5 +1,14 @@
 <template>
-<form id="vaccine-interest-form">
+<form >
+
+    <div :style="[user.type != 'korisnik' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
+
+    <div id="title">
+        <h5><b>Сагласност за спровођење препоручене имунизације</b></h5>
+        <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+            <image href="../assets/images/batut.png" width="200" height="200" />
+        </svg>
+    </div>
     <div class="form-group">
         <label for="options">Држављанство (*)</label>
         <select v-model="citizenship" id="options" name="notResident" class="form-control">
@@ -168,11 +177,150 @@
         <label style="color: #74222a;">Обавезна поља су означена звездицом (*)</label>
     </div>
 
+    <div class="form-group">
+        Датум: {{ dateToday | date }}
+    </div>
+
     <div class="bottom">
         <button class="button tertiary" href="#" v-on:click="decline()">Одустани</button>
         <button class="button secondary" href="#" v-on:click="accept()">Поднеси захтев</button>
     </div>
+
+    <br>
+
+    </div>
+
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    <div :style="[user.type != 'radnik' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
+    <br><br>
+
+    <div id="title2">
+        <h5><b>Евиденција о вакцинацији против COVID-19</b></h5>
+    </div>
+
+    <br><br>
+
+    <div class="form-group">
+        <label for="healthInstitution">Здравствена установа (*)</label>
+        <input type="text" id="healthInstitution" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="vaccinationPoint">Вакцинацијски пункт (*)</label>
+        <input type="text" id="vaccinationPoint" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="doctorInfo">Име, презиме, факсимил и бр. телефона лекара (*)</label>
+        <input type="text" id="doctorInfo" class="form-control">
+    </div>
+
+    <p>
+        Пре давања вакцине прегледати особу и упознати је са користима и о могућим нежељеним реакцијама после 
+        вакцинације. Обавезно уписати сваку дату вакцину и све тражене податке у овај образац и податке унети у лични 
+        картон о извршеним имунизацијама и здравствени картон. 
+    </p>
+
+    <table border="1">
+        <thead>
+            <th>
+                Назив вакцине
+            </th>
+            <th>
+                Датум давања вакцине (V1 i V2)
+            </th>
+            <th>
+                Начин давања вакцине
+            </th>
+            <th>
+                Екстремитет
+            </th>
+            <th>
+                Серија вакцине (лот)
+            </th>
+            <th>
+                Произвођач
+            </th>
+            <th>
+                Нежељена реакција
+            </th>
+            <th>
+                Потпис лекара
+            </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" id="vaccineName" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineDate" class="form-control">
+                </td>
+                <td>
+                    ИМ
+                </td>
+                <td>
+                    1) ДР, 2) ЛР
+                </td>
+                <td>
+                    <input type="text" id="vaccineLot" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineProducer" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineReaction" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="doctorSignature" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="vaccineName" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineDate" class="form-control">
+                </td>
+                <td>
+                    ИМ
+                </td>
+                <td>
+                    1) ДР, 2) ЛР
+                </td>
+                <td>
+                    <input type="text" id="vaccineLot" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineProducer" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="vaccineReaction" class="form-control">
+                </td>
+                <td>
+                    <input type="text" id="doctorSignature" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    Привремене контраиндикације (датум утврђивања и дијагноза): 
+                    <input type="text" id="vaccineTemporaryContraindication" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    Одлука комисије за трајне контраиндикације (ако постоји, уписати Да): 
+                    <input type="text" id="vaccinePermanentContraindication" class="form-control">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    </div>
+
 </form>
+
 </template>
 
 <script>
@@ -191,12 +339,21 @@ export default {
         status: null,
         socialSecurityBeneficiary: null,
         municipalHeadquarters: null,
+        dateToday: new Date(),
+        user: {
+            type: "korisnik",
+        },
         };
     },
 
     methods: {
 
     },
+    filters: {
+        date: function(date) {
+            return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+        }
+    }
 };
 </script>
 
@@ -212,6 +369,18 @@ export default {
     background-color: #017932 !important;
     border: none !important;
     font-family: inherit;
+}
+
+#title {
+    text-align: left;
+    font-weight: 50;
+    color: black;
+}
+
+#title2 {
+    text-align: center;
+    font-weight: 50;
+    color: black;
 }
 
  .button {
