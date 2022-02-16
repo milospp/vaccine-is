@@ -19,6 +19,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Korisnik loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return userExistRepository.findUserByEmail(username);
+    }
+
+    @Override
+    public Korisnik findUserByEmail(String email) {
+        return userExistRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public Korisnik save(Korisnik korisnik) {
+        return userExistRepository.save(korisnik);
     }
 }
