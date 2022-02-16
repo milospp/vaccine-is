@@ -94,7 +94,7 @@ public class Xml2PdfTransformer {
     }
 
     public static void main(String[] args) throws Exception {
-        new Xml2PdfTransformer("./src/main/resources/data/xml/obrazac-saglasnosti.xml", "./src/main/resources/data/xsl-fo/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.pdf").generatePDF();
+        new Xml2PdfTransformer("./src/main/resources/data/xml/digitalni-sertifikat.xml", "./src/main/resources/data/xsl-fo/digitalni-sertifikat.xsl","./src/main/resources/data/gen/itext/digitalni-sertifikat.pdf").generatePDF();
     }
 
     /*
