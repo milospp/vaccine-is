@@ -13,6 +13,7 @@ public class InteresovanjeExistRepository extends CRUDRepositoryImpl<Interesovan
     @Autowired
     public InteresovanjeExistRepository(ExistManager existManager, MarshallingService marshallingService) {
         super("db/interesovanje", existManager, marshallingService);
+        System.out.println("InteresovanjeExistRepository.InteresovanjeExistRepository");
     }
 
     @Override
