@@ -25,11 +25,19 @@ public class AuthenticationUtilities {
 			super();
 			dataset = props.getProperty("conn.dataset").trim();
 			endpoint = props.getProperty("conn.endpoint").trim();
-			
+
 			queryEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.query").trim());
 			updateEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.update").trim());
 			dataEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.data").trim());
-			
+
+
+//			dataset = "PersonDataset";
+//			endpoint = "http://localhost:3033";
+//
+//			queryEndpoint = "query";
+//			updateEndpoint = "update";
+//			dataEndpoint = "data";
+
 			System.out.println("[INFO] Parsing connection properties:");
 			System.out.println("[INFO] Query endpoint: " + queryEndpoint);
 			System.out.println("[INFO] Update endpoint: " + updateEndpoint);
@@ -53,6 +61,7 @@ public class AuthenticationUtilities {
 		props.load(propsStream);
 
 		return new ConnectionProperties(props);
+//		return new ConnectionProperties(null);
 	}
 
 	/**
@@ -61,8 +70,7 @@ public class AuthenticationUtilities {
 	 * @param fileName
 	 *            the name of the resource
 	 * @return an input stream for the resource
-	 * @throws IOException
-	 */
+9	 */
 	public static InputStream openStream(String fileName) throws IOException {
 		return AuthenticationUtilities.class.getClassLoader().getResourceAsStream(fileName);
 	}

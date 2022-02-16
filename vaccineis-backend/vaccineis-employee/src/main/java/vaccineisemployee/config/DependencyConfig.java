@@ -1,9 +1,9 @@
-package zajednicko.config;
+package vaccineisemployee.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
-public class ConfigZajednicko {
+@ComponentScan("zajednicko")
+public class DependencyConfig {
 }

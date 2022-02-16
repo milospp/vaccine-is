@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sertifikat:zeleniSertifikat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../schemas/digitalni-sertifikat.xsd"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../../../schemas/digitalni-sertifikat.xsd"
     xmlns:sertifikat = "http://www.ftn.uns.ac.rs/digitalni-sertifikat"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
     brojSertifikata="645155" datumVrijemeIzdavanja="2021-11-22T09:00:00">    
@@ -63,4 +63,3 @@
         </sertifikat:digitalniPotpis>
     </sertifikat:infoSertifikata>
 </sertifikat:zeleniSertifikat>
-

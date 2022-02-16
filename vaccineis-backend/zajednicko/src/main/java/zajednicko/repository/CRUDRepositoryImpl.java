@@ -1,8 +1,8 @@
 package zajednicko.repository;
 
+import org.springframework.stereotype.Repository;
 import zajednicko.db.ExistManager;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 import zajednicko.service.MarshallingService;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Service
+@Repository
 public abstract class CRUDRepositoryImpl<T> implements CRUDRepository<T> {
 
     protected final String collectionId;
