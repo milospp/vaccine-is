@@ -1,12 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import AuthenticationService from "@/service/AuthenticationService.js";
+import xmljs from "xml-js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
         user: {
-            role: "PATIENT"
+            role: undefined
         },
     },
 
@@ -24,10 +26,9 @@ export default new Vuex.Store({
             let token = localStorage.getItem('token').substring(1, localStorage.getItem('token').length-1);
             console.log(token);
 
-            commit('SET_AUTHORIZED_USER', ""); 
-            // AuthenticationService.getAuthorizedUser(token)
-            //     .then(response => { commit('SET_AUTHORIZED_USER', response.data); })
-            //     .catch(error => { console.log(error); });
+            AuthenticationService.getAuthorizedUser(token)
+                .then(response => { commit('SET_AUTHORIZED_USER', xmljs.xml2json(response.data)); })
+                .catch(error => { console.log(error); });
         }
     },
 
