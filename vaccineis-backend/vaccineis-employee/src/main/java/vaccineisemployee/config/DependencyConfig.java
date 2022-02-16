@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("zajednicko")
-public class ConfigDependency {
+public class DependencyConfig {
 }

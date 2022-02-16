@@ -2,25 +2,25 @@
 <form @submit.prevent="registration">
     <div class="modal-body text-start">
         <div class="form-group">
-            <input v-model="user.username" type="text" class="form-control" placeholder="Korisničko ime"/>
-            <div class="invalid-feedback">Invalid username.</div>
+            <input v-model="user.firstName" type="text" class="form-control" placeholder="Име"/>
+            <div class="invalid-feedback">Невалидно име.</div>
         </div>
         <div class="form-group">
-            <input v-model="user.firstName" type="text" class="form-control" placeholder="Ime"/>
-            <div class="invalid-feedback">Invalid first name.</div>
+            <input v-model="user.lastName" type="text" class="form-control" placeholder="Презиме"/>
+            <div class="invalid-feedback">Невалидно презиме.</div>
         </div>
         <div class="form-group">
-            <input v-model="user.lastName" type="text" class="form-control" placeholder="Prezime"/>
-            <div class="invalid-feedback">Invalid last name.</div>
+            <input v-model="user.email" type="text" class="form-control" placeholder="Имејл"/>
+            <div class="invalid-feedback">Невалидан имејл.</div>
         </div>
         <div class="form-group">
-            <input v-model="user.jmbg" type="text" class="form-control" placeholder="Jmbg"/>
-            <div class="invalid-feedback">Invalid jmbg.</div>
+            <input v-model="user.password" type="text" class="form-control" placeholder="Лозинка"/>
+            <div class="invalid-feedback">Невалидна лозинка.</div>
         </div>
     </div>
 
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Prijavi se</button>
+        <button type="submit" class="btn btn-primary">Региструј се</button>
     </div>
 </form>
 </template>
@@ -32,7 +32,7 @@ export default {
     data() {
         return {
         user: {
-            username: "",
+            email: "",
             password: "",
             firstName: "",
             lastName: "",

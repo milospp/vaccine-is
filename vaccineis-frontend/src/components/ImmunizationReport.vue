@@ -4,9 +4,6 @@
     <br><br><br>
     <div id="title">
         <h5><b>Извештај о имунизацији / Immunization Report</b></h5>
-        <!-- <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-            <image href="../assets/images/batut.png" width="200" height="200" />
-        </svg> -->
     </div>
     <br><br>
     <p>
