@@ -74,8 +74,8 @@
                             <div style="position:absolute;left:34px;top:441px" class="cls_006"><span class="cls_006">Здравствена установа која вакцинише:
                                 <xsl:value-of select="zaj:zdravstvenaUstanova"/></span>
                             </div>
-
                             <div style="position:absolute;left:34px;top:455px" class="cls_003"><span class="cls_003">Zdravstvena ustanova koja vakciniše / Health care institution of vaccination</span></div>
+
                             <div style="position:absolute;left:34px;top:480px" class="cls_006"><span class="cls_006">Назив вакцине:
                                 <xsl:value-of select="zaj:nazivVakcine"/></span>
                             </div>
