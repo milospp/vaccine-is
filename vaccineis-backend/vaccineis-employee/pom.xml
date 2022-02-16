@@ -36,6 +36,19 @@
 <!--			<scope>runtime</scope>-->
 <!--			<optional>true</optional>-->
 <!--		</dependency>-->
+
+<!--		 https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.example</groupId>
+			<artifactId>zajednicko</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -116,12 +129,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.example</groupId>
-			<artifactId>zajednicko</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
 	</dependencies>
 
 <!--	<build>-->
@@ -138,7 +145,24 @@
 <!--					</excludes>-->
 <!--				</configuration>-->
 <!--			</plugin>-->
-
+<!--			<plugin>-->
+<!--				<groupId>org.jvnet.jaxb2.maven2</groupId>-->
+<!--				<artifactId>maven-jaxb22-plugin</artifactId>-->
+<!--				<version>0.14.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<schemaDirectory>${project.basedir}\src\main\resources\static\xsd</schemaDirectory>-->
+<!--					<schemaIncludes>-->
+<!--						<include>*.xsd </include>-->
+<!--					</schemaIncludes>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 <!--		</plugins>-->
 <!--	</build>-->
 </project>

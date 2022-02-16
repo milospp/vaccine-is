@@ -7,7 +7,7 @@ import org.xmldb.api.base.XMLDBException;
 import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
 import zajednicko.db.ExistManager;
 import zajednicko.repository.CRUDRepositoryImpl;
-import zajednicko.service.MarshallingService;
+import zajednicko.service.impl.MarshallingServiceImpl;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class PotvrdaOVakcinacijiExistRepository extends CRUDRepositoryImpl<PotvrdaVakcinacije> {
 
     @Autowired
-    public PotvrdaOVakcinacijiExistRepository(ExistManager existManager, MarshallingService marshallingService) {
+    public PotvrdaOVakcinacijiExistRepository(ExistManager existManager, MarshallingServiceImpl marshallingService) {
         super("db/potvrdeOVakcinaciji", existManager, marshallingService);
     }
 

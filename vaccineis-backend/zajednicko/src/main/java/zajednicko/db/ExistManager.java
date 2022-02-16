@@ -4,7 +4,6 @@ import org.exist.xmldb.DatabaseImpl;
 import org.exist.xmldb.EXistResource;
 import org.exist.xupdate.XUpdateProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -33,7 +32,7 @@ public class ExistManager {
             + "</xu:modifications>";
 
     @Autowired
-    private zajednicko.db.AuthenticationManager authManager;
+    private AuthenticationManager authManager;
 
     public void createConnection() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 //        Class<?> cl = Class.forName(authManager.getDriver());

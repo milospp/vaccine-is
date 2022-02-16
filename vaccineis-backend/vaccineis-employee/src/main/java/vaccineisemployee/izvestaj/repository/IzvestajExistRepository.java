@@ -6,7 +6,7 @@ import org.xmldb.api.base.XMLDBException;
 import vaccineisemployee.izvestaj.model.Izvjestaj;
 import zajednicko.db.ExistManager;
 import zajednicko.repository.CRUDRepositoryImpl;
-import zajednicko.service.MarshallingService;
+import zajednicko.service.impl.MarshallingServiceImpl;
 
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class IzvestajExistRepository extends CRUDRepositoryImpl<Izvjestaj> {
 
     @Autowired
-    public IzvestajExistRepository(ExistManager existManager, MarshallingService marshallingService) {
+    public IzvestajExistRepository(ExistManager existManager, MarshallingServiceImpl marshallingService) {
         super("db/izvestaji", existManager, marshallingService);
     }
 
