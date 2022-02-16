@@ -2,19 +2,23 @@
 <form @submit.prevent="registration">
     <div class="modal-body text-start">
         <div class="form-group">
-            <input v-model="user.firstName" type="text" class="form-control" placeholder="Име"/>
+            <input v-model="user.ime" type="text" class="form-control" placeholder="Име"/>
             <div class="invalid-feedback">Невалидно име.</div>
         </div>
         <div class="form-group">
-            <input v-model="user.lastName" type="text" class="form-control" placeholder="Презиме"/>
+            <input v-model="user.prezime" type="text" class="form-control" placeholder="Презиме"/>
             <div class="invalid-feedback">Невалидно презиме.</div>
+        </div>
+        <div class="form-group">
+            <input v-model="user.jmbg" type="text" class="form-control" placeholder="Јмбг / ЕБС"/>
+            <div class="invalid-feedback">Невалидан јмбг.</div>
         </div>
         <div class="form-group">
             <input v-model="user.email" type="text" class="form-control" placeholder="Имејл"/>
             <div class="invalid-feedback">Невалидан имејл.</div>
         </div>
         <div class="form-group">
-            <input v-model="user.password" type="text" class="form-control" placeholder="Лозинка"/>
+            <input v-model="user.sifra" type="password" class="form-control" placeholder="Лозинка"/>
             <div class="invalid-feedback">Невалидна лозинка.</div>
         </div>
     </div>
@@ -26,24 +30,36 @@
 </template>
 
 <script>
+import AuthenticationService from "@/service/AuthenticationService.js";
+import xmljs from "xml-js";
+
+
 export default {
     name: "RegistrationForm",
 
     data() {
         return {
-        user: {
-            email: "",
-            password: "",
-            firstName: "",
-            lastName: "",
-            jmbg: ""
-        },
+            user: {
+                ime: "",
+                prezime: "",
+                jmbg: "",
+                email: "",
+                sifra: ""
+            },
         };
     },
 
     methods: {
         registration() {
+            console.log(xmljs);
 
+            let data = "<UserRegistrationDTO>" + xmljs.json2xml(this.user, {compact: true, spaces: 4}) + "</UserRegistrationDTO>";
+
+            console.log(data);
+            AuthenticationService.register(data)
+                .then(response => { 
+                    console.log(xmljs.xml2json(response));
+                })
         },
 
         toast(message, type) {

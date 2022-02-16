@@ -9,4 +9,6 @@ import org.springframework.context.annotation.Configuration;
 //@ComponentScan("zajednicko.repository")
 //@EntityScan("zajednicko.repository")
 public class ConfigDependency {
+
+
 }
