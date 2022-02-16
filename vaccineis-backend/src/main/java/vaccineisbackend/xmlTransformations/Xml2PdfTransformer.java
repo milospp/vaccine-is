@@ -94,7 +94,7 @@ public class Xml2PdfTransformer {
     }
 
     public static void main(String[] args) throws Exception {
-        new Xml2PdfTransformer("./src/main/resources/data/xml/interesovanje.xml", "./src/main/resources/data/xsl-fo/interesovanje.xsl","./src/main/resources/data/gen/itext/interesovanje.pdf").generatePDF();
+        new Xml2PdfTransformer("./src/main/resources/data/xml/izvjestaj-o-imunizaciji.xml", "./src/main/resources/data/xsl-fo/izvjestaj-o-imunizaciji.xsl","./src/main/resources/data/gen/itext/izvjestaj-o-imunizaciji.pdf").generatePDF();
     }
 
     /*
