@@ -127,8 +127,4 @@
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
-
-    <xsl:template match="zahtjev:podnosilac">
-
-    </xsl:template>
 </xsl:stylesheet>
