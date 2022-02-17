@@ -138,6 +138,32 @@ public class ExistManager {
         }
     }
 
+    public ResourceSet loadXPath(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri);
+
+            // get an instance of xpath query service
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("", TARGET_NAMESPACE);
+
+            // execute xpath expression
+            ResourceSet result = xpathService.query(xpathExp);
+            return result;
+        } finally {
+            if (col != null) {
+                col.close();
+            }
+        }
+    }
+
+
     public ResourceSet retrieve(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         createConnection();
         Collection col = null;
