@@ -36,16 +36,6 @@ const routes = [
     component: () => import("@/views/DocumentListView.vue"),
 },
 {
-    path: encodeURI("/вакцине"),
-    name: "VaccineListView",
-    component: () => import("@/views/VaccineListView.vue"),
-},
-{
-    path: encodeURI("/извештај-о-имунизацији"),
-    name: "ImmunizationReportRequest",
-    component: () => import("@/views/ImmunizationReportRequest.vue"),
-},
-{
     path: encodeURI("/образац-сагласности-за-имунизацију"),
     name: "ImmunizationConsentRequest",
     component: () => import("@/views/ImmunizationConsentRequest.vue"),

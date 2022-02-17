@@ -13,28 +13,16 @@
                 <li class="nav-item">
                     <router-link :to="{ name: 'Home'}" class="nav-link">Почетна</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'VaccineInterestRequest'}" class="nav-link">Исказивање интересовања</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'DigitalGreenCertificateRequest'}" class="nav-link">Захтев за дигитални зелени сертификат</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'DocumentListView'}" class="nav-link">Преглед докумената</router-link>
-                </li>
+
                 <li class="nav-item">
                     <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'ImmunizationReportRequest' }" class="nav-link">Извештај о имунизацији</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link v-if="$store.getters.rola === 'ZDRAVSTVENI_RADNIK'" :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
-                </li>
             </ul>
             <form class="d-flex justify-content-end">
                 <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
-                <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Registration'}" class="btn btn-outline-primary">Регистрација</router-link>
                 <button v-else :to="{ name: 'Logout'}" @click="logout" class="btn btn-outline-primary">Одјава</button>
             </form>
         </div>
