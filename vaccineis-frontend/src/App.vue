@@ -5,6 +5,7 @@
 <script>
 import axios from "axios"
 
+
 export default {
     beforeMount() {
         if (!localStorage.getItem('token'))
@@ -16,7 +17,8 @@ export default {
             return response;
         }, function (error) {
             if (error.response.status === 401) {
-            this.$router.push({name: "Login"});
+                console.log("usao");
+                this.$router.push({name: "Login"});
             }
             return Promise.reject(error);
         });

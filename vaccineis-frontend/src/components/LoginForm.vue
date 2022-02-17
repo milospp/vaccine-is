@@ -2,12 +2,12 @@
 <form @submit.prevent="login">
     <div class="modal-body text-start">
         <div class="form-group">
-            <input v-model="authenticationData.email" type="text" class="form-control" placeholder="Имејл"/>
+            <input v-model="authenticationData.email" type="text" class="form-control" placeholder="Имејл" required/>
             <div class="invalid-feedback">Невалидан имејл.</div>
         </div>
         <div class="form-group">
-            <input v-model="authenticationData.password" type="password" class="form-control" placeholder="Лозинка"/>
-            <div class="invalid-feedback">Invalid password.</div>
+            <input v-model="authenticationData.sifra" type="password" class="form-control" placeholder="Лозинка" required/>
+            <div class="invalid-feedback">Невалидна шифра.</div>
         </div>
     </div>
     <div class="modal-footer">
@@ -17,6 +17,10 @@
 </template>
 
 <script>
+import AuthenticationService from "@/service/AuthenticationService.js";
+import xmljs from "xml-js";
+import axios from "axios"
+
 export default {
     name: "LoginForm",
 
@@ -24,15 +28,28 @@ export default {
         return {
             authenticationData: {
                 email: "",
-                password: "",
+                sifra: "",
             },
         };
     },
 
     methods: {
+
         login() {
-            if (this.authenticationData.username === "" || this.authenticationData.password === "")
-                return;
+            let data = "<AuthenticationRequestDTO>" + xmljs.json2xml(this.authenticationData, {compact: true, spaces: 4}) + "</AuthenticationRequestDTO>";
+            AuthenticationService.login(data)
+                .then(response => { 
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4})); 
+
+                    let token = data["AuthenticationResponseDTO"]["jwt"]["_text"]
+
+                    localStorage.setItem('token', JSON.stringify(token));
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + JSON.stringify(token);
+
+                    this.$store.dispatch('loadAuthorizedUser');
+                    this.$router.push("/");
+                })
+                .catch((error) => { console.log(error) })
         },
 
         toast(message, type) {

@@ -9,34 +9,34 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <router-link :to="{ name: 'Home'}" class="nav-link">Почетна</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'VaccineInterestRequest'}" class="nav-link">Исказивање интересовања</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'DigitalGreenCertificateRequest'}" class="nav-link">Захтев за дигитални зелени сертификат</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'DocumentListView'}" class="nav-link">Преглед докумената</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'ImmunizationReportRequest' }" class="nav-link">Извештај о имунизацији</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
-            </li>
-        </ul>
-        <form class="d-flex">
-            <router-link v-if="$store.user === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
-            <router-link v-if="$store.user === undefined" :to="{ name: 'Registration'}" class="btn btn-outline-primary">Регистрација</router-link>
-            <button v-else :to="{ name: 'Logout'}" @click="logout" class="btn btn-outline-primary">Одјава</button>
-        </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <router-link :to="{ name: 'Home'}" class="nav-link">Почетна</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'VaccineInterestRequest'}" class="nav-link">Исказивање интересовања</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'DigitalGreenCertificateRequest'}" class="nav-link">Захтев за дигитални зелени сертификат</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'DocumentListView'}" class="nav-link">Преглед докумената</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'ImmunizationReportRequest' }" class="nav-link">Извештај о имунизацији</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'ZDRAVSTVENI_RADNIK'" :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
+                </li>
+            </ul>
+            <form class="d-flex justify-content-end">
+                <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
+                <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Registration'}" class="btn btn-outline-primary">Регистрација</router-link>
+                <button v-else :to="{ name: 'Logout'}" @click="logout" class="btn btn-outline-primary">Одјава</button>
+            </form>
         </div>
     </div>
 </nav>
@@ -49,6 +49,7 @@ export default {
     methods: {
         logout() {
             localStorage.removeItem("token");
+            this.$router.push({ name: 'Login'});
             this.$router.go();
         },
     },
@@ -56,6 +57,7 @@ export default {
 </script>
 
 <style scoped>
+
 nav {
     z-index: 1;
     padding: 10px;
