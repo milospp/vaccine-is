@@ -1,11 +1,12 @@
 package zajednicko.repository;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface CRUDExistRepository<T> {
 
-    List<T> findAll();
-    T findOne(UUID id);
+    T findOne(String id);
+
+    List<T> findXpath(String xPath);
+
     T create(String xmlString);
 }

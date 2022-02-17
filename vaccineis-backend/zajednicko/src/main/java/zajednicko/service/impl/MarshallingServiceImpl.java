@@ -3,6 +3,9 @@ package zajednicko.service.impl;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import zajednicko.exception.XMLSchemaValidationException;
+import org.w3c.dom.Node;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
 import zajednicko.service.MarshallingService;
 import zajednicko.util.XMLSchemaValidationHandler;
 
@@ -39,6 +42,29 @@ public class MarshallingServiceImpl implements MarshallingService {
         } catch (JAXBException | SAXException e) {
             String message = (eventHandler != null) ? eventHandler.getMessage() : e.getMessage();
             throw new XMLSchemaValidationException(message);
+        }
+    }
+
+    public <T> T unmarshall(XMLResource xmlResource, Class<T> clazz) {
+        try {
+            return unmarshall(xmlResource.getContentAsDOM(), clazz);
+        } catch (XMLDBException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public <T> T unmarshall(Node xmlDOM, Class<T> clazz) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+
+            var unmarshalledObject = unmarshaller.unmarshal(xmlDOM);
+            return clazz.cast(unmarshalledObject);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
@@ -26,4 +28,16 @@ public class InteresovanjeController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+
+//    @PreAuthorize("hasRole('GRADJANIN')")
+    @GetMapping(value = "/get-pdf")
+    public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
+        return interesovanjeService.getPdf(2); // id za dok
+    }
+
+//    @PreAuthorize("hasRole('GRADJANIN')")
+    @GetMapping(value = "/get-html")
+    public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
+        return interesovanjeService.getHtml(2);
+    }
 }

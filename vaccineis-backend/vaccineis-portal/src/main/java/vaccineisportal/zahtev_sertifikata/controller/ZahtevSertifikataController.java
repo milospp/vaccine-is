@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 import vaccineisportal.zahtev_sertifikata.service.ZahtevSertifikataService;
+import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
@@ -23,5 +25,15 @@ public class ZahtevSertifikataController {
 
         Zahtjev retVal = zahtevSertifikataService.create(zahtjev);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get-pdf")
+    public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
+        return zahtevSertifikataService.getPdf(2); // id za dok
+    }
+
+    @GetMapping(value = "/get-html")
+    public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
+        return zahtevSertifikataService.getHtml(2);
     }
 }
