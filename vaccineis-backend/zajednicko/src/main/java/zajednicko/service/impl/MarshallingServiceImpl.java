@@ -1,6 +1,7 @@
 package zajednicko.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import zajednicko.service.MarshallingService;
@@ -33,18 +34,28 @@ public class MarshallingServiceImpl implements MarshallingService {
 
     public <T> T unmarshall(XMLResource xmlResource, Class<T> clazz) {
         try {
-            JAXBContext context = JAXBContext.newInstance(clazz);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-
-            var unmarshalledObject = unmarshaller.unmarshal(xmlResource.getContentAsDOM());
-            return clazz.cast(unmarshalledObject);
-        } catch (JAXBException | XMLDBException e) {
+            return unmarshall(xmlResource.getContentAsDOM(), clazz);
+        } catch (XMLDBException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-//    public <T> T unmarshallList(XMLResource xmlResource, Class<ArrayList<T>> clazz) {
+    @Override
+    public <T> T unmarshall(Node xmlDOM, Class<T> clazz) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+
+            var unmarshalledObject = unmarshaller.unmarshal(xmlDOM);
+            return clazz.cast(unmarshalledObject);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //    public <T> T unmarshallList(XMLResource xmlResource, Class<ArrayList<T>> clazz) {
 //        try {
 //            JAXBContext context = JAXBContext.newInstance(clazz);
 //            Unmarshaller unmarshaller = context.createUnmarshaller();

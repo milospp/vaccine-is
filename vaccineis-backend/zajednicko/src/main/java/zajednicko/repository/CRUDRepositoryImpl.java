@@ -2,6 +2,7 @@ package zajednicko.repository;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -37,9 +38,10 @@ public abstract class CRUDRepositoryImpl<T extends BaseModel> implements CRUDRep
 
     @Override
     public T findOne(String id) {
-        XMLResource resource;
+        Node resource;
         try {
-            resource = existManager.load(collectionId, id);
+            resource = existManager.loadDOM(collectionId, id);
+            System.out.println("resource = " + resource);
         } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             return null;

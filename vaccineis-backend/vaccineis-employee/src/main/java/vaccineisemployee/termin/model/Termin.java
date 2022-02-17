@@ -8,6 +8,7 @@
 
 package vaccineisemployee.termin.model;
 
+import zajednicko.model.BaseModel;
 import zajednicko.model.CTlicniPodaci;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -42,44 +43,16 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "korisnik",
     "datumVrijeme"
 })
 @XmlRootElement(name = "termin")
-public class Termin {
-
-    @XmlElement(required = true)
-    protected String id;
+public class Termin extends BaseModel {
     @XmlElement(required = true)
     protected CTlicniPodaci korisnik;
     @XmlElement(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar datumVrijeme;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the korisnik property.
