@@ -19,6 +19,21 @@ public class AuthenticationManager {
     @Value("${conn.uri}")
     private String uri;
 
+    @Value("${fuseki.endpoint}")
+    public String fusekiEndpoint;
+
+    @Value("${fuseki.dataset}")
+    public String fusekiDataset;
+
+    @Value("${fuseki.query}")
+    public String fusekiQuery;
+
+    @Value("${fuseki.update}")
+    public String fusekiUpdate;
+
+    @Value("${fuseki.data}")
+    public String fusekiData;
+
     public String getUser() {
         return user;
     }
@@ -67,4 +82,43 @@ public class AuthenticationManager {
         this.uri = uri;
     }
 
+    public String getFusekiEndpoint() {
+        return fusekiEndpoint;
+    }
+
+    public void setFusekiEndpoint(String fusekiEndpoint) {
+        this.fusekiEndpoint = fusekiEndpoint;
+    }
+
+    public String getFusekiDataset() {
+        return fusekiDataset;
+    }
+
+    public void setFusekiDataset(String fusekiDataset) {
+        this.fusekiDataset = fusekiDataset;
+    }
+
+    public String getFusekiQuery() {
+        return fusekiQuery;
+    }
+
+    public void setFusekiQuery(String fusekiQuery) {
+        this.fusekiQuery = fusekiQuery;
+    }
+
+    public String getFusekiUpdate() {
+        return fusekiUpdate;
+    }
+
+    public void setFusekiUpdate(String fusekiUpdate) {
+        this.fusekiUpdate = fusekiUpdate;
+    }
+
+    public String getFusekiData() {
+        return fusekiData;
+    }
+
+    public void setFusekiData(String fusekiData) {
+        this.fusekiData = fusekiData;
+    }
 }
