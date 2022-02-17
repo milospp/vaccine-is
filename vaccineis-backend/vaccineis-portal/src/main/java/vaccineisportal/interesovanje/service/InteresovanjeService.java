@@ -25,4 +25,17 @@ public interface InteresovanjeService {
 ////        Model model = fusekiManager.createRDFModel(statement);
 //        fusekiManager.testUpload();
 //    }
+//=======
+//@Service
+//@AllArgsConstructor
+//public class InteresovanjeService {
+//
+//    protected final FusekiManager fusekiManager;
+//    protected final ExistManager existManager;
+//    protected final CRUDRDFRepository crudrdfRepository;
+//
+//    public void writeSomething() {
+//        crudrdfRepository.uploadTriplet("test", "http://www.ftn.uns.ac.rs/rdf/examples/person/Petar_Petrovic", "radi", "voli");
+////        fusekiManager.testUpload();
+//    }
 }
