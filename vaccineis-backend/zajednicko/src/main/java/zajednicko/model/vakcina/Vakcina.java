@@ -8,6 +8,7 @@
 
 package zajednicko.model.vakcina;
 
+import zajednicko.model.BaseModel;
 import zajednicko.model.STtipVakcine;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -46,10 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "kolicina"
 })
 @XmlRootElement(name = "vakcina")
-public class Vakcina {
-
-    @XmlElement(required = true)
-    protected String id;
+public class Vakcina extends BaseModel {
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected STtipVakcine naziv;
