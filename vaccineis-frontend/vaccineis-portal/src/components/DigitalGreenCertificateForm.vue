@@ -39,8 +39,9 @@
     </div>
     <div class="form-group">
         <label for="razlog">Разлог за подношење захтева</label>
-        <input v-model="zahtev.razlog" type="text" id="razlog" class="form-control" required>
-        <span class="validation-error" data-bind="validationMessage: patientInformation.email" style="display: none;"></span>
+        <editor id="razlog" v-model="value" @change="onChange" theme="snow" :options="options"/>
+<!--        <input v-model="zahtev.razlog" type="text" id="razlog" class="form-control" required>-->
+<!--        <span class="validation-error" data-bind="validationMessage: patientInformation.email" style="display: none;"></span>-->
     </div>
     <div class="form-group">
         <label for="lokacija">Локација</label>
@@ -58,7 +59,11 @@
 import DigitalniZeleniSertifikatService from "@/service/DigitalniZeleniSertifikatService.js";
 import { mapState } from "vuex";
 import xmljs from "xml-js";
+import '@morioh/v-quill-editor/dist/editor.css';
+import Editor from '@morioh/v-quill-editor';
+import Vue from "vue";
 
+Vue.use(Editor);
 
 export default {
     name: "DigitalGreenCertificateForm",
@@ -119,6 +124,20 @@ export default {
                     datum: ""
                 }
             },
+          value: '',
+          options: {
+              modules: {
+                'toolbar': [
+                    [{'size': []}],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'script': 'super' }, { 'script': 'sub' }],
+                    [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }]
+                ],
+              }
+          }
         };
     },
 
@@ -185,6 +204,12 @@ export default {
                 duration: 3000,
             });
         },
+
+        onChange(html, text) {
+          console.log(html.length, text.length);
+          console.log(text);
+          console.log(html);
+        }
 
     },
 };

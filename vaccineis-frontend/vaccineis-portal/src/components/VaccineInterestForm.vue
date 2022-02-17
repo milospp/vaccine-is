@@ -165,7 +165,7 @@ export default {
         this.interesovanje.licneInformacije.prezime = this.user.prezime;
         this.interesovanje.licneInformacije.kontakt.email._text = this.user.email;
         this.interesovanje.licneInformacije.drzavljanstvo = "Држављанин Републике Србије";
-},
+    },
 
     methods: {
 
