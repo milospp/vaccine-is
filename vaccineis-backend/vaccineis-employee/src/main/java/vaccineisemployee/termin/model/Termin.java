@@ -6,9 +6,9 @@
 //
 
 
-package zajednicko.model.vakcina;
+package vaccineisemployee.termin.model;
 
-import zajednicko.model.STtipVakcine;
+import zajednicko.model.CTlicniPodaci;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -29,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.ftn.uns.ac.rs/zajednicka}STid"/&gt;
- *         &lt;element name="naziv" type="{http://www.ftn.uns.ac.rs/zajednicka}STtipVakcine"/&gt;
- *         &lt;element name="kolicina" type="{http://www.ftn.uns.ac.rs/zajednicka}STpozitivanBroj"/&gt;
+ *         &lt;element name="korisnik" type="{http://www.ftn.uns.ac.rs/zajednicka}CTlicniPodaci"/&gt;
+ *         &lt;element name="datumVrijeme" type="{http://www.ftn.uns.ac.rs/zajednicka}STdatumVrijeme"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -42,18 +43,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "id",
-    "naziv",
-    "kolicina"
+    "korisnik",
+    "datumVrijeme"
 })
-@XmlRootElement(name = "vakcina")
-public class Vakcina {
+@XmlRootElement(name = "termin")
+public class Termin {
 
     @XmlElement(required = true)
     protected String id;
     @XmlElement(required = true)
-    @XmlSchemaType(name = "string")
-    protected STtipVakcine naziv;
-    protected int kolicina;
+    protected CTlicniPodaci korisnik;
+    @XmlElement(required = true)
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar datumVrijeme;
 
     /**
      * Gets the value of the id property.
@@ -80,43 +82,51 @@ public class Vakcina {
     }
 
     /**
-     * Gets the value of the naziv property.
+     * Gets the value of the korisnik property.
      * 
      * @return
      *     possible object is
-     *     {@link STtipVakcine }
+     *     {@link CTlicniPodaci }
      *     
      */
-    public STtipVakcine getNaziv() {
-        return naziv;
+    public CTlicniPodaci getKorisnik() {
+        return korisnik;
     }
 
     /**
-     * Sets the value of the naziv property.
+     * Sets the value of the korisnik property.
      * 
      * @param value
      *     allowed object is
-     *     {@link STtipVakcine }
+     *     {@link CTlicniPodaci }
      *     
      */
-    public void setNaziv(STtipVakcine value) {
-        this.naziv = value;
+    public void setKorisnik(CTlicniPodaci value) {
+        this.korisnik = value;
     }
 
     /**
-     * Gets the value of the kolicina property.
+     * Gets the value of the datumVrijeme property.
      * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public int getKolicina() {
-        return kolicina;
+    public XMLGregorianCalendar getDatumVrijeme() {
+        return datumVrijeme;
     }
 
     /**
-     * Sets the value of the kolicina property.
+     * Sets the value of the datumVrijeme property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public void setKolicina(int value) {
-        this.kolicina = value;
+    public void setDatumVrijeme(XMLGregorianCalendar value) {
+        this.datumVrijeme = value;
     }
 
 }

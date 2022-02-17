@@ -5,5 +5,5 @@
 // Generated on: 2022.02.17 at 01:51:16 AM CET 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ftn.uns.ac.rs/zahtjevSertifikata", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package vaccineisportal.zahtev_sertifikata.model;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ftn.uns.ac.rs/termin", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package vaccineisemployee.termin.model;

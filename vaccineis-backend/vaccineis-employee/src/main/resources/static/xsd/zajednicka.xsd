@@ -9,6 +9,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="STid">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(urn:uuid:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+
     <xs:simpleType name="STprezime">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
@@ -123,6 +132,7 @@
 
     <xs:complexType name="CTlicniPodaci">
         <xs:sequence>
+            <xs:element name="id" type="STid"/>
             <xs:element name="ime" type="STime"/>
             <xs:element name="prezime" type="STprezime"/>
             <xs:element name="pol" type="STpol"/>
@@ -152,6 +162,7 @@
 
     <xs:complexType name="CTvakcinacijaPodaci">
         <xs:sequence>
+            <xs:element name="id" type="STid"/>
             <xs:element name="datumDavanjaDoze" type="STdatum"/>
             <xs:element name="brojDoze" type="STbrojDoze"/>
             <xs:element name="nazivVakcine" type="STtipVakcine"/>
