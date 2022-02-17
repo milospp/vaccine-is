@@ -8,6 +8,7 @@
 
 package vaccineisportal.interesovanje.model;
 
+import zajednicko.model.BaseModel;
 import zajednicko.model.CTkontakt;
 
 import javax.xml.bind.annotation.*;
@@ -69,7 +70,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "licneInformacije",
     "lokacijaPrimanja",
     "nazivVakcine",
@@ -77,10 +77,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "datum"
 })
 @XmlRootElement(name = "interesovanje")
-public class Interesovanje {
+public class Interesovanje extends BaseModel {
 
-    @XmlElement(required = true)
-    protected String id;
     @XmlElement(required = true)
     protected Interesovanje.LicneInformacije licneInformacije;
     @XmlElement(required = true)
@@ -93,30 +91,6 @@ public class Interesovanje {
     @XmlElement(required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datum;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the licneInformacije property.
