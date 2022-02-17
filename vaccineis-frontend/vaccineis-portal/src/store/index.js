@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: {
-            rola: undefined
+            rola: "GRADJANIN" // "SLUZBENIK", "ZDRAVSTVENI_RADNIK"
         },
     },
 

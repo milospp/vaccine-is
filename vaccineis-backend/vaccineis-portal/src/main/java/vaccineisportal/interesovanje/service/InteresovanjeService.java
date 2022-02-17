@@ -1,11 +1,21 @@
 package vaccineisportal.interesovanje.service;
 
+import org.springframework.http.ResponseEntity;
+import zajednicko.service.MailService;
 
 import vaccineisportal.interesovanje.model.Interesovanje;
 
+import java.io.IOException;
+
 public interface InteresovanjeService {
+    void setMailService(MailService mailService);
 
     Interesovanje save(Interesovanje interesovanje);
+
+    public ResponseEntity<byte[]> getPdf(int id) throws IOException;
+
+    public ResponseEntity<byte[]> getHtml(int id) throws IOException;
+}
 
 //    protected final FusekiManager fusekiManager;
 //    protected final ExistManager existManager;
@@ -24,6 +34,7 @@ public interface InteresovanjeService {
 //
 ////        Model model = fusekiManager.createRDFModel(statement);
 //        fusekiManager.testUpload();
+
 //    }
 //=======
 //@Service
@@ -38,4 +49,3 @@ public interface InteresovanjeService {
 //        crudrdfRepository.uploadTriplet("test", "http://www.ftn.uns.ac.rs/rdf/examples/person/Petar_Petrovic", "radi", "voli");
 ////        fusekiManager.testUpload();
 //    }
-}

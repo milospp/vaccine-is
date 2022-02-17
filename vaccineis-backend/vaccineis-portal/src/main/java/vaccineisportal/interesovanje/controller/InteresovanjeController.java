@@ -13,6 +13,8 @@ import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
@@ -23,9 +25,19 @@ public class InteresovanjeController {
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Interesovanje> createInteresovanje(@Valid @RequestBody Interesovanje interesovanje) {
-
         Interesovanje retVal = interesovanjeService.save(interesovanje);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    //@PreAuthorize("hasRole('PACIJENT')")
+    @GetMapping(value = "/get-pdf")
+    public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
+        return interesovanjeService.getPdf(2); // id za dok
+    }
+
+    @GetMapping(value = "/get-html")
+    public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
+        return interesovanjeService.getHtml(2);
     }
 
 

@@ -15,13 +15,14 @@
     <div class="row card-group" v-for="n in Math.ceil(documents.length/4)" :key="n.id">
         <div class="col-3" v-for="doc in documents.slice((n-1)*4, n*4)" :key="doc.id">
             <div class="card">
-                <router-link class="routerLink" :to="{ name: 'Home'}">
-                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap">
+<!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                <router-link class="routerLink" :to="{}">
+                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf()">
                     <div class="card-header"><b>{{ doc.name }}</b></div>
                 </router-link>
                 <div class="card-body">
-                    <a href="#" class="card-link">PDF</a>
-                    <a href="#" class="card-link">XHTML</a>
+                    <a v-on:click="getInteresovanjePdf()" class="card-link">PDF</a>
+                    <a v-on:click="getInteresovanjeHtml()" class="card-link">XHTML</a>
                     <a href="#" class="card-link">RDF</a>
                     <a href="#" class="card-link">JSON</a>
                 </div>
@@ -33,6 +34,8 @@
 </template>
 
 <script>
+import InteresovanjeService from '@/service/InteresovanjeService';
+
 export default {
     name: "DocumentList",
 
@@ -63,6 +66,18 @@ export default {
 
     methods: {
         filterDocuments() {
+        },
+
+        getInteresovanjePdf() {
+          InteresovanjeService.getInteresovanjePdf();
+        },
+
+        getInteresovanjeHtml() {
+          InteresovanjeService.getInteresovanjeHtml();
+        },
+
+        viewInteresovanjePdf() {
+          InteresovanjeService.viewInteresovanjePdf();
         }
     },
 };
