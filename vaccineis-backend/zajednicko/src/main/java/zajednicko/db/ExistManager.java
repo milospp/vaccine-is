@@ -5,6 +5,7 @@ import org.exist.xmldb.EXistResource;
 import org.exist.xupdate.XUpdateProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Node;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -121,6 +122,7 @@ public class ExistManager {
         }
     }
 
+    @Deprecated
     public XMLResource load(String collectionUri, String documentId) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         createConnection();
         Collection col = null;
@@ -134,9 +136,28 @@ public class ExistManager {
         } finally {
             if (col != null) {
                 col.close();
+                System.out.println("ExistManager.load CLOSE");
             }
         }
     }
+
+
+    public Node loadDOM(String collectionUri, String documentId) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+            res = (XMLResource) col.getResource(documentId);
+            return res.getContentAsDOM();
+        } finally {
+            if (col != null) {
+                col.close();
+                System.out.println("ExistManager.load CLOSE");
+            }
+        }    }
 
     public ResourceSet loadXPath(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         createConnection();

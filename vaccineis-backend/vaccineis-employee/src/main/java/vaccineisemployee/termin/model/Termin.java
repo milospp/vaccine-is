@@ -48,7 +48,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 @XmlRootElement(name = "termin")
 public class Termin extends BaseModel {
-
     @XmlElement(required = true)
     protected CTlicniPodaci korisnik;
     @XmlElement(required = true)
