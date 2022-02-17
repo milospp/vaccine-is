@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         <label for="jmbg">ЈМБГ</label>
-        <input v-model="interesovanje.licneInformacije.jmbg" type="text" id="jmbg" class="form-control" required>
+        <input disabled v-model="interesovanje.licneInformacije.jmbg" type="text" id="jmbg" class="form-control" required>
         <span class="validation-error" data-bind="validationMessage: patientInformation.JMBG" style="display: none;"></span>
     </div>
     <div class="form-group">
@@ -26,17 +26,17 @@
     </div>
     <div class="form-group">
         <label for="email">Адреса електронске поште</label>
-        <input v-model="interesovanje.licneInformacije.kontakt.email" type="text" id="email" class="form-control" required>
+        <input v-model="interesovanje.licneInformacije.kontakt.email._text" type="text" id="email" class="form-control" required>
         <span class="validation-error" data-bind="validationMessage: patientInformation.email" style="display: none;"></span>
     </div>
     <div class="form-group">
         <label for="mobilni">Број мобилног телефона (навести број у формату 06X..... без размака и цртица)</label>
-        <input v-model="interesovanje.licneInformacije.kontakt.mobilniTelefon" type="text" id="mobilni" class="form-control" required>
+        <input v-model="interesovanje.licneInformacije.kontakt.mobilniTelefon._text" type="text" id="mobilni" class="form-control" required>
         <span class="validation-error" data-bind="validationMessage: patientInformation.contactPhone" style="display: none;"></span>
     </div>
     <div class="form-group">
         <label for="fiksni">Број фиксног телефона (навести број у формату нпр. 011..... без размака и цртица):</label>
-        <input v-model="interesovanje.licneInformacije.kontakt.fiksniTelefon" type="text" id="fiksni" class="form-control" required>
+        <input v-model="interesovanje.licneInformacije.kontakt.fiksniTelefon._text" type="text" id="fiksni" class="form-control" required>
         <span class="validation-error" data-bind="validationMessage: patientInformation.homePhone" style="display: none;"></span>
     </div>
     <div class="form-group">
@@ -105,25 +105,46 @@
 
 <script>
 import xmljs from "xml-js";
-
+import { mapState } from "vuex";
 import InteresovanjeService from "@/service/InteresovanjeService.js";
 
 
 export default {
     name: "VaccineInterestForm",
 
+    computed: {
+        ...mapState([
+            'user'
+        ])
+    },
+
     data() {
         return {
             interesovanje: {
                 licneInformacije: {
                     drzavljanstvo: "",
+                    jmbg: "",
                     ime: "",
                     prezime: "",
-                    jmbg: "",
                     kontakt: {
-                        fiksniTelefon: "",
-                        mobilniTelefon: "",
-                        email: ""
+                        fiksniTelefon: {
+                            "_attributes": {
+                                "xmlns": "http://www.ftn.uns.ac.rs/zajednicka"
+                            },
+                            "_text": ""
+                        },
+                        mobilniTelefon: {
+                            "_attributes": {
+                                "xmlns": "http://www.ftn.uns.ac.rs/zajednicka"
+                            },
+                            "_text": ""
+                        },
+                        email: {
+                            "_attributes": {
+                                "xmlns": "http://www.ftn.uns.ac.rs/zajednicka"
+                            },
+                            "_text": ""
+                        }
                     }
                 },
                 lokacijaPrimanja: "",
@@ -134,6 +155,13 @@ export default {
 
             saglasnost: ""
         };
+    },
+
+    created() {
+        this.interesovanje.licneInformacije.jmbg = this.user.jmbg;
+        this.interesovanje.licneInformacije.ime = this.user.ime;
+        this.interesovanje.licneInformacije.prezime = this.user.prezime;
+        this.interesovanje.licneInformacije.email = this.user.email;
     },
 
     methods: {
@@ -147,12 +175,14 @@ export default {
         },
 
         confirm() {
-            this.interesovanje.datum = new Date();
+            this.interesovanje.datum = new Date().toISOString().slice(0, 10);
 
             let data = "<interesovanje xmlns='http://www.ftn.uns.ac.rs/interesovanje'>" + xmljs.json2xml(this.interesovanje, {compact: true, spaces: 4}) + "</interesovanje>";
+
+            console.log(data);
             InteresovanjeService.createInteresovanje(data)
                 .then(() => { this.toast("Успешно сте поднели захтев за вакцинисање против COVID-19", "success"); })
-                .catch(error => console.log(error));
+                .catch(error => { this.toast("Невалидан унос података! Покушајте поново.", "error"); console.log(error.response.data.message) });
         },
 
         toast(message, type) {

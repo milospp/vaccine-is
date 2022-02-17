@@ -4,5 +4,5 @@ import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 
 public interface ZahtevSertifikataService {
 
-    Zahtjev save(Zahtjev zahtjev);
+    Zahtjev create(String xmlString);
 }

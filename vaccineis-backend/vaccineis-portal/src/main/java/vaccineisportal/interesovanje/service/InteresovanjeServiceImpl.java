@@ -12,7 +12,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     private InteresovanjeExistRepository interesovanjeExistRepository;
 
     @Override
-    public Interesovanje save(Interesovanje interesovanje) {
-        return interesovanjeExistRepository.save(interesovanje);
+    public Interesovanje create(String xmlString) {
+        return interesovanjeExistRepository.create(xmlString);
     }
 }

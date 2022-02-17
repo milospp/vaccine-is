@@ -8,7 +8,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <router-link :to="{ name: 'Home'}" class="nav-link">Почетна</router-link>
@@ -23,10 +23,10 @@
                     <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'DocumentListView'}" class="nav-link">Преглед докумената</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link v-if="$store.getters.rola === 'ZDRAVSTVENI_RADNIK'" :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
+                    <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
                 </li>
             </ul>
-            <form class="d-flex justify-content-end">
+            <form class="d-flex">
                 <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
                 <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Registration'}" class="btn btn-outline-primary">Регистрација</router-link>
                 <button v-else :to="{ name: 'Logout'}" @click="logout" class="btn btn-outline-primary">Одјава</button>

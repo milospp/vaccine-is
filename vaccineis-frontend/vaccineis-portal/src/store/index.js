@@ -8,6 +8,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         user: {
+            ime: undefined,
+            prezime: undefined,
+            jmbg: undefined,
             rola: undefined
         },
     },

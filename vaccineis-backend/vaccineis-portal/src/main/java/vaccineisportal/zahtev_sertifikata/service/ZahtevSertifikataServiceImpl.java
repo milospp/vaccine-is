@@ -12,7 +12,7 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
     private ZahtevSertifikataExistRepository zahtevSertifikataExistRepository;
 
     @Override
-    public Zahtjev save(Zahtjev zahtjev) {
-        return zahtevSertifikataExistRepository.save(zahtjev);
+    public Zahtjev create(String xmlString) {
+        return zahtevSertifikataExistRepository.create(xmlString);
     }
 }

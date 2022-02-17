@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/korisnik"
+    xmlns="http://www.ftn.uns.ac.rs/korisnik"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
+    <xs:element name="korisnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ime" type="zaj:STime"/>
+                <xs:element name="prezime" type="zaj:STprezime"/>
+                <xs:element name="email" type="zaj:STemail"/>
+                <xs:element name="sifra" type="xs:string"/>
+                <xs:element name="jmbg" type="xs:string"/>
+                <xs:element name="rola" type="STrola"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="emailUnique">
+            <xs:selector xpath="korisnik"/>
+            <xs:field xpath="@email"/>
+        </xs:unique>
+        <xs:unique name="jmbgUnique">
+            <xs:selector xpath="korisnik"/>
+            <xs:field xpath="@jmbg"/>
+        </xs:unique>
+    </xs:element>
+
+    <xs:simpleType name="STrola">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GRADJANIN"/>
+            <xs:enumeration value="ZDRAVSTVENI_RADNIK"/>
+            <xs:enumeration value="SLUZBENIK"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

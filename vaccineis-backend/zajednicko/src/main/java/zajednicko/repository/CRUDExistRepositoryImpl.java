@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import zajednicko.db.ExistManager;
 import lombok.AllArgsConstructor;
 import org.xmldb.api.base.XMLDBException;
+import zajednicko.exception.XMLSchemaValidationException;
 import zajednicko.service.MarshallingService;
 
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Repository
-public abstract class CRUDRepositoryImpl<T> implements CRUDRepository<T> {
+public abstract class CRUDExistRepositoryImpl<T> implements CRUDExistRepository<T> {
 
     protected final String collectionId;
+    protected final String schemaPath;
     protected final ExistManager existManager;
     protected final MarshallingService marshallingService;
 
@@ -31,17 +32,14 @@ public abstract class CRUDRepositoryImpl<T> implements CRUDRepository<T> {
     }
 
     @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public T save(T entity) {
+    public T create(String xmlString) {
         try {
+            T entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
             existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), marshallingService.marshall(entity, getEntityClass()));
             return entity;
+
         } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            return null;
+            throw new XMLSchemaValidationException(e.getMessage());
         }
     }
 }
