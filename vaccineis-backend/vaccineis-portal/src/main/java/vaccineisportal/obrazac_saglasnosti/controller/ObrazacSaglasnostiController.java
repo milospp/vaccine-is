@@ -1,34 +1,28 @@
-package vaccineisportal.interesovanje.controller;
+package vaccineisportal.obrazac_saglasnosti.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vaccineisportal.interesovanje.service.InteresovanjeService;
-import org.springframework.http.ResponseEntity;
+import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
 import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/interesovanje")
-public class InteresovanjeController {
+@RequestMapping("/api/saglasnost")
+public class ObrazacSaglasnostiController {
 
-    private final InteresovanjeService interesovanjeService;
-
-    @GetMapping("test")
-    public String index() {
-        interesovanjeService.writeSomething();
-        return "Greetings from Spring Boot!";
-    }
+    private final ObrazacSaglasnostiService obrazacSaglasnostiService;
 
     //@PreAuthorize("hasRole('PACIJENT')")
     @GetMapping(value = "/get-pdf")
     public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
-        return interesovanjeService.getPdf(2); // id za dok
+        return obrazacSaglasnostiService.getPdf(2);
     }
 
     @GetMapping(value = "/get-html")
     public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
-        return interesovanjeService.getHtml(2);
+        return obrazacSaglasnostiService.getHtml(2);
     }
 }

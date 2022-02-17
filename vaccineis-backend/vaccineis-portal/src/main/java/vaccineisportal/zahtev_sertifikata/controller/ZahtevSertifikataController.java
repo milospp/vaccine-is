@@ -1,34 +1,29 @@
-package vaccineisportal.interesovanje.controller;
+package vaccineisportal.zahtev_sertifikata.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vaccineisportal.interesovanje.service.InteresovanjeService;
-import org.springframework.http.ResponseEntity;
+import vaccineisportal.zahtev_sertifikata.service.ZahtevSertifikataService;
+
 import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/interesovanje")
-public class InteresovanjeController {
+@RequestMapping("/api/zahtev-sertifikata")
+public class ZahtevSertifikataController {
 
-    private final InteresovanjeService interesovanjeService;
-
-    @GetMapping("test")
-    public String index() {
-        interesovanjeService.writeSomething();
-        return "Greetings from Spring Boot!";
-    }
+    private final ZahtevSertifikataService zahtevSertifikataService;
 
     //@PreAuthorize("hasRole('PACIJENT')")
     @GetMapping(value = "/get-pdf")
     public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
-        return interesovanjeService.getPdf(2); // id za dok
+        return zahtevSertifikataService.getPdf(2); // id za dok
     }
 
     @GetMapping(value = "/get-html")
     public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
-        return interesovanjeService.getHtml(2);
+        return zahtevSertifikataService.getHtml(2);
     }
 }
