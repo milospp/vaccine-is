@@ -49,7 +49,6 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "ime",
     "prezime",
     "email",

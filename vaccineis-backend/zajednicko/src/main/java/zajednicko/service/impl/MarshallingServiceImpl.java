@@ -1,34 +1,47 @@
 package zajednicko.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
+import zajednicko.exception.XMLSchemaValidationException;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import zajednicko.service.MarshallingService;
+import zajednicko.util.XMLSchemaValidationHandler;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class MarshallingServiceImpl implements MarshallingService {
 
-    public <T> T unmarshall(String xmlString, Class<T> clazz) {
+    public <T> T unmarshall(String xmlString, Class<T> clazz, String schemaPath) {
+        XMLSchemaValidationHandler eventHandler = null;
+
         try {
             JAXBContext context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            StringReader stringReader = new StringReader(xmlString);
-            var unmarshalledObject = unmarshaller.unmarshal(stringReader);
-            return clazz.cast(unmarshalledObject);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-            return null;
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(new File(schemaPath));
+
+            eventHandler = new XMLSchemaValidationHandler("");
+            unmarshaller.setSchema(schema);
+            unmarshaller.setEventHandler(eventHandler);
+
+            return clazz.cast(unmarshaller.unmarshal(new StringReader(xmlString)));
+
+        } catch (JAXBException | SAXException e) {
+            String message = (eventHandler != null) ? eventHandler.getMessage() : e.getMessage();
+            throw new XMLSchemaValidationException(message);
         }
     }
 
@@ -55,19 +68,6 @@ public class MarshallingServiceImpl implements MarshallingService {
         }
     }
 
-    //    public <T> T unmarshallList(XMLResource xmlResource, Class<ArrayList<T>> clazz) {
-//        try {
-//            JAXBContext context = JAXBContext.newInstance(clazz);
-//            Unmarshaller unmarshaller = context.createUnmarshaller();
-//
-//            var unmarshalledObject = unmarshaller.unmarshal(xmlResource.getContentAsDOM());
-//            return clazz.cast(unmarshalledObject);
-//        } catch (JAXBException | XMLDBException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
     public <T> String marshall(T object, Class<T> clazz) {
         try {
             JAXBContext context = JAXBContext.newInstance(clazz);
@@ -78,9 +78,9 @@ public class MarshallingServiceImpl implements MarshallingService {
             StringWriter stringWriter = new StringWriter();
             marshaller.marshal(object, stringWriter);
             return stringWriter.toString();
+
         } catch (JAXBException e) {
-            e.printStackTrace();
-            return null;
+            throw new XMLSchemaValidationException(e.getMessage());
         }
     }
 }

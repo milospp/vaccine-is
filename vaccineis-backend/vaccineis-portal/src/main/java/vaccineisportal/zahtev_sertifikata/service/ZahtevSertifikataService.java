@@ -8,7 +8,8 @@ import java.io.IOException;
 
 @Service
 public interface ZahtevSertifikataService {
-    Zahtjev save(Zahtjev zahtjev);
+
+    Zahtjev create(String xmlString);
 
     public ResponseEntity<byte[]> getPdf(int id) throws IOException;
 

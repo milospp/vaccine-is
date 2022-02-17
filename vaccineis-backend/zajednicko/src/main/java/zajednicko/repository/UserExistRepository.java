@@ -8,11 +8,11 @@ import zajednicko.service.MarshallingService;
 import zajednicko.db.ExistManager;
 
 @Repository
-public class UserExistRepository extends CRUDRepositoryImpl<Korisnik> {
+public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
 
     @Autowired
     public UserExistRepository(ExistManager existManager, MarshallingService marshallingService) {
-        super("db/korisnici", existManager, marshallingService);
+        super("db/korisnici", "schemas/korisnik.xsd", existManager, marshallingService);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class UserExistRepository extends CRUDRepositoryImpl<Korisnik> {
         var korisnik = new Korisnik();
         korisnik.setIme("marko");
         korisnik.setPrezime("markovic");
-        korisnik.setJmbg("as123123");
+        korisnik.setJmbg("2006999183897");
         korisnik.setEmail("marko@gmail.com");
         korisnik.setSifra("$2a$10$QD6Kbt74UFyyK9RIhXfZM.tmIZdGUGo82G6FFMfsES0P0/lLi3wuK");
         korisnik.setRola(STrola.GRADJANIN);

@@ -20,18 +20,12 @@ import java.util.Collections;
 @Service
 public class InteresovanjeServiceImpl implements InteresovanjeService {
 
-    private InteresovanjeExistRepository interesovanjeExistRepository;
-    protected MailService mailService;
+    private final InteresovanjeExistRepository interesovanjeExistRepository;
+    private final MailService mailService;
 
     @Override
-    public Interesovanje save(Interesovanje interesovanje) {
-        return interesovanjeExistRepository.save(interesovanje);
-    }
-
-    @Autowired
-    @Override
-    public void setMailService(MailService mailService) {
-        this.mailService = mailService;
+    public Interesovanje create(String xmlString) {
+        return interesovanjeExistRepository.create(xmlString);
     }
 
     @Override
