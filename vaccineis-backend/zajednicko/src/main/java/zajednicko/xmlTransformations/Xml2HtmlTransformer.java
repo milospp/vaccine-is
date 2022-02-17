@@ -99,7 +99,7 @@ public class Xml2HtmlTransformer {
 
         System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
 
-        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/obrazac-saglasnosti.xml", "./src/main/resources/data/xslt/obrazac-o-saglasnosti.xsl","./src/main/resources/data/gen/itext/obrazac-o-saglasnosti.html");
+        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml", "./src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl","./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.html");
 
         pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
 

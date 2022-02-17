@@ -47,7 +47,7 @@
                         <span class="cls_003"><b><xsl:value-of select="//zah:podnosilac/zaj:brojPasosa"/></b></span> </span>
                     </div>
                     <div style="position:absolute;left:87.60px;top:353.04px" class="cls_003"><span class="cls_003">Разлог за подношење захтева:
-                        <span class="cls_003"><b><xsl:value-of select="//zah:razlog"/></b></span></span>
+                        <span class="cls_003"><b><xsl:value-of select="//zah:razlog" disable-output-escaping="yes"/></b></span></span>
                     </div>
                     <div style="position:absolute;left:131.88px;top:433.84px" class="cls_004"><span class="cls_004">(навести што прецизнији разлога за подношење захтева за издавање дигиталног пасоша)</span></div>
                     <div style="position:absolute;left:87.60px;top:497.40px" class="cls_003"><span class="cls_003">У

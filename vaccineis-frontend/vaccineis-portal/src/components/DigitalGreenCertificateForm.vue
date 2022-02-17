@@ -86,7 +86,6 @@ export default {
           options: {
               modules: {
                 'toolbar': [
-                    [{'size': []}],
                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ 'color': [] }, { 'background': [] }],
@@ -120,9 +119,11 @@ export default {
 
         onChange(html, text) {
           console.log(html.length, text.length);
+          let temp = html.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
           console.log(text);
           console.log(html);
-        }
+          console.log(temp);
+        },
 
     },
 };
