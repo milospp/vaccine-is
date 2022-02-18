@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TerminService {
-    Termin addTermin(Termin termin);
+    Termin addTermin(String termin);
     Termin getTermin(String uuid);
     List<Termin> findTermin(String query);
     List<Termin> getAll();
 
     //TODO: Testirati
-    Termin zakaziPrviSlovodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException;
+    Termin zakaziPrviSlobodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException;
 
     void saveMetadata(Termin termin);
 }

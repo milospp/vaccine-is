@@ -8,6 +8,7 @@ import vaccineisemployee.termin.model.Termin;
 import vaccineisemployee.termin.service.TerminService;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.model.STpol;
+import zajednicko.service.MailService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -16,32 +17,32 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/termin")
 public class TerminController {
 
     private final TerminService terminService;
+    private final MailService mailService;
 
     @GetMapping()
     public ResponseEntity<Termin> getInteresovanje() throws DatatypeConfigurationException {
-        Termin t = new Termin();
-        LocalDate localDate = LocalDate.of(2019, 4, 25);
-
-        XMLGregorianCalendar xmlGregorianCalendar =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar("2024-10-10T05:22:33");
-
+//        Termin t = new Termin();
+//        LocalDate localDate = LocalDate.of(2019, 4, 25);
+//
+//        XMLGregorianCalendar xmlGregorianCalendar =
+//                DatatypeFactory.newInstance().newXMLGregorianCalendar("2024-10-10T05:22:33");
+//
         CTlicniPodaci lp = new CTlicniPodaci();
         lp.setId(String.valueOf(UUID.randomUUID()));
         lp.setIme("marko");
         lp.setPrezime("petrovic");
         lp.setPol(STpol.МУШКО);
-        t.setDatumVrijeme(xmlGregorianCalendar);
-        t.setKorisnik(lp);
-        t = terminService.addTermin(t);
+        lp.setDatumRodjenja(DatatypeFactory.newInstance().newXMLGregorianCalendar("2024-10-10T05:22:33"));
 
-        terminService.saveMetadata(t);
-        System.out.println("Radi");
+        Termin t = terminService.zakaziPrviSlobodan(lp);
+//        System.out.println("Radi");
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
 

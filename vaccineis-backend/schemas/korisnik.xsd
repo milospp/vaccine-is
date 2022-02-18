@@ -7,6 +7,7 @@
     <xs:element name="korisnik">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
                 <xs:element name="ime" type="zaj:STime"/>
                 <xs:element name="prezime" type="zaj:STprezime"/>
                 <xs:element name="email" type="zaj:STemail"/>

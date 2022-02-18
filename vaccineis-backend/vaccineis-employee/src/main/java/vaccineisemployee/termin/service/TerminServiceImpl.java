@@ -1,14 +1,12 @@
 package vaccineisemployee.termin.service;
 
 import lombok.AllArgsConstructor;
-import net.sf.cglib.core.Local;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.Collection;
 import vaccineisemployee.termin.model.Termin;
 import vaccineisemployee.termin.repository.TerminExistRepository;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.repository.CRUDRDFRepository;
+import zajednicko.service.MarshallingService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -24,10 +22,11 @@ import java.util.stream.Collectors;
 public class TerminServiceImpl implements TerminService{
     protected final TerminExistRepository terminExistRepository;
     private final CRUDRDFRepository crudrdfRepository;
+    private final MarshallingService marshallingService;
 
     @Override
-    public Termin addTermin(Termin termin) {
-        return terminExistRepository.save(termin);
+    public Termin addTermin(String termin) {
+        return terminExistRepository.create(termin);
     }
 
     @Override
@@ -47,17 +46,22 @@ public class TerminServiceImpl implements TerminService{
     }
 
     @Override
-    public Termin zakaziPrviSlovodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException {
+    public Termin zakaziPrviSlobodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException {
         LocalDateTime localDateTime = findFreeTermin();
         if (localDateTime == null) return null;
 
         Termin termin = new Termin();
 
         XMLGregorianCalendar xmlGregorianCalendar =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.toString());
+                DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.toString() + ":00");
+//        termin.setId(String.valueOf(UUID.randomUUID()));
+        termin.setId(null);
         termin.setDatumVrijeme(xmlGregorianCalendar);
         termin.setKorisnik(cTlicniPodaci);
-        return addTermin(termin);
+        String varijabla = marshallingService.marshall(termin, Termin.class);
+        Termin t = addTermin(varijabla);
+        saveMetadata(t);
+        return t;
     }
 
 
@@ -72,18 +76,18 @@ public class TerminServiceImpl implements TerminService{
             broj_termina.put(LocalDate.now().plusDays(i), 0);
         }
 
-        List<Termin> termini = getAll();
-        for (Termin t : termini) {
-            LocalDate localDate = LocalDate.of(
-                    t.getDatumVrijeme().getYear(),
-                    t.getDatumVrijeme().getMonth(),
-                    t.getDatumVrijeme().getDay());
-
-            if (localDate.isBefore(startDate) || localDate.isAfter(endDate)) continue;
-
-            Integer br = broj_termina.getOrDefault(localDate, 0) + 1;
-            broj_termina.put(localDate, br);
-        }
+//        List<Termin> termini = getAll();
+//        for (Termin t : termini) {
+//            LocalDate localDate = LocalDate.of(
+//                    t.getDatumVrijeme().getYear(),
+//                    t.getDatumVrijeme().getMonth(),
+//                    t.getDatumVrijeme().getDay());
+//
+//            if (localDate.isBefore(startDate) || localDate.isAfter(endDate)) continue;
+//
+//            Integer br = broj_termina.getOrDefault(localDate, 0) + 1;
+//            broj_termina.put(localDate, br);
+//        }
 
         LocalDate freeDay;
         LocalDateTime freeAppointment;
@@ -93,7 +97,7 @@ public class TerminServiceImpl implements TerminService{
         for ( Map.Entry<LocalDate, Integer> entry : broj_termina.entrySet()){
             if (entry.getValue() < max_termina) {
                 freeDay = entry.getKey();
-                return freeDay.atTime(LocalTime.of(8,0)).plusHours(entry.getValue());
+                return freeDay.atTime(LocalTime.of(8,0, 0)).plusHours(entry.getValue());
 
             }
         }
