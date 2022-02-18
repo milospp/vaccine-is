@@ -28,13 +28,13 @@ public class DbInit {
             userService.create(marshallingService.marshall(korisnik, Korisnik.class));
 
         // VAKCINE
-        List<Vakcina> vakcine = VakcinaConstants.getSveDefaultVakcine();
-        for (Vakcina vakcina: vakcine) {
-            try {
-                vakcinaService.addKolicina(String.valueOf(vakcina.getNaziv()), 1);
-            } catch (Exception e) {
-                vakcinaService.create(marshallingService.marshall(vakcina, Vakcina.class));
-            }
-        }
+//        List<Vakcina> vakcine = VakcinaConstants.getSveDefaultVakcine();
+//        for (Vakcina vakcina: vakcine) {
+//            try {
+//                vakcinaService.addKolicina(String.valueOf(vakcina.getNaziv()), 1);
+//            } catch (Exception e) {
+//                vakcinaService.create(marshallingService.marshall(vakcina, Vakcina.class));
+//            }
+//        }
     }
 }

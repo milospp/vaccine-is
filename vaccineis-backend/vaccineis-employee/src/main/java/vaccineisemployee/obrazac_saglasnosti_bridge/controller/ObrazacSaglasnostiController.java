@@ -1,9 +1,7 @@
 package vaccineisemployee.obrazac_saglasnosti_bridge.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import vaccineisemployee.authentication.service.AuthenticationService;
 import vaccineisemployee.obrazac_saglasnosti_bridge.service.ObrazacSaglasnostiService;
@@ -38,5 +36,10 @@ public class ObrazacSaglasnostiController {
         DocDatas saglasnosti = saglasnostiService.getSaglasnostiByUser(korisnik.getId());
 
         return new ResponseEntity<>(saglasnosti, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/podnete-saglasnosti")
+    public ResponseEntity<String> getPodnetiObrasciSaglasnosti() {
+        return saglasnostiService.getPodneteObrasce();
     }
 }

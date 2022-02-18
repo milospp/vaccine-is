@@ -8,13 +8,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 import vaccineisportal.authentication.service.AuthenticationService;
+import vaccineisportal.obrazac_saglasnosti.model.ListaSaglasnosti;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.service.MarshallingService;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -23,6 +27,7 @@ public class ObrazacSaglasnostiController {
 
     private final ObrazacSaglasnostiService obrazacSaglasnostiService;
     private final AuthenticationService authenticationService;
+    private final MarshallingService marshallingService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -51,5 +56,15 @@ public class ObrazacSaglasnostiController {
         DocDatas interesovanjes = obrazacSaglasnostiService.getObrasciByUser(korisnik.getId());
 
         return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/podnete-saglasnosti")
+    public ResponseEntity<String> getPodnetiObrasciSaglasnosti() {
+        List<Saglasnost> saglasnosti = obrazacSaglasnostiService.findAll().stream().filter(o -> o.getEvidencijaVakcinacije() == null).collect(Collectors.toList());
+
+        ListaSaglasnosti retVal = new ListaSaglasnosti();
+        retVal.setSaglasnosti(saglasnosti);
+
+        return new ResponseEntity<>(marshallingService.marshall(retVal, ListaSaglasnosti.class), HttpStatus.OK);
     }
 }

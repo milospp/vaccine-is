@@ -84,8 +84,8 @@ export default {
           InteresovanjeService.getInteresovanjeHtml(uuid);
         },
 
-        viewInteresovanjePdf() {
-          InteresovanjeService.viewInteresovanjePdf();
+        viewInteresovanjePdf(uuid) {
+          InteresovanjeService.viewInteresovanjePdf(uuid);
         },
 
         viewSertifikatPdf() {
@@ -166,7 +166,7 @@ export default {
 
     created() {
         this.getDocs();
-    }
+    },
 };
 </script>
 

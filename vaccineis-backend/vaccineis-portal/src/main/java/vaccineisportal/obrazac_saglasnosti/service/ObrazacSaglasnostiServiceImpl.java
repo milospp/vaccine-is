@@ -34,6 +34,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -60,6 +61,11 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
     @Override
     public Saglasnost update(String xmlString) {
         return null;
+    }
+
+    @Override
+    public List<Saglasnost> findAll() {
+        return obrazacSaglasnostiExistRepository.findAll();
     }
 
     @Override

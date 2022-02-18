@@ -5,6 +5,7 @@ import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
 import zajednicko.model.docdatas.DocDatas;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface PotvrdaService {
     PotvrdaVakcinacije create(String xmlString);
@@ -14,6 +15,8 @@ public interface PotvrdaService {
     void extractMetadataPotvrda(PotvrdaVakcinacije potvrdaVakcinacije);
 
     ResponseEntity<?> getPdf(String id) throws IOException;
+
+    PotvrdaVakcinacije getPoslednjuPotvrdu(String uuid);
 
     ResponseEntity<?> getHtml(String id) throws IOException;
 

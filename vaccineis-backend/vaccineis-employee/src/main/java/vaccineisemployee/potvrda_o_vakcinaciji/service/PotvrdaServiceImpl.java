@@ -50,7 +50,11 @@ public class PotvrdaServiceImpl implements PotvrdaService{
     public void extractMetadataPotvrda(PotvrdaVakcinacije potvrdaVakcinacije) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
+
+        cleanLastJmbg(potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
         crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", localDateTime.toString());
+        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
+        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "poslednja_potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
         crudrdfRepository.uploadTriplet("metadates", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", korisnik.getId() );
     }
 
@@ -97,13 +101,37 @@ public class PotvrdaServiceImpl implements PotvrdaService{
         String xmlString = marshallingService.marshall(potvrdaVakcinacije, PotvrdaVakcinacije.class);
 
         Xml2PdfTransformer pdfTransformer = new Xml2PdfTransformer(ZajednickoUtil.POTVRDA_PDF);
-        byte[] arr =  pdfTransformer.generatePDF(xmlString);
+        byte[] arr = pdfTransformer.generatePDF(xmlString);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentLength(arr.length);
         responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
         responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile.pdf"));
         return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    @Override
+    public PotvrdaVakcinacije getPoslednjuPotvrdu(String uuid) {
+
+        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+
+        for (ResultSet it = results; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            PotvrdaVakcinacije i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
+            return i;
+        }
+
+        return null;
+    }
+
+    private void cleanLastJmbg(String uuid){
+        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        for (ResultSet it = results; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            String sub = s.get("s").toString();
+            crudrdfRepository.deleteTriplet("rdf", sub, "poslednja_potvrda_jmbg", uuid);
+        }
+
     }
 
     @Override
