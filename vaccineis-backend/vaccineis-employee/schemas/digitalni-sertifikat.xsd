@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/digitalni-sertifikat"
+    xmlns="http://www.ftn.uns.ac.rs/digitalni-sertifikat"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
+    <xs:element name="zeleniSertifikat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
+                <xs:element name="qrKod"/>
+                <xs:element name="podaciVakcinisanog" type="zaj:CTpodnosilacZahtjeva"/>
+                <xs:element name="vakcinacija" type="CTvakcinacijaPodaciSertifikat"/>
+                <xs:element name="testovi" type="CTtest"/>
+                <xs:element name="infoSertifikata" type="CTinfoSertifikata"/>
+            </xs:sequence>
+            <xs:attribute name="brojSertifikata" use="required" type="zaj:STbrojSertifikata"/>
+            <xs:attribute name="datumVrijemeIzdavanja" use="required" type="zaj:STdatumVrijeme"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="CTinfoSertifikata">
+        <xs:all>
+            <xs:element name="izdavacSertifikata">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="digitalniPotpis"> <!-- PITATI DA LI TREBA -->
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="nazivUstanove" type="xs:string"/>
+                        <xs:element name="adresaUstanove" type="zaj:CTadresa"/>
+                        <xs:element name="datumIzdavanja" type="zaj:STdatum"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+    
+    <xs:complexType name="CTvakcinacijaPodaciSertifikat">
+        <xs:sequence maxOccurs="unbounded" minOccurs="2">
+            <xs:element name="doza">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="vakcinaPodaci" type="zaj:CTvakcinacijaPodaci"/>
+                        <xs:element name="proizvodjac" type="xs:string"/>
+                        <xs:element name="serijaVakcine" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="CTtest">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="test">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tipTesta">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="SARS-CoV-2 RT Real-time PCR"/>
+                                    <xs:enumeration value="SARS-CoV-2 Ag-RDT (Antigen Rapid Detection test)"/>
+                                    <xs:enumeration value="SARS-CoV-2 RBD S-Protein Immunoglobulin G (lgG) test"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="vrstaUzorka" type="xs:string"/>
+                        <xs:element name="proizvodjacTesta" type="xs:string"/>
+                        <xs:element name="datumVremeUzorkovanja" type="zaj:STdatumVrijeme"/>
+                        <xs:element name="datumVremeRezultata" type="zaj:STdatumVrijeme"/>
+                        <xs:element name="rezultat" type="xs:string"/>
+                        <xs:element name="laboratorija" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/interesovanje"
+    xmlns="http://www.ftn.uns.ac.rs/interesovanje" xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
+    <xs:element name="interesovanje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
+                <xs:element name="licneInformacije">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="drzavljanstvo">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Држављанин Републике Србије"/>
+                                        <xs:enumeration value="Страни држављанин са боравком у РС"/>
+                                        <xs:enumeration value="Страни држављанин без боравка у РС"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="jmbg" type="zaj:STjmbg"/>
+                            <xs:element name="ime" type="zaj:STime"/>
+                            <xs:element name="prezime" type="zaj:STprezime"/>
+                            <xs:element name="kontakt" type="zaj:CTkontakt"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="lokacijaPrimanja" type="zaj:STlokacija"/>
+                <xs:element name="nazivVakcine" type="zaj:STodabirVakcine"/>
+                <xs:element name="davalacKrvi">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Да"/>
+                            <xs:enumeration value="Не"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="datum" type="zaj:STdatum"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
