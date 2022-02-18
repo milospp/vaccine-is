@@ -33,7 +33,22 @@ public abstract class CRUDRepositoryImpl<T extends BaseModel> implements CRUDRep
 
     @Override
     public List<T> findAll() {
-        return new ArrayList<>();
+        List<T> entities = new ArrayList<>();
+
+        List<Node> nodes;
+        try {
+            nodes =  existManager.loadAll(collectionId);
+        } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            return entities;
+        }
+
+        for (Node node : nodes){
+            T entity = marshallingService.unmarshall(node, getEntityClass());
+            entities.add(entity);
+        }
+
+        return entities;
     }
 
     @Override
