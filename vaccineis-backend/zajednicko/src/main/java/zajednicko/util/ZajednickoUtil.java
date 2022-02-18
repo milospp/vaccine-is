@@ -4,11 +4,22 @@ public class ZajednickoUtil {
     public static String XML_PREFIX = "http://www.ftn.uns.ac.rs/";
     public static String RDF_PREDICATE = "http://www.ftn.uns.ac.rs/predicate/";
 
+    public static String INTERESOVANJE_XSLT = "zajednicko/src/main/resources/data/xslt/interesovanje.xsl";
+    public static String INTERESOVANJE_PDF = "zajednicko/src/main/resources/data/xsl-fo/interesovanje.xsl";
+    public static String ZAHTEV_ZA_ZS_XSLT = "zajednicko/src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl";
 
     public static String getIdFromUri(String uri) {
         uri = uri.strip();
         if (uri.lastIndexOf('/') == uri.length() - 1) uri = uri.substring(0, uri.length()-1);
         int first_index = uri.lastIndexOf('/');
         return uri.substring(first_index + 1);
+    }
+
+    public static String literalQuotes(String literal) {
+        if (literal.startsWith("http://")) {
+            return "<" + literal + ">";
+        } else {
+            return "\"" + literal + "\"";
+        }
     }
 }

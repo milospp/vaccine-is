@@ -40,6 +40,17 @@ public class ZahtevSertifikataController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+
+//    @PreAuthorize("hasAnyAuthority('GRADJANIN')")
+//    @GetMapping(value = "/moji-zahtevi")
+//    public ResponseEntity<List<Zahtjev>> getZahteviByStatusPodnet() {
+//
+////        zahtevSertifikataService
+//
+//        return new ResponseEntity<>(null, HttpStatus.OK);
+//    }
+
+
     @GetMapping(value = "/get-pdf")
     public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
         return zahtevSertifikataService.getPdf(2); // id za dok

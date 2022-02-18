@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.ftn.uns.ac.rs/zahtjevSertifikata"
-    xmlns="http://www.ftn.uns.ac.rs/zahtjevSertifikata"
+    targetNamespace="http://www.ftn.uns.ac.rs/docDatas"
+    xmlns="http://www.ftn.uns.ac.rs/docDatas"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">    
     <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
 
-    <xs:element name="zahtjev">
+    <xs:element name="docDatas">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
-                <xs:element name="podnosilac" type="zaj:CTpodnosilacZahtjeva"/>
-                <xs:element name="razlog" type="xs:string"/>
-                <xs:element name="mjestoDatum">
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="docData">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="lokacija" type="zaj:STlokacija"/>
+                            <xs:element name="id" type="zaj:STid"/>
+                            <xs:element name="naziv" type="xs:string"/>
+                            <xs:element name="ime" type="zaj:STime"/>
+                            <xs:element name="prezime" type="zaj:STprezime"/>
                             <xs:element name="datum" type="zaj:STdatum"/>
                         </xs:sequence>
                     </xs:complexType>

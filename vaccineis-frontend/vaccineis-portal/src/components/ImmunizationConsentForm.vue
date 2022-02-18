@@ -437,8 +437,10 @@ export default {
             },
 
             ustanova: "",
-            date16YrsAgo: new Date()
+            date16YrsAgo: new Date(),
+
         };
+
     },
 
     created() {

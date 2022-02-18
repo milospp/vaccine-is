@@ -44,12 +44,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "korisnikId",
+    "interesovanjeId",
     "datumVrijeme"
 })
 @XmlRootElement(name = "termin")
 public class Termin extends BaseModel {
     @XmlElement(required = true)
     protected String korisnikId;
+    @XmlElement(required = true)
+    protected String interesovanjeId;
     @XmlElement(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar datumVrijeme;
@@ -72,6 +75,14 @@ public class Termin extends BaseModel {
      */
     public XMLGregorianCalendar getDatumVrijeme() {
         return datumVrijeme;
+    }
+
+    public String getInteresovanjeId() {
+        return interesovanjeId;
+    }
+
+    public void setInteresovanjeId(String interesovanjeId) {
+        this.interesovanjeId = interesovanjeId;
     }
 
     /**

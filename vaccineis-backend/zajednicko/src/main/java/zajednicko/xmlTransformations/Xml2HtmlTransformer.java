@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.TransformerFactoryImpl;
 import com.itextpdf.text.DocumentException;
+import org.exist.source.StringSource;
 import org.xml.sax.InputSource;
 
 public class Xml2HtmlTransformer {
@@ -42,20 +43,30 @@ public class Xml2HtmlTransformer {
 
     }
 
+    public Xml2HtmlTransformer() {
+    }
+
     public Xml2HtmlTransformer(String xmlInputFile, String xslInputFile, String htmlOutFile) {
         INPUT_FILE = xmlInputFile;
         XSL_FILE = xslInputFile;
         HTML_FILE = htmlOutFile;
     }
 
-    public org.w3c.dom.Document buildDocument(String filePath) {
+
+    public org.w3c.dom.Document buildDocument(String filePath) throws IOException {
+
+        File file = new File(filePath);
+        String temp = new String(Files.readAllBytes(Paths.get(filePath)));
+        return buildDocumentString(temp);
+    }
+
+    public org.w3c.dom.Document buildDocumentString(String xmlString) {
 
         org.w3c.dom.Document document = null;
         try {
 
             DocumentBuilder builder = documentFactory.newDocumentBuilder();
-            File file = new File(filePath);
-            String temp = new String(Files.readAllBytes(Paths.get(filePath)));
+            String temp = xmlString;
             temp = temp.replace("&amp;lt", "&lt").replace("&amp;gt", "&gt").replace("&amp;quot", "&quot");
 
             document = builder.parse(new InputSource(new StringReader(temp))); //builder.parse(file);
@@ -73,7 +84,7 @@ public class Xml2HtmlTransformer {
         return document;
     }
 
-    public void generateHTML(String xmlPath, String xslPath) throws FileNotFoundException {
+    public String generateHTML(String xmlString, String xslPath) throws FileNotFoundException {
 
         try {
 
@@ -88,26 +99,34 @@ public class Xml2HtmlTransformer {
             transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
 
             // Transform DOM to HTML
-            DOMSource source = new DOMSource(buildDocument(xmlPath));
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
+            DOMSource source = new DOMSource(buildDocumentString(xmlString));
+//            StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
+
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+
             transformer.transform(source, result);
 
-        } catch (TransformerFactoryConfigurationError | TransformerException e) {
+            return writer.toString();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
 
     }
 
     public static void main(String[] args) throws IOException, DocumentException {
 
-        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
+//        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
 
         Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xslt/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.html");
 
         pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
 
-        System.out.println("[INFO] File \"" + HTML_FILE + "\" generated successfully.");
-        System.out.println("[INFO] End.");
+//        System.out.println("[INFO] File \"" + HTML_FILE + "\" generated successfully.");
+//        System.out.println("[INFO] End.");
     }
 
     /*
