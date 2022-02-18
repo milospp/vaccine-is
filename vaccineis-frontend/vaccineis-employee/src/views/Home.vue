@@ -1,6 +1,7 @@
 <template>
     <div>
         <Navbar />
+        <napredna-pretraga />
         <article>
             <h1 class="button-primary" >Добродошли службеници</h1>
             <h2>Изаберите једну од могућности из навигационог бара</h2>
@@ -12,10 +13,11 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import NaprednaPretraga from "@/components/NaprednaPretraga";
 
 export default {
     name: "Home",
-    components: { Navbar },
+    components: {NaprednaPretraga, Navbar },
 };
 </script>
 
