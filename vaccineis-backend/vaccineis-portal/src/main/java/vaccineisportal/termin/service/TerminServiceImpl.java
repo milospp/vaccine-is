@@ -11,6 +11,7 @@ import vaccineisportal.termin.repository.TerminExistRepository;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MarshallingService;
+import zajednicko.util.ZajednickoUtil;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -52,24 +53,21 @@ public class TerminServiceImpl implements TerminService{
     }
 
     @Override
-    public Termin zakaziPrviSlobodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException {
-        LocalDateTime localDateTime = findFreeTermin();
+    public Termin zakaziPrviSlobodan(String uuid, LocalDateTime localDateTime) throws DatatypeConfigurationException {
+        if (localDateTime == null) localDateTime = findFreeTermin();
         if (localDateTime == null) return null;
 
         Termin termin = new Termin();
 
         XMLGregorianCalendar xmlGregorianCalendar =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.toString() + ":00");
-//        termin.setId(String.valueOf(UUID.randomUUID()));
-        termin.setId(null);
         termin.setDatumVrijeme(xmlGregorianCalendar);
-        termin.setKorisnik(cTlicniPodaci);
+        termin.setKorisnikId(ZajednickoUtil.getIdFromUri(uuid));
         String varijabla = marshallingService.marshall(termin, Termin.class);
         Termin t = addTermin(varijabla);
         saveMetadata(t);
         return t;
     }
-
 
 
     private LocalDateTime findFreeTermin() {
@@ -113,7 +111,8 @@ public class TerminServiceImpl implements TerminService{
 
     @Override
     public void saveMetadata(Termin termin) {
-        crudrdfRepository.uploadTriplet("gradjanin","korisnik/" + termin.getKorisnik().getId().toString(), "termin", termin.getId().toString());
+        crudrdfRepository.uploadTriplet("rdf",ZajednickoUtil.XML_PREFIX + "korisnik/" + termin.getKorisnikId().toString(), "termin", ZajednickoUtil.XML_PREFIX + "termin/" + termin.getId());
+        crudrdfRepository.uploadTriplet("rdf",ZajednickoUtil.XML_PREFIX + "termin/" + termin.getId(), "termin_ceka_potvrdu", "true");
     }
 
     @Override
@@ -141,9 +140,32 @@ public class TerminServiceImpl implements TerminService{
 
     private LocalDateTime srediTerminZa(String uri, String ceka_od) {
         LocalDateTime freeTermin = this.findFreeTermin();
+        try {
+            zakaziPrviSlobodan(uri, freeTermin);
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
         if (freeTermin == null) return null;
 
         crudrdfRepository.deleteTriplet("rdf", uri, "ceka_od", ceka_od);
         return freeTermin;
+    }
+
+    @Override
+    public Termin dobaviTerminBezSaglasnosti() {
+        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "termin_ceka_potvrdu", "true");
+        if (!results.hasNext()) return null;
+
+        QuerySolution s = results.next();
+        String terminUri = s.get("s").toString();
+
+        String[] token = terminUri.split("/");
+        String terminId = token[token.length - 1];
+
+
+        Termin termin = getTermin(terminId);
+
+        return termin;
+
     }
 }
