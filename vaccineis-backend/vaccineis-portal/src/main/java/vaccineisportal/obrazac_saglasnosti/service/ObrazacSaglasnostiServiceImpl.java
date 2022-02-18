@@ -1,9 +1,8 @@
 package vaccineisportal.obrazac_saglasnosti.service;
 
 import lombok.AllArgsConstructor;
-import org.apache.commons.io.FileUtils;
-import org.apache.xerces.dom.ElementNSImpl;
-import org.apache.xerces.dom.TextImpl;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,10 +14,14 @@ import org.xml.sax.SAXException;
 import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.repository.ObrazacSaglasnostiExistRepository;
+import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
+import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
 import zajednicko.util.ZajednickoUtil;
+import zajednicko.xmlTransformations.Xml2HtmlTransformer;
+import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,9 +29,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -40,6 +43,7 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
     private final CRUDRDFRepository crudrdfRepository;
     private final AuthenticationService authenticationService;
     private final MarshallingService marshallingService;
+    private final MailService mailService;
 
     @Override
     public Saglasnost create(String xmlString) {
@@ -108,22 +112,81 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "datumIzdavanja", String.valueOf(localDateTime));
     }
 
-    public ResponseEntity<byte[]> getPdf(int id) throws IOException {
-        return getDocument("pdf");
+    public ResponseEntity<?> getPdf(String id) throws IOException {
+        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+
+        Saglasnost i = findOne(id);
+        try {
+            return this.getPdfDocument(i);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
-    public ResponseEntity<byte[]> getHtml(int id) throws IOException {
-        return getDocument("html");
+    public ResponseEntity<?> getHtml(String id) throws IOException {
+        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+
+        Saglasnost i = findOne(id);
+        return this.getHtmlDocument(i);
     }
 
-    public static ResponseEntity<byte[]> getDocument(String type) throws IOException {
-        File file = new File("./src/main/resources/files/interesovanje."+type);
-        byte[] arr = FileUtils.readFileToByteArray(file);
+    public ResponseEntity<?> getHtmlDocument(Saglasnost saglasnost) throws IOException {
+        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
+
+        String xmlString = marshallingService.marshall(saglasnost, Saglasnost.class);
+
+        Xml2HtmlTransformer htmlTransformer = new Xml2HtmlTransformer();
+        String htmlData = htmlTransformer.generateHTML(xmlString, ZajednickoUtil.SAGLASNOST_XSLT);
+        byte[] arr = htmlData.getBytes(StandardCharsets.UTF_8);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentLength(arr.length);
-        responseHeaders.setContentType(MediaType.valueOf("application/" + type));
-        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile."+type));
-        return new ResponseEntity<byte[]> (arr, responseHeaders, HttpStatus.OK);
+        responseHeaders.setContentType(MediaType.valueOf("application/html"));
+        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile.html"));
+        return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getPdfDocument(Saglasnost saglasnost) throws Exception {
+        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
+
+        String xmlString = marshallingService.marshall(saglasnost, Saglasnost.class);
+
+        Xml2PdfTransformer pdfTransformer = new Xml2PdfTransformer(ZajednickoUtil.SAGLASNOST_PDF);
+        byte[] arr =  pdfTransformer.generatePDF(xmlString);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentLength(arr.length);
+        responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
+        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile.pdf"));
+        return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    @Override
+    public DocDatas getObrasciByUser(String uuid) {
+        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+
+        DocDatas a = new DocDatas();
+
+        for (ResultSet it = results; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            Saglasnost i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
+            DocDatas.DocData data = new DocDatas.DocData();
+            data.setId(i.getId());
+            data.setNaziv("Saglasnost");
+            data.setDatum(i.getPodaciPacijenta().getDatumSaglasnosti());
+            data.setType("saglasnost");
+            data.setUri(ZajednickoUtil.XML_PREFIX + "saglasnost/" + i.getId());
+            data.setIme(i.getPodaciPacijenta().getIme());
+            data.setPrezime(i.getPodaciPacijenta().getPrezime());
+            a.getDocData().add(data);
+        }
+
+        return a;
+    }
+
+    @Override
+    public Saglasnost findOne(String id) {
+        return obrazacSaglasnostiExistRepository.findOne(id);
     }
 }

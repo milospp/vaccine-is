@@ -36,6 +36,10 @@
 <script>
 import InteresovanjeService from '@/service/InteresovanjeService';
 import DigitalniZeleniSertifikatService from "@/service/DigitalniZeleniSertifikatService";
+import ObrazacSaglasnostiService from "@/service/ObrazacSaglasnostiService";
+import ZahtjevZaSertifikatService from "@/service/ZahtjevZaSertifikatService";
+import PotvrdaVakcinacijeService from "@/service/PotvrdaVakcinacijeService";
+
 import xmljs from "xml-js";
 
 export default {
@@ -90,12 +94,59 @@ export default {
 
         getDocs() {
             InteresovanjeService.mojaInteresovanja().then(response => {
-                let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4})); 
-                console.log(data);
-                data = data['docDatas']['docData'];
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!(data instanceof Array)) data = [data];
 
-               this.docs = data;
-            }) 
+                    this.docs = data;
+                }
+            });
+
+            ObrazacSaglasnostiService.mojiObrasci().then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!(data instanceof Array)) data = [data];
+
+                    this.docs.concat(data);
+                }
+            });
+
+            ZahtjevZaSertifikatService.mojiZahtjevi().then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!(data instanceof Array)) data = [data];
+
+                    this.docs.concat(data);
+                }
+            });
+
+            DigitalniZeleniSertifikatService.mojiDigitalniSertifikati().then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!(data instanceof Array)) data = [data];
+
+                    this.docs.concat(data);
+                }
+            });
+
+            PotvrdaVakcinacijeService.mojePotvrde().then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!(data instanceof Array)) data = [data];
+
+                    this.docs.concat(data);
+                }
+            });
         },
         
         fromatDate(string) {

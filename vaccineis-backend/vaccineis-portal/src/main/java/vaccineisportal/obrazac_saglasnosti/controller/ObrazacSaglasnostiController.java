@@ -6,8 +6,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
+import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
+import zajednicko.model.docdatas.DocDatas;
+import zajednicko.model.korisnik.Korisnik;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -16,6 +22,7 @@ import java.io.IOException;
 public class ObrazacSaglasnostiController {
 
     private final ObrazacSaglasnostiService obrazacSaglasnostiService;
+    private final AuthenticationService authenticationService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -26,13 +33,23 @@ public class ObrazacSaglasnostiController {
     }
 
     //@PreAuthorize("hasRole('PACIJENT')")
-    @GetMapping(value = "/get-pdf")
-    public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
-        return obrazacSaglasnostiService.getPdf(2);
+    @GetMapping(value = "/get-pdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjePdf(@PathVariable("uuid") String uuid) throws IOException {
+        return obrazacSaglasnostiService.getPdf(uuid);
     }
 
-    @GetMapping(value = "/get-html")
-    public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
-        return obrazacSaglasnostiService.getHtml(2);
+    @GetMapping(value = "/get-html/{uuid}")
+    public ResponseEntity<?> getInteresovanjeHtml(@PathVariable("uuid") String uuid) throws IOException {
+        return obrazacSaglasnostiService.getHtml(uuid);
+    }
+
+    @GetMapping(value = "/moji-obrasci", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public ResponseEntity<DocDatas> getMojeSaglasnosti() {
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        DocDatas interesovanjes = obrazacSaglasnostiService.getObrasciByUser(korisnik.getId());
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }
 }

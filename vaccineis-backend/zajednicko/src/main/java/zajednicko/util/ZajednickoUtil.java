@@ -6,7 +6,21 @@ public class ZajednickoUtil {
 
     public static String INTERESOVANJE_XSLT = "zajednicko/src/main/resources/data/xslt/interesovanje.xsl";
     public static String INTERESOVANJE_PDF = "zajednicko/src/main/resources/data/xsl-fo/interesovanje.xsl";
+
     public static String ZAHTEV_ZA_ZS_XSLT = "zajednicko/src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl";
+    public static String ZAHTEV_ZA_ZS_PDF = "zajednicko/src/main/resources/data/xsl-fo/interesovanje.xsl";
+
+    public static String SAGLASNOST_XSLT = "zajednicko/src/main/resources/data/xslt/obrazac-o-saglasnosti.xsl";
+    public static String SAGLASNOST_PDF = "zajednicko/src/main/resources/data/xsl-fo/obrazac-o-saglasnosti.xsl";
+
+    public static String POTVRDA_XSLT = "zajednicko/src/main/resources/data/xslt/potvrda-o-vakcinaciji.xsl";
+    public static String POTVRDA_PDF = "zajednicko/src/main/resources/data/xsl-fo/potvrda-o-vakcinaciji.xsl";
+
+    public static String DIGITALNI_XSLT = "zajednicko/src/main/resources/data/xslt/digitalni-sertifikat.xsl";
+    public static String DIGITALNI_PDF = "zajednicko/src/main/resources/data/xsl-fo/digitalni-sertifikat.xsl";
+
+    public static String IZVESTAJ_XSLT = "zajednicko/src/main/resources/data/xslt/izvjestaj-o-imunizaciji.xsl";
+    public static String IZVESTAJ_PDF = "zajednicko/src/main/resources/data/xsl-fo/izvjestaj-o-imunizaciji.xsl";
 
     public static String getIdFromUri(String uri) {
         uri = uri.strip();

@@ -156,8 +156,6 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     public DocDatas getInteresovanjaByUser(String uuid) {
         ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "interesovanje_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" +uuid);
 
-
-        List<Interesovanje> interesovanjes = new ArrayList<>();
         DocDatas a = new DocDatas();
 
         for (ResultSet it = results; it.hasNext(); ) {
