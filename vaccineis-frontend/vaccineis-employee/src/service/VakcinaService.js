@@ -9,9 +9,19 @@ class VakcinaService {
             method: 'PUT',
             url: `${API_URL}/dodajKolicinu`,
             headers: {
-                'Authorization': 'Bearer ' + "token", // token? ********************************
+                'Content-Type': 'application/xml'
             },
             data: data
+        });
+    }
+
+    loadVakcine() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
         });
     }
 

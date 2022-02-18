@@ -50,7 +50,7 @@ export default {
                     localStorage.setItem('token', token);
                     localStorage.setItem('user', JSON.stringify(user));
 
-                    axios.defaults.headers.common['Authorization'] = "Bearer " + JSON.stringify(token);
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
 
                     this.$store.dispatch('loadAuthorizedUser');
                     this.$router.push("/");
