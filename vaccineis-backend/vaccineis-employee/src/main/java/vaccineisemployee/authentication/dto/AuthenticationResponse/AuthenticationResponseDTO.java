@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.*;
 
-
 @NoArgsConstructor @AllArgsConstructor @Getter
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "ime",
         "prezime",
-//        "jmbg",
         "email",
         "rola",
         "jwt"
@@ -25,8 +23,6 @@ public class AuthenticationResponseDTO {
     private String ime;
     @XmlElement(required = true)
     private String prezime;
-//    @XmlElement(required = true)
-//    private String jmbg;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
@@ -34,11 +30,12 @@ public class AuthenticationResponseDTO {
     @XmlElement(required = false)
     private String jwt;
 
-    public AuthenticationResponseDTO(String ime, String prezime, String email, String rola) {  //String jmbg,
+
+    public AuthenticationResponseDTO(String ime, String prezime, String email, String rola) {
         this.ime = ime;
         this.prezime = prezime;
-//        this.jmbg = jmbg;
         this.email = email;
         this.rola = rola;
     }
 }
+
