@@ -31,6 +31,26 @@ public abstract class CRUDExistRepositoryImpl<T extends BaseModel> implements CR
     protected abstract Class<T> getEntityClass();
 
     @Override
+    public List<T> findAll() {
+        List<T> entities = new ArrayList<>();
+
+        List<Node> nodes;
+        try {
+            nodes =  existManager.loadAll(collectionId);
+        } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            return entities;
+        }
+
+        for (Node node : nodes){
+            T entity = marshallingService.unmarshall(node, getEntityClass());
+            entities.add(entity);
+        }
+
+        return entities;
+    }
+
+    @Override
     public T findOne(String id) {
         Node resource;
         try {
@@ -51,7 +71,7 @@ public abstract class CRUDExistRepositoryImpl<T extends BaseModel> implements CR
             T entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
             entity.setId(String.valueOf(UUID.randomUUID()));
 
-            existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), marshallingService.marshall(entity, getEntityClass()));
+            existManager.storeFromText(collectionId, entity.getId(), marshallingService.marshall(entity, getEntityClass()));
             return entity;
 
         } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {

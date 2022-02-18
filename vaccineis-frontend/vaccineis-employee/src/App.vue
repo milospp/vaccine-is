@@ -7,7 +7,7 @@ import axios from "axios"
 
 
 export default {
-    beforeMount() {
+    beforeCreate() {
         if (!localStorage.getItem('token'))
             return;
         

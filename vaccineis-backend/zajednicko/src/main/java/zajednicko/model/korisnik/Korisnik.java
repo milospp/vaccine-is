@@ -53,7 +53,6 @@ import java.util.List;
     "prezime",
     "email",
     "sifra",
-    "jmbg",
     "rola"
 })
 @XmlRootElement(name = "korisnik")
@@ -67,8 +66,6 @@ public class Korisnik extends BaseModel implements UserDetails {
     protected String email;
     @XmlElement(required = true)
     protected String sifra;
-    @XmlElement(required = true)
-    protected String jmbg;
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected STrola rola;
@@ -169,29 +166,6 @@ public class Korisnik extends BaseModel implements UserDetails {
         this.sifra = value;
     }
 
-    /**
-     * Gets the value of the jmbg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getJmbg() {
-        return jmbg;
-    }
-
-    /**
-     * Sets the value of the jmbg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setJmbg(String value) {
-        this.jmbg = value;
-    }
 
     /**
      * Gets the value of the rola property.

@@ -5,21 +5,17 @@ import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
 import vaccineisemployee.izvestaj.model.Izvjestaj;
 import zajednicko.db.ExistManager;
-import zajednicko.repository.CRUDRepositoryImpl;
+import zajednicko.repository.CRUDExistRepositoryImpl;
 import zajednicko.service.impl.MarshallingServiceImpl;
 
 import java.util.UUID;
 
 @Repository
-public class IzvestajExistRepository extends CRUDRepositoryImpl<Izvjestaj> {
+public class IzvestajExistRepository extends CRUDExistRepositoryImpl<Izvjestaj> {
 
     @Autowired
     public IzvestajExistRepository(ExistManager existManager, MarshallingServiceImpl marshallingService) {
-        super("db/izvestaji", existManager, marshallingService);
-    }
-
-    public void saveIzvestaj(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), text);
+        super("db/izvestaji", "schemas/izvjestaj-o-imunizaciji.xsd", existManager, marshallingService);
     }
 
     @Override

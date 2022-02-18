@@ -1,4 +1,4 @@
-package vaccineisportal.authentication.dto.AuthenticationRequest;
+package vaccineisemployee.authentication.dto.AuthenticationRequest;
 
 import lombok.Getter;
 
@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "email",
         "sifra"
+
 })
 @XmlRootElement(name = "AuthenticationRequestDTO")
 public class AuthenticationRequestDTO {

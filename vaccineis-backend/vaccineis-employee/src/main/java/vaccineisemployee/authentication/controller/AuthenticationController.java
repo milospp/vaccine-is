@@ -1,4 +1,4 @@
-package vaccineisportal.authentication.controller;
+package vaccineisemployee.authentication.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,15 +10,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import vaccineisportal.authentication.dto.AuthenticationRequest.AuthenticationRequestDTO;
-import vaccineisportal.authentication.dto.AuthenticationResponse.AuthenticationResponseDTO;
-import vaccineisportal.authentication.dto.UserRegistration.UserRegistrationDTO;
+import vaccineisemployee.authentication.dto.AuthenticationRequest.AuthenticationRequestDTO;
+import vaccineisemployee.authentication.dto.AuthenticationResponse.AuthenticationResponseDTO;
+import vaccineisemployee.authentication.dto.UserRegistration.UserRegistrationDTO;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.security.TokenUtils;
 import zajednicko.service.UserService;
 import zajednicko.support.IConverter;
-
-import javax.validation.Valid;
 
 @AllArgsConstructor
 @RestController
@@ -45,19 +43,12 @@ public class AuthenticationController {
         if (korisnik == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value());
+        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getJmbg(), korisnik.getEmail(), korisnik.getRola().value());
         return new ResponseEntity<>(retVal,  HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Korisnik> register(@RequestBody String userRegistrationDTO)  {
-
-        Korisnik korisnik = userService.create(userRegistrationDTO);
-        return new ResponseEntity<>(korisnik, HttpStatus.OK);
-    }
-
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<AuthenticationResponseDTO> login(@Valid @RequestBody AuthenticationRequestDTO authenticationRequest)  {
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody AuthenticationRequestDTO authenticationRequest)  {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getSifra()));
@@ -66,7 +57,7 @@ public class AuthenticationController {
         Korisnik korisnik = (Korisnik) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(korisnik);
 
-        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
+        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getJmbg(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-package vaccineisportal.authentication.dto.UserRegistration;
+package vaccineisemployee.authentication.dto.UserRegistration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "ime",
         "prezime",
+        "jmbg",
         "email",
         "sifra",
         "rola"
@@ -24,6 +25,8 @@ public class UserRegistrationDTO {
     private String ime;
     @XmlElement(required = true)
     private String prezime;
+    @XmlElement(required = true)
+    private String jmbg;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)

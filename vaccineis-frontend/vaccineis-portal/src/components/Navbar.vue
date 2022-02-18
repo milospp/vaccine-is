@@ -25,6 +25,9 @@
                 <li class="nav-item">
                     <router-link v-if="$store.getters.rola === 'GRADJANIN'" :to="{ name: 'ImmunizationConsentRequest' }" class="nav-link">Образац сагласности за имунизацију</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'ZDRAVSTVENI_RADNIK'" :to="{ name: 'ImmunizationConsentRecords' }" class="nav-link">Образци сагласности за имунизацију</router-link>
+                </li>
             </ul>
             <form class="d-flex">
                 <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>
@@ -43,6 +46,7 @@ export default {
     methods: {
         logout() {
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
             this.$router.push({ name: 'Login'});
             this.$router.go();
         },
