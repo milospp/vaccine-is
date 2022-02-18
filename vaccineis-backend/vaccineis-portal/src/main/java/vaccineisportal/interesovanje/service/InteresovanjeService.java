@@ -4,9 +4,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.xml.sax.SAXException;
 import vaccineisportal.interesovanje.model.Interesovanje;
+import zajednicko.model.docdatas.DocDatas;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.List;
 
 public interface InteresovanjeService {
 
@@ -16,9 +18,11 @@ public interface InteresovanjeService {
 
     void extractMetadataInteresovanje(Interesovanje interesovanje);
 
-    ResponseEntity<?> getPdf(int id) throws IOException, ParserConfigurationException, SAXException;
+    ResponseEntity<?> getPdf(String id) throws IOException, ParserConfigurationException, SAXException;
 
-    ResponseEntity<?> getHtml(int id) throws IOException, ParserConfigurationException, SAXException;
+    ResponseEntity<?> getHtml(String id) throws IOException, ParserConfigurationException, SAXException;
+
+    DocDatas getInteresovanjaByUser(String uuid);
 
     void obradiTermine();
 }

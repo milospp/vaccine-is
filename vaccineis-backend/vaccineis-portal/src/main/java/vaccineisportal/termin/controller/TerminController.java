@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class TerminController {
         return new ResponseEntity<>("obradjeno", HttpStatus.OK);
     }
 
-    @GetMapping("/novi-termin")
+    @GetMapping(value = "/novi-termin", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Termin> noviTerminBezSaglasnosti() {
         Termin termin = terminService.dobaviTerminBezSaglasnosti();
         return new ResponseEntity<>(termin, HttpStatus.OK);

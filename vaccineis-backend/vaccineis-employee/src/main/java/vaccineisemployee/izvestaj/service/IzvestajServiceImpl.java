@@ -58,8 +58,7 @@ public class IzvestajServiceImpl implements IzvestajService{
         return getDocument("html");
     }
 
-    public static ResponseEntity<?> getDocument(String type) throws IOException {
-        System.out.println("AWDAWDAWDAWDAWD");
+    private static ResponseEntity<?> getDocument(String type) throws IOException {
         File file = new File("./src/main/resources/data/gen/files/izvjestaj." + type);
         byte[] arr = FileUtils.readFileToByteArray(file);
         System.out.println(Arrays.toString(arr));

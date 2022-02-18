@@ -123,9 +123,15 @@ public class FusekiManager {
         Resource resourceData = model.createResource(resource);
 
         Property property1 = model.createProperty(ZajednickoUtil.RDF_PREDICATE,propery);
-        Literal literal1 = model.createLiteral(literal);
 
-        Statement statement = model.createStatement(resourceData, property1, literal1);
+        Statement statement;
+        if (literal.startsWith("http://")) {
+            Resource resource2 = model.createResource(literal);
+            statement = model.createStatement(resourceData, property1, resource2);
+        } else {
+            Literal literal1 = model.createLiteral(literal);
+            statement = model.createStatement(resourceData, property1, literal1);
+        }
 
         model.add(statement);
 

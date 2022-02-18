@@ -15,6 +15,7 @@ import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 import vaccineisportal.zahtev_sertifikata.repository.ZahtevSertifikataExistRepository;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
+import zajednicko.util.ZajednickoUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,19 +59,23 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
         return retVal;
     }
 
+
+
+
     @Override
     public void extractMetadata(Zahtjev zahtevSertifikata) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
-        crudrdfRepository.uploadTriplet("rdf", "zahtev/" + zahtevSertifikata.getId(), "korisnik", korisnik.getId() );
-        crudrdfRepository.uploadTriplet("rdf", "zahtev/" + zahtevSertifikata.getId(), "status", ZahtevZaSertifikatStatus.PODNET.name());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "status", ZajednickoUtil.XML_PREFIX + "zahtev/" + ZahtevZaSertifikatStatus.PODNET.name());
 
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "korisnik", korisnik.getId() );
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "imePodnosioca", zahtevSertifikata.getPodnosilac().getIme() );
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "prezimePodnosioca", zahtevSertifikata.getPodnosilac().getPrezime() );
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "datumRodjenjaPodnosioca", String.valueOf(zahtevSertifikata.getPodnosilac().getDatumRodjenja()));
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "polPodnosioca", String.valueOf(zahtevSertifikata.getPodnosilac().getPol()));
-        crudrdfRepository.uploadTriplet("metadates", "zahtev/" + zahtevSertifikata.getId(), "datumIzdavanja", localDateTime.toString());
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", korisnik.getId() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "imePodnosioca", zahtevSertifikata.getPodnosilac().getIme() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "prezimePodnosioca", zahtevSertifikata.getPodnosilac().getPrezime() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "datumRodjenjaPodnosioca", String.valueOf(zahtevSertifikata.getPodnosilac().getDatumRodjenja()));
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "polPodnosioca", String.valueOf(zahtevSertifikata.getPodnosilac().getPol()));
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "datumIzdavanja", localDateTime.toString());
     }
 
     @Override
