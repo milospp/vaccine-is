@@ -6,6 +6,8 @@
             <th scope="col">Датум</th>
             <th scope="col">Име подносиоца</th>
             <th scope="col">Презиме подносиоца</th>
+            <th scope="col">Захтев</th>
+            <th scope="col">Потврда</th>
         </tr>
     </thead>
     <tbody>
@@ -13,8 +15,9 @@
             <td>{{ zahtev.datum }}</td>
             <td>{{ zahtev.imePodnosioca }}</td>
             <td>{{ zahtev.prezimePodnosioca }}</td>
-            <td><button class="btn btn-primary">Прегледај захтев</button></td>
-            <td><button class="btn btn-primary">Прегледај потврду</button></td>
+            <td><button class="btn btn-info">Прегледај захтев</button></td>
+            <td><button class="btn btn-info">Прегледај потврду о вакцинацији</button></td>
+            <td><button class="btn btn-primary">Обради захтев</button></td>
         </tr>
     </tbody>
 </table>
@@ -32,6 +35,16 @@ export default {
                     datum: "01.08.2021",
                     imePodnosioca: "Marko",
                     prezimePodnosioca: "Markovic"
+                },
+                {
+                    datum: "01.08.2021",
+                    imePodnosioca: "Marko",
+                    prezimePodnosioca: "Markovic"
+                },
+                {
+                    datum: "01.08.2021",
+                    imePodnosioca: "Marko",
+                    prezimePodnosioca: "Markovic"
                 }
             ]
 
@@ -41,10 +54,16 @@ export default {
     methods: {
 
     },
+
+    created() {
+        
+    }
 };
 </script>
 
 <style scoped>
-
+table {
+    margin-top: 2rem;
+}
 
 </style>

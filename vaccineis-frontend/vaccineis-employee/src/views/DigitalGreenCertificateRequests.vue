@@ -1,10 +1,8 @@
 <template>
 <div>
     <Navbar />
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <DigitalGreenCertificateRequestsTable />
-        </div>
+    <div class="container">
+        <DigitalGreenCertificateRequestsTable />
     </div>
 </div>
 </template>

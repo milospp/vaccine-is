@@ -30,7 +30,7 @@ public class ZahtevSertifikataController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('GRADJANIN')")
+    @PreAuthorize("hasAnyAuthority('SLUZBENI')")
     @GetMapping(value = "/podneti-zahtevi")
     public ResponseEntity<List<Zahtjev>> getZahteviByStatusPodnet() {
 

@@ -22,7 +22,6 @@ export default new Vuex.Store({
         SET_AUTHORIZED_USER (state, user) {
             state.user.ime = user.ime["_text"];
             state.user.prezime = user.prezime["_text"];
-            state.user.jmbg = user.jmbg["_text"];
             state.user.email = user.email["_text"];
             state.user.rola = user.rola["_text"];
         },

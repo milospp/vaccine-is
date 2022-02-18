@@ -15,21 +15,21 @@
                 <form>
                     <label for="vaccine">
                         <span>Тип вакцине:</span>
-                        <input disabled v-model="vaccineType" id="vaccine" type="text">
+                        <input disabled v-model="tip" id="vaccine" type="text">
                     </label>
                     <label for="currentAmount">
                         <span>Тренутна количина:</span>
-                        <input disabled v-model="currentAmount" id="currentAmount" type="number" min="0">
+                        <input disabled v-model="kolicina" id="currentAmount" type="number" min="0">
                     </label>
                     <label for="amount">
                         <span>Количина за додавање:</span>
-                        <input v-model="amount" id="amount" type="number" min="0">
+                        <input v-model="vakcinaKolicina.kolicina" id="amount" type="number" min="0">
                     </label>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
-                <button  type="button" class="btn btn-primary">Потврди</button>
+                <button @click="confirm" type="button" class="btn btn-primary">Потврди</button>
             </div>
         </div>
     </div>
@@ -63,6 +63,10 @@
 </template>
 
 <script>
+import VakcinaService from "@/service/VakcinaService.js";
+import xmljs from "xml-js";
+import axios from "axios"
+
 export default {
     name: "VaccineList",
 
@@ -87,18 +91,31 @@ export default {
                 }
             ],
 
-            vaccineType: "",
-            currentAmount: 0, 
-
-            amount: 0,
+            tip: "",
+            kolicina: "",
+            
+            vakcinaKolicina: {
+                nazivVakcine: "",
+                kolicina: 0,
+            }
         };
     },
 
     methods: {
 
         addAmount(vaccine) {
-            this.vaccineType = vaccine.tip;
-            this.currentAmount = vaccine.kolicina;
+            this.tip = vaccine.tip;
+            this.kolicina = vaccine.kolicina;
+        },
+
+        confirm() {
+            this.vakcinaKolicina.nazivVakcine = this.tip;
+
+            let data = "<vakcinaKolicina>" + xmljs.json2xml(this.vakcinaKolicina, {compact: true, spaces: 4}) + "</vakcinaKolicina>";
+            VakcinaService.addKolicina(data)
+                .then(response => console.log(response))
+                .catch(console.log(greska))
+
         }
     },
 };
