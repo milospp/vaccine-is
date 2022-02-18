@@ -18,6 +18,9 @@
                     <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'VaccineListView'}" class="nav-link">Вакцине</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'DigitalGreenCertificateRequests' }" class="nav-link">Захтеви за ДЗС</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'ImmunizationReportRequest' }" class="nav-link">Извештај о имунизацији</router-link>
                 </li>
                 <li class="nav-item">

@@ -40,7 +40,7 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 
     @Override
     public ResultSet findByPredicate(String graphUri, String predicate) {
-        String query =  "?s " + "<" + predicate + ">" + " ?o";
+        String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + ">" + " ?o";
         return fusekiManager.queryRDF(graphUri, query);
     }
 
@@ -51,19 +51,25 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
     }
 
     @Override
+    public ResultSet findByPredicateAndObject(String graphUri, String predicate, String object) {
+        String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + "> " + "\"" + object + "\"";
+        return fusekiManager.queryRDF(graphUri, query);
+    }
+
+    @Override
     public void dropRDF(String graphUri, String uri) {
 
     }
 
     @Override
     public void uploadTriplet(String graphUri, String resource, String property, String literal) {
-        Model model = fusekiManager.createRDFModel(ZajednickoUtil.XML_PREFIX + resource, property, literal);
+        Model model = fusekiManager.createRDFModel(resource, property, literal);
         fusekiManager.uploadRDFModel(graphUri, model);
     }
 
     @Override
     public void deleteTriplet(String graphUri, String resource, String property, String literal) {
-        Model model = fusekiManager.createRDFModel(ZajednickoUtil.XML_PREFIX + resource, property, literal);
+        Model model = fusekiManager.createRDFModel(resource, property, literal);
         fusekiManager.deleteRDFModel(graphUri, model);
     }
 

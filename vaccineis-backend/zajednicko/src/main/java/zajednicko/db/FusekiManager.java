@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import zajednicko.util.FusekiAuthenticationUtilities;
 import zajednicko.util.SparqlUtil;
+import zajednicko.util.ZajednickoUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,7 +30,6 @@ import java.util.Collection;
 @Component
 public class FusekiManager {
     private static final String PERSON_NAMED_GRAPH_URI = "/example/person/metadata";
-    private static final String PREDICATE_NAMESPACE = "http://www.ftn.uns.ac.rs/rdf/examples/predicate/";
 
 
     private HttpContext httpContext;
@@ -96,7 +96,7 @@ public class FusekiManager {
 
     public Model createRDFModel (Statement statement) {
         Model model = ModelFactory.createDefaultModel();
-        model.setNsPrefix("pred", PREDICATE_NAMESPACE);
+        model.setNsPrefix("pred", ZajednickoUtil.RDF_PREDICATE);
 
         model.add(statement);
 
@@ -106,7 +106,7 @@ public class FusekiManager {
 
     public Model createRDFModel (Collection<Statement> statements) {
         Model model = ModelFactory.createDefaultModel();
-        model.setNsPrefix("pred", PREDICATE_NAMESPACE);
+        model.setNsPrefix("pred", ZajednickoUtil.RDF_PREDICATE);
 
         for(Statement statement : statements) {
             model.add(statement);
@@ -118,11 +118,11 @@ public class FusekiManager {
     public Model createRDFModel (String resource, String propery, String literal) {
 
         Model model = ModelFactory.createDefaultModel();
-        model.setNsPrefix("pred", PREDICATE_NAMESPACE);
+        model.setNsPrefix("pred", ZajednickoUtil.RDF_PREDICATE);
 
         Resource resourceData = model.createResource(resource);
 
-        Property property1 = model.createProperty(PREDICATE_NAMESPACE,propery);
+        Property property1 = model.createProperty(ZajednickoUtil.RDF_PREDICATE,propery);
         Literal literal1 = model.createLiteral(literal);
 
         Statement statement = model.createStatement(resourceData, property1, literal1);
@@ -166,7 +166,7 @@ public class FusekiManager {
 
         // Creates a default model
         Model model = ModelFactory.createDefaultModel();
-        model.setNsPrefix("pred", PREDICATE_NAMESPACE);
+        model.setNsPrefix("pred", ZajednickoUtil.RDF_PREDICATE);
 
         // Loading the changes from an RDF/XML
 //        model.read(rdfFilePath);
@@ -174,13 +174,13 @@ public class FusekiManager {
         // Making the changes manually
         Resource resource = model.createResource("http://www.ftn.uns.ac.rs/rdf/examples/person/Petar_Petrovic");
 
-        Property property1 = model.createProperty(PREDICATE_NAMESPACE, "livesIn");
+        Property property1 = model.createProperty(ZajednickoUtil.RDF_PREDICATE, "livesIn");
         Literal literal1 = model.createLiteral("Novi Sad");
 
-        Property property2 = model.createProperty(PREDICATE_NAMESPACE, "profession");
+        Property property2 = model.createProperty(ZajednickoUtil.RDF_PREDICATE, "profession");
         Literal literal2 = model.createLiteral("lawyer");
 
-        Property property3 = model.createProperty(PREDICATE_NAMESPACE, "hobby");
+        Property property3 = model.createProperty(ZajednickoUtil.RDF_PREDICATE, "hobby");
         Literal literal3 = model.createLiteral("hiking");
 
         // Adding the statements to the model

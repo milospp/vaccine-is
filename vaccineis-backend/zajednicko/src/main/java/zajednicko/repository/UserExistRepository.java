@@ -52,6 +52,14 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     }
 
     public Korisnik findUserByEmail(String email) {
+//        Korisnik korisnik = new Korisnik();
+//        korisnik.setId(String.valueOf(UUID.randomUUID()));
+//        korisnik.setIme("mile");
+//        korisnik.setPrezime("mile");
+//        korisnik.setEmail("mile@gmail.com");
+//        korisnik.setSifra(passwordEncoder.encode("mile123"));
+//        korisnik.setRola(STrola.SLUZBENIK);
         return findAll().stream().filter(x -> x.getEmail().equalsIgnoreCase(email.trim())).findFirst().orElse(null);
+//        return korisnik;
     }
 }

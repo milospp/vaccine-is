@@ -55,7 +55,6 @@ public abstract class CRUDExistRepositoryImpl<T extends BaseModel> implements CR
         Node resource;
         try {
             resource = existManager.loadDOM(collectionId, id);
-            System.out.println("resource = " + resource);
         } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             return null;

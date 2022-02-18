@@ -13,12 +13,13 @@ public interface TerminService {
     Termin getTermin(String uuid);
     List<Termin> findTermin(String query);
     List<Termin> getAll();
-
-
+    
     void terminZaInteresovanje();
 
     //TODO: Testirati
-    Termin zakaziPrviSlobodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException;
+    Termin zakaziPrviSlobodan(String uuid, LocalDateTime localDateTime) throws DatatypeConfigurationException;
 
     void saveMetadata(Termin termin);
+
+    Termin dobaviTerminBezSaglasnosti();
 }

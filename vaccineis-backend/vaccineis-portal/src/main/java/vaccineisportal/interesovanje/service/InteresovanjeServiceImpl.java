@@ -2,8 +2,6 @@ package vaccineisportal.interesovanje.service;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +13,6 @@ import vaccineisportal.interesovanje.repository.InteresovanjeExistRepository;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
-import zajednicko.service.MarshallingService;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +46,8 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     public void extractMetadataInteresovanje(Interesovanje interesovanje) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
-        crudrdfRepository.uploadTriplet("rdf", "interesovanje/" + interesovanje.getId(), "korisnik", localDateTime.toString() );
+
+        crudrdfRepository.uploadTriplet("rdf", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId());
         crudrdfRepository.uploadTriplet("rdf", "interesovanje/" + interesovanje.getId(), "ceka_od", localDateTime.toString() );
 
         crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId() );

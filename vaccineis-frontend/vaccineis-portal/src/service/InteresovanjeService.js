@@ -5,6 +5,7 @@ const API_URL = "http://localhost:8082/api/interesovanje"
 class InteresovanjeService {
 
     createInteresovanje(data) {
+        console.log("AAAAAAAA");
         return axios({
             method: 'POST',
             url: `${API_URL}`,

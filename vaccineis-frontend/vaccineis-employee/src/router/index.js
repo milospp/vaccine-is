@@ -29,7 +29,13 @@ const routes = [
     path: encodeURI("/претрага-докумената"),
     name: "DocumentsSearch",
     component: () => import("@/views/SearchDocuments")
-}
+},
+{
+    path: encodeURI("/dzs-zahtevi"),
+    name: "DigitalGreenCertificateRequests",
+    component: () => import("@/views/DigitalGreenCertificateRequests.vue"),
+},
+
 ]
 
 const router = new VueRouter({

@@ -9,6 +9,10 @@ public interface ObrazacSaglasnostiService {
 
     Saglasnost create(String xmlString);
 
+    Saglasnost update(String xmlString);
+
+    void extractMetadata(Saglasnost saglasnost);
+
     ResponseEntity<byte[]> getPdf(int id) throws IOException;
 
     ResponseEntity<byte[]> getHtml(int id) throws IOException;
