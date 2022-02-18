@@ -6,11 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import vaccineisemployee.vakcina.dto.VakcinaKolicinaDTO;
-import zajednicko.model.vakcina.Vakcina;
+import vaccineisemployee.vakcina.dto.ListaVakcinaDTO;
+import vaccineisemployee.vakcina.dto.VakcinaDTO;
+import zajednicko.service.MarshallingService;
 import zajednicko.service.VakcinaService;
 
-import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -18,19 +18,21 @@ import java.util.List;
 public class VakcinaController {
 
     private final VakcinaService vakcinaService;
+    private final MarshallingService marshallingService;
 
     @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
     @GetMapping(value = "", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<List<Vakcina>> getSveVakcine() {
+    public ResponseEntity<ListaVakcinaDTO> getSveVakcine() {
 
-        return new ResponseEntity<>(vakcinaService.findAll(), HttpStatus.OK);
+        var retVal = new ListaVakcinaDTO();
+        vakcinaService.findAll().forEach(v -> retVal.getVakcine().add(new VakcinaDTO(v.getId(), v.getNaziv(), v.getKolicina())));
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
-    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Boolean> addKolicin(@RequestBody VakcinaKolicinaDTO vakcinaKolicina) {
+    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_XML_VALUE)
+    public void addKolicin(@RequestBody VakcinaDTO vakcinaKolicina) {
 
-        vakcinaService.addKolicina(vakcinaKolicina.getNazivVakcine(), vakcinaKolicina.getKolicina());
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        vakcinaService.addKolicina(vakcinaKolicina.getNaziv(), vakcinaKolicina.getKolicina());
     }
 }
