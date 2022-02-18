@@ -112,7 +112,14 @@ public class FusekiManager {
     }
 
     public ResultSet getAllRDF(String uri) {
-        String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + PERSON_NAMED_GRAPH_URI, "?s ?p ?o");
+        return queryRDF(uri, "?s ?p ?o");
+
+    }
+
+    public ResultSet queryRDF(String uri, String whereQuery) {
+        if (uri != null && !uri.startsWith("/")) uri = "/" + uri;
+
+        String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + uri, whereQuery);
 
         // Create a QueryExecution that will access a SPARQL service over HTTP
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);

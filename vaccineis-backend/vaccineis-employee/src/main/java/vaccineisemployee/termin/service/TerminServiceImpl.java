@@ -107,7 +107,6 @@ public class TerminServiceImpl implements TerminService{
 
     @Override
     public void saveMetadata(Termin termin) {
-        String prefix = "http://www.ftn.uns.ac.rs/";
-        crudrdfRepository.uploadTriplet(prefix + "gradjanin",prefix + "korisnik/" + termin.getKorisnik().getId().toString(), "termin", termin.getId().toString());
+        crudrdfRepository.uploadTriplet("gradjanin","korisnik/" + termin.getKorisnik().getId().toString(), "termin", termin.getId().toString());
     }
 }

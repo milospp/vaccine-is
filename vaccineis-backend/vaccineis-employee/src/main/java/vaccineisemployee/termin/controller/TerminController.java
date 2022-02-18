@@ -1,6 +1,8 @@
 package vaccineisemployee.termin.controller;
 
 import lombok.AllArgsConstructor;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import vaccineisemployee.termin.model.Termin;
 import vaccineisemployee.termin.service.TerminService;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.model.STpol;
+import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -24,7 +27,7 @@ import java.util.UUID;
 public class TerminController {
 
     private final TerminService terminService;
-    private final MailService mailService;
+    private final CRUDRDFRepository crudrdfRepository;
 
     @GetMapping()
     public ResponseEntity<Termin> getInteresovanje() throws DatatypeConfigurationException {
@@ -65,5 +68,23 @@ public class TerminController {
     public ResponseEntity<List<Termin>> getQuery() {
         List<Termin> t = terminService.getAll();
         return new ResponseEntity<>(t, HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testTriplet() {
+        crudrdfRepository.uploadTriplet("test", "korisnik/123231023912931923123124", "cekaTermin", "2022-12-29");
+
+        ResultSet rs = crudrdfRepository.findByObject("test", "2022-12-29");
+        rs.getResultVars();
+        String res = "";
+        for (ResultSet it = rs; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            res += s.get("o") + " - " + s.get("s") + "\n";
+            System.out.println("s = " + s);
+        }
+
+
+
+        return new ResponseEntity<>("Triplet se resio \n" + res, HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import zajednicko.db.FusekiManager;
+import zajednicko.util.ZajednickoUtil;
 
 import java.util.Collection;
 
@@ -26,22 +27,25 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 
     @Override
     public ResultSet findWhere(String graphUri, String whereStatement) {
-        return null;
+        return fusekiManager.queryRDF(graphUri, whereStatement);
     }
 
     @Override
     public ResultSet findBySubject(String graphUri, String subject) {
-        return null;
+        String query = "<" + subject + ">" + " ?p ?o";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
     public ResultSet findByPredicate(String graphUri, String predicate) {
-        return null;
+        String query =  "?s " + "<" + predicate + ">" + " ?o";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
     public ResultSet findByObject(String graphUri, String object) {
-        return null;
+        String query = "?s ?p " + "\"" + object + "\"";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
@@ -51,19 +55,19 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 
     @Override
     public void uploadTriplet(String graphUri, String resource, String property, String literal) {
-        Model model = fusekiManager.createRDFModel(resource, property, literal);
+        Model model = fusekiManager.createRDFModel(ZajednickoUtil.XML_PREFIX + resource, property, literal);
         fusekiManager.uploadRDFModel(graphUri, model);
     }
 
     @Override
     public void addStatement(String graphUri, Statement statement) {
         Model model = fusekiManager.createRDFModel(statement);
-        fusekiManager.uploadRDFModel(graphUri, model);
+        fusekiManager.uploadRDFModel(ZajednickoUtil.XML_PREFIX + graphUri, model);
     }
 
     @Override
     public void addStatement(String graphUri, Collection<Statement> statement) {
         Model model = fusekiManager.createRDFModel(statement);
-        fusekiManager.uploadRDFModel(graphUri, model);
+        fusekiManager.uploadRDFModel(ZajednickoUtil.XML_PREFIX + graphUri, model);
     }
 }
