@@ -5,7 +5,11 @@ import store from './store'
 import Toasted from 'vue-toasted'
 import { QueryBuilderPlugin } from '@syncfusion/ej2-vue-querybuilder'
 import { L10n, setCulture } from '@syncfusion/ej2-base';
+import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
+Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 Vue.use(Toasted);
 Vue.use(QueryBuilderPlugin);

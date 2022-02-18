@@ -25,6 +25,11 @@ const routes = [
     name: "ImmunizationReportRequest",
     component: () => import("@/views/ImmunizationReportRequest.vue"),
 },
+{
+    path: encodeURI("/претрага-докумената"),
+    name: "DocumentsSearch",
+    component: () => import("@/views/SearchDocuments")
+}
 ]
 
 const router = new VueRouter({

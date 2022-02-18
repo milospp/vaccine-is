@@ -2,7 +2,7 @@
     <div class="control-section">
         <h5>Напредна претрага</h5>
         <div class="col-lg-12 querybuilder-control">
-            <ejs-querybuilder ref="querybuilder" width="70%" :ruleChange="updateRule">
+            <ejs-querybuilder ref="querybuilder" width="100%" :ruleChange="updateRule">
                 <e-columns>
                     <e-column field='id' label='ИД' type='string' :operators="operatorsString" />
                     <e-column field='ime' label='Име' type='string' :operators="operatorsString" />

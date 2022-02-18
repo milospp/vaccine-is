@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'ImmunizationReportRequest' }" class="nav-link">Извештај о имунизацији</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link v-if="$store.getters.rola === 'SLUZBENIK'" :to="{ name: 'DocumentsSearch' }" class="nav-link">Претрага докумената</router-link>
+                </li>
             </ul>
             <form class="d-flex justify-content-end">
                 <router-link v-if="$store.getters.rola === undefined" :to="{ name: 'Login'}" class="nav-link">Пријава</router-link>

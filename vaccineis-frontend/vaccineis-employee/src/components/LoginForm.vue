@@ -38,12 +38,18 @@ export default {
         login() {
             let data = "<AuthenticationRequestDTO>" + xmljs.json2xml(this.authenticationData, {compact: true, spaces: 4}) + "</AuthenticationRequestDTO>";
             AuthenticationService.login(data)
-                .then(response => { 
-                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4})); 
+                .then(response => {
+                    this.toast("Логинован", "success");
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+
+                    let user = data["AuthenticationResponseDTO"];
+                    user.rola = user.rola._text;
 
                     let token = data["AuthenticationResponseDTO"]["jwt"]["_text"]
 
                     localStorage.setItem('token', token);
+                    localStorage.setItem('user', JSON.stringify(user));
+
                     axios.defaults.headers.common['Authorization'] = "Bearer " + JSON.stringify(token);
 
                     this.$store.dispatch('loadAuthorizedUser');

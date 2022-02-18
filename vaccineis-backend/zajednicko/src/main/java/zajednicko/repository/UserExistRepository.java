@@ -32,6 +32,7 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     @Override
     public Korisnik create(String xmlString) {
         try {
+            System.out.println(xmlString);
             Korisnik entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
 
 
