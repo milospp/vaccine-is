@@ -7,9 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.repository.InteresovanjeExistRepository;
+import zajednicko.model.korisnik.Korisnik;
+import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
+import zajednicko.service.MarshallingService;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,10 +26,23 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
     private final InteresovanjeExistRepository interesovanjeExistRepository;
     private final MailService mailService;
+    private final CRUDRDFRepository crudrdfRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public Interesovanje create(String xmlString) {
-        return interesovanjeExistRepository.create(xmlString);
+
+        Interesovanje interesovanje = interesovanjeExistRepository.create(xmlString);
+        extractMetadataInteresovanje(interesovanje);
+        return interesovanje;
+    }
+
+    @Override
+    public void extractMetadataInteresovanje(Interesovanje interesovanje) {
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "korisnik" ,"korisnik/" + korisnik.getId() );
+
+        crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik" ,"korisnik/" + korisnik.getId() );
     }
 
     @Override

@@ -252,7 +252,7 @@ public class Interesovanje extends BaseModel {
         "prezime",
         "kontakt"
     })
-    public static class LicneInformacije {
+    public static class LicneInformacije  {
 
         @XmlElement(required = true)
         protected String drzavljanstvo;

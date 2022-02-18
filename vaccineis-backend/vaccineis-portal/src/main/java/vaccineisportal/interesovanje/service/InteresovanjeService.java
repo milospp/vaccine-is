@@ -12,6 +12,8 @@ public interface InteresovanjeService {
 
     Interesovanje create(String xmlString);
 
+    void extractMetadataInteresovanje(Interesovanje interesovanje);
+
     ResponseEntity<?> getPdf(int id) throws IOException, ParserConfigurationException, SAXException;
 
     ResponseEntity<?> getHtml(int id) throws IOException, ParserConfigurationException, SAXException;

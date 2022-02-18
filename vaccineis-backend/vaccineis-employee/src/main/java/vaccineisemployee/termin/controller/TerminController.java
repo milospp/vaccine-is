@@ -73,6 +73,9 @@ public class TerminController {
     @GetMapping("/test")
     public ResponseEntity<String> testTriplet() {
         crudrdfRepository.uploadTriplet("test", "korisnik/123231023912931923123124", "cekaTermin", "2022-12-29");
+        crudrdfRepository.uploadTriplet("test", "korisnik/123231023912931923123124", "cekaTermin", "2022-12-29");
+        crudrdfRepository.uploadTriplet("test", "korisnik/123231023912931923123124", "cekaTermin", "2022-12-29");
+        crudrdfRepository.uploadTriplet("test", "korisnik/123231023912931923123124", "cekaTermin", "2022-12-29");
 
         ResultSet rs = crudrdfRepository.findByObject("test", "2022-12-29");
         rs.getResultVars();
