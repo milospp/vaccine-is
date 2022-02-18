@@ -1,27 +1,18 @@
 package zajednicko.repository;
 
-import lombok.AllArgsConstructor;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.xmldb.api.base.XMLDBException;
-import zajednicko.db.ExistManager;
 import zajednicko.db.FusekiManager;
-import zajednicko.service.MarshallingService;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 @Component
 public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
-    protected final FusekiManager fusekiManager;
 
+    protected final FusekiManager fusekiManager;
 
     @Autowired
     public CRUDRDFRepositoryImpl(FusekiManager fusekiManager) {
