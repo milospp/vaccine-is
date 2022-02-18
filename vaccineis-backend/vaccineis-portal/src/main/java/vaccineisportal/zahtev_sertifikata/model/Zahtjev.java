@@ -8,6 +8,7 @@
 
 package vaccineisportal.zahtev_sertifikata.model;
 
+import zajednicko.model.BaseModel;
 import zajednicko.model.CTpodnosilacZahtjeva;
 
 import javax.xml.bind.annotation.*;
@@ -48,46 +49,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "podnosilac",
     "razlog",
     "mjestoDatum"
 })
 @XmlRootElement(name = "zahtjev")
-public class Zahtjev {
+public class Zahtjev extends BaseModel {
 
-    @XmlElement(required = true)
-    protected String id;
     @XmlElement(required = true)
     protected CTpodnosilacZahtjeva podnosilac;
     @XmlElement(required = true)
     protected String razlog;
     @XmlElement(required = true)
     protected MjestoDatum mjestoDatum;
-
-    /**
-     * Gets the value of the id property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the podnosilac property.

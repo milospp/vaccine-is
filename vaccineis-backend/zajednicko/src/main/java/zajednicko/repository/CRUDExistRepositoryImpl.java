@@ -10,22 +10,21 @@ import org.xmldb.api.base.Resource;
 import zajednicko.db.ExistManager;
 import lombok.AllArgsConstructor;
 import org.xmldb.api.base.XMLDBException;
+import zajednicko.exception.XMLSchemaValidationException;
 import zajednicko.model.BaseModel;
 import zajednicko.service.MarshallingService;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import java.beans.ExceptionListener;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @Repository
-public abstract class CRUDRepositoryImpl<T extends BaseModel> implements CRUDRepository<T> {
+public abstract class CRUDExistRepositoryImpl<T extends BaseModel> implements CRUDExistRepository<T> {
 
     protected final String collectionId;
+    protected final String schemaPath;
     protected final ExistManager existManager;
     protected final MarshallingService marshallingService;
 
@@ -67,13 +66,26 @@ public abstract class CRUDRepositoryImpl<T extends BaseModel> implements CRUDRep
     }
 
     @Override
+    public T create(String xmlString) {
+        try {
+            T entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
+            entity.setId(String.valueOf(UUID.randomUUID()));
+
+            existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), marshallingService.marshall(entity, getEntityClass()));
+            return entity;
+
+        } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            throw new XMLSchemaValidationException(e.getMessage());
+        }
+    }
+
+    @Override
     public List<T> findXpath(String xPath) {
         ResourceSet resources;
         try {
             resources = existManager.loadXPath(collectionId, xPath);
         } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
+            throw new XMLSchemaValidationException(e.getMessage());
         }
 
         ArrayList<T> arrayList = new ArrayList<>();
@@ -106,27 +118,9 @@ public abstract class CRUDRepositoryImpl<T extends BaseModel> implements CRUDRep
                 }
             }
         } catch (XMLDBException e) {
-
+            throw new XMLSchemaValidationException(e.getMessage());
         }
 
         return arrayList;
-    }
-
-    @Override
-    public void delete() {
-        return;
-    }
-
-    @Override
-    public T save(T entity) {
-        try {
-            String uuid = String.valueOf(UUID.randomUUID());
-            entity.setId(uuid);
-
-            existManager.storeFromText(collectionId, uuid, marshallingService.marshall(entity, getEntityClass()));
-            return entity;
-        } catch (XMLDBException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            return null;
-        }
     }
 }

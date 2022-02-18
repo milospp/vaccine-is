@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Korisnik save(Korisnik korisnik) {
-        return userExistRepository.save(korisnik);
+    public Korisnik create(String xmlString) {
+        return userExistRepository.create(xmlString);
     }
 }

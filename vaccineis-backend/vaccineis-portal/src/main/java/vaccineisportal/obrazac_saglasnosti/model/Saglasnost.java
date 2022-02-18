@@ -8,6 +8,8 @@
 
 package vaccineisportal.obrazac_saglasnosti.model;
 
+import zajednicko.model.BaseModel;
+
 import javax.xml.bind.annotation.*;
 
 
@@ -34,46 +36,19 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id",
     "drzavljanstvo",
     "podaciPacijenta",
     "evidencijaVakcinacije"
 })
 @XmlRootElement(name = "saglasnost")
-public class Saglasnost {
+public class Saglasnost extends BaseModel {
 
-    @XmlElement(required = true)
-    protected String id;
     @XmlElement(required = true)
     protected CTvrstaDrzavljanstva drzavljanstvo;
     @XmlElement(required = true)
     protected CTpacijentSaglasnost podaciPacijenta;
     @XmlElement(required = true)
     protected CTevidencijaVakcinacije evidencijaVakcinacije;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the drzavljanstvo property.

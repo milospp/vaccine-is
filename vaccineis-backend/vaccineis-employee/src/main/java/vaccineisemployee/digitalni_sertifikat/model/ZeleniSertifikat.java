@@ -8,6 +8,7 @@
 
 package vaccineisemployee.digitalni_sertifikat.model;
 
+import zajednicko.model.BaseModel;
 import zajednicko.model.CTpodnosilacZahtjeva;
 
 import javax.xml.bind.annotation.*;
@@ -42,7 +43,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "id",
         "qrKod",
         "podaciVakcinisanog",
         "vakcinacija",
@@ -50,10 +50,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
         "infoSertifikata"
 })
 @XmlRootElement(name = "zeleniSertifikat")
-public class ZeleniSertifikat {
+public class ZeleniSertifikat extends BaseModel {
 
-    @XmlElement(required = true)
-    protected String id;
     @XmlElement(required = true)
     protected Object qrKod;
     @XmlElement(required = true)
@@ -68,30 +66,6 @@ public class ZeleniSertifikat {
     protected String brojSertifikata;
     @XmlAttribute(name = "datumVrijemeIzdavanja", required = true)
     protected XMLGregorianCalendar datumVrijemeIzdavanja;
-
-    /**
-     * Gets the value of the id property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the qrKod property.

@@ -50,11 +50,9 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Korisnik> register(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO)  {
+    public ResponseEntity<Korisnik> register(@RequestBody String userRegistrationDTO)  {
 
-        Korisnik korisnik = toKorisnik.convert(userRegistrationDTO);
-        userService.save(korisnik);
-
+        Korisnik korisnik = userService.create(userRegistrationDTO);
         return new ResponseEntity<>(korisnik, HttpStatus.OK);
     }
 

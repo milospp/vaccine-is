@@ -1,7 +1,7 @@
 <template>
 <form >
 
-    <div :style="[user.type != 'korisnik' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
+    <div :style="[this.user.rola !== 'GRADJANIN' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
 
     <div id="title">
         <h5><b>Сагласност за спровођење препоручене имунизације</b></h5>
@@ -192,7 +192,7 @@
 
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-    <div :style="[user.type != 'radnik' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
+    <div :style="[user.rola != 'ZDRAVSTVENI_RADNIK' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
     <br><br>
 
     <div id="title2">
@@ -324,25 +324,31 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-    name: "VaccineInterestForm",
+    name: "ImmunizationConsenstForm",
+
+    computed: {
+        ...mapState([
+            'user'
+        ])
+    },
 
     data() {
         return {
-        patientInfo: {
-            jmbg: "",
-            password: "",
-            ime: "",
-            prezime: "",
-        },
-        citizenship: "",
-        status: null,
-        socialSecurityBeneficiary: null,
-        municipalHeadquarters: null,
-        dateToday: new Date(),
-        user: {
-            type: "korisnik",
-        },
+            patientInfo: {
+                jmbg: "",
+                password: "",
+                ime: "",
+                prezime: "",
+            },
+            citizenship: "",
+            status: null,
+            socialSecurityBeneficiary: null,
+            municipalHeadquarters: null,
+            dateToday: new Date(),
+            agreement: ""
         };
     },
 
