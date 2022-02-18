@@ -18,6 +18,7 @@ import zajednicko.service.MarshallingService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 @AllArgsConstructor
@@ -40,9 +41,11 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     @Override
     public void extractMetadataInteresovanje(Interesovanje interesovanje) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
-        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "korisnik" ,"korisnik/" + korisnik.getId() );
+        LocalDateTime localDateTime = LocalDateTime.now();
+        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "korisnik", localDateTime.toString() );
+        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "ceka_od", localDateTime.toString() );
 
-        crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik" ,"korisnik/" + korisnik.getId() );
+        crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId() );
     }
 
     @Override

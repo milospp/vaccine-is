@@ -57,7 +57,7 @@ public class AuthenticationController {
         Korisnik korisnik = (Korisnik) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(korisnik);
 
-        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
+        var retVal = new AuthenticationResponseDTO(korisnik.getId(), korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
 
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }

@@ -3,12 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Toasted from 'vue-toasted'
-import { QueryBuilderPlugin } from '@syncfusion/ej2-vue-querybuilder'
 
 
 Vue.config.productionTip = false
 Vue.use(Toasted);
-Vue.use(QueryBuilderPlugin);
 
 new Vue({
   router,

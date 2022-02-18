@@ -61,8 +61,11 @@ export default {
 
             let data = "<korisnik xmlns='http://www.ftn.uns.ac.rs/korisnik'>" + xmljs.json2xml(this.user, {compact: true, spaces: 4}) + "</korisnik>";
             AuthenticationService.register(data)
-                .then(response => { console.log(xmljs.xml2json(response)); })
-                .catch(() => {this.toast("Greska", "error")})
+                .then(response => { console.log(xmljs.xml2json(response.data)) })
+                .catch((error) => {
+                    console.log(error);
+                    this.toast("Greska", "error")    
+                })
         },
 
         resetInvalidStates() {
