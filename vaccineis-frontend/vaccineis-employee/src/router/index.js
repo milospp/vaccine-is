@@ -35,7 +35,11 @@ const routes = [
     name: "DigitalGreenCertificateRequests",
     component: () => import("@/views/DigitalGreenCertificateRequests.vue"),
 },
-
+{
+    path: encodeURI("/преглед-докумената/пацијент=16564"),
+    name: "DocumentsListForPacient",
+    component: () => import("@/views/DocumentListView.vue"),
+},
 ]
 
 const router = new VueRouter({

@@ -1,25 +1,23 @@
 package vaccineisemployee.digitalni_sertifikat.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.apache.jena.base.Sys;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import vaccineisemployee.authentication.dto.AuthenticationResponse.AuthenticationResponseDTO;
+import vaccineisemployee.digitalni_sertifikat.dto.SertifikatResponseDTO;
+import vaccineisemployee.digitalni_sertifikat.service.SertifikatService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/digitalni-sertifikat")
 public class DigitalniSertifikatController {
-
+    private final SertifikatService sertifikatService;
     private final RestTemplate restTemplate;
-
-    @Autowired
-    public DigitalniSertifikatController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     @GetMapping(value = "/zahtevi", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<ArrayList> getZahteviWithStatusPredat() {
@@ -39,4 +37,21 @@ public class DigitalniSertifikatController {
         return new ResponseEntity<ArrayList>(zahtevi, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get-pdf")
+    public ResponseEntity<?> getSertifikatPdf() throws IOException {
+        return sertifikatService.getPdf(2);
+    }
+
+    @GetMapping(value = "/get-html")
+    public ResponseEntity<?> getSertifikatHtml() throws IOException {
+        return sertifikatService.getHtml(2);
+    }
+
+    @PostMapping(value = "/response-request", consumes = MediaType.APPLICATION_XML_VALUE)
+    public void responseToRequest(@RequestBody SertifikatResponseDTO responseDTO) {
+        System.out.println(responseDTO.getDecision());
+        System.out.println(responseDTO.getMessage());
+        System.out.println(responseDTO.getRequestId());
+        // accept / decline request
+    }
 }

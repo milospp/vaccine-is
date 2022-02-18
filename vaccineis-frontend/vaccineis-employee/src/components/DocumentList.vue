@@ -17,12 +17,12 @@
             <div class="card">
 <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                 <router-link class="routerLink" :to="{}">
-                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewSertifikatPdf()">
+                    <img class="card-img-top" src="@/assets/images/pharmacy.png" alt="Card image cap" v-on:click="viewSertifikatPdf()">
                     <div class="card-header"><b>{{ doc.name }}</b></div>
                 </router-link>
                 <div class="card-body">
-                    <a v-on:click="getInteresovanjePdf()" class="card-link">PDF</a>
-                    <a v-on:click="getInteresovanjeHtml()" class="card-link">XHTML</a>
+                    <a v-on:click="getSertifikatPdf()" class="card-link">PDF</a>
+                    <a v-on:click="getSertifikatHtml()" class="card-link">XHTML</a>
                     <a href="#" class="card-link">RDF</a>
                     <a href="#" class="card-link">JSON</a>
                 </div>
@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import InteresovanjeService from '@/service/InteresovanjeService';
-import DigitalniZeleniSertifikatService from "@/service/DigitalniZeleniSertifikatService";
+import DigitalniSertifikatService from "@/service/DigitalniSertifikatService";
 
 export default {
     name: "DocumentList",
@@ -69,21 +68,17 @@ export default {
         filterDocuments() {
         },
 
-        getInteresovanjePdf() {
-          InteresovanjeService.getInteresovanjePdf();
-        },
-
-        getInteresovanjeHtml() {
-          InteresovanjeService.getInteresovanjeHtml();
-        },
-
-        viewInteresovanjePdf() {
-          InteresovanjeService.viewInteresovanjePdf();
-        },
-
         viewSertifikatPdf() {
-            DigitalniZeleniSertifikatService.viewSertifikatPdf();
+            DigitalniSertifikatService.viewSertifikatPdf();
         },
+
+        getSertifikatPdf() {
+            DigitalniSertifikatService.getSertifikatPdf();
+        },
+
+        getSertifikatHtml() {
+            DigitalniSertifikatService.getSertifikatHtml();
+        }
     },
 };
 </script>
