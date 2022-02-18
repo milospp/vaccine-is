@@ -1,7 +1,6 @@
 package vaccineisemployee.termin.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vaccineisemployee.termin.model.Termin;
 import vaccineisemployee.termin.repository.TerminExistRepository;
@@ -11,12 +10,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Service
 public class TerminServiceImpl implements TerminService{
+
     protected final TerminExistRepository terminExistRepository;
 
-
     @Override
-    public Termin addTermin(Termin termin) {
-        return terminExistRepository.save(termin);
+    public Termin addTermin(String termin) {
+        return terminExistRepository.create(termin);
     }
 
     @Override

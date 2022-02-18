@@ -26,20 +26,20 @@ public class TerminController {
 
     @GetMapping()
     public ResponseEntity<String> getInteresovanje() throws DatatypeConfigurationException {
-        Termin t = new Termin();
-        LocalDate localDate = LocalDate.of(2019, 4, 25);
-
-        XMLGregorianCalendar xmlGregorianCalendar =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar("2024-10-10T05:22:33");
-
-        CTlicniPodaci lp = new CTlicniPodaci();
-        lp.setIme("marko");
-        lp.setPrezime("petrovic");
-        lp.setPol(STpol.МУШКО);
-        t.setDatumVrijeme(xmlGregorianCalendar);
-        t.setKorisnik(lp);
-        terminService.addTermin(t);
-        System.out.println("Radi");
+//        Termin t = new Termin();
+//        LocalDate localDate = LocalDate.of(2019, 4, 25);
+//
+//        XMLGregorianCalendar xmlGregorianCalendar =
+//                DatatypeFactory.newInstance().newXMLGregorianCalendar("2024-10-10T05:22:33");
+//
+//        CTlicniPodaci lp = new CTlicniPodaci();
+//        lp.setIme("marko");
+//        lp.setPrezime("petrovic");
+//        lp.setPol(STpol.МУШКО);
+//        t.setDatumVrijeme(xmlGregorianCalendar);
+//        t.setKorisnik(lp);
+//        terminService.addTermin(t);
+//        System.out.println("Radi");
         return new ResponseEntity<>("true", HttpStatus.OK);
     }
 
