@@ -7,7 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vaccineisemployee.vakcina.dto.VakcinaKolicinaDTO;
+import zajednicko.model.vakcina.Vakcina;
 import zajednicko.service.VakcinaService;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -15,6 +18,13 @@ import zajednicko.service.VakcinaService;
 public class VakcinaController {
 
     private final VakcinaService vakcinaService;
+
+    @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<List<Vakcina>> getSveVakcine() {
+
+        return new ResponseEntity<>(vakcinaService.findAll(), HttpStatus.OK);
+    }
 
     @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
     @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)

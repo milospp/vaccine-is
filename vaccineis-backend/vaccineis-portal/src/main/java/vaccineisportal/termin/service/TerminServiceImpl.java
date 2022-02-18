@@ -3,12 +3,16 @@ package vaccineisportal.termin.service;
 import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.xmldb.api.base.Collection;
+import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 import vaccineisportal.termin.model.Termin;
 import vaccineisportal.termin.repository.TerminExistRepository;
 import zajednicko.model.CTlicniPodaci;
+import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MarshallingService;
 import zajednicko.util.ZajednickoUtil;
@@ -28,7 +32,7 @@ public class TerminServiceImpl implements TerminService{
     protected final TerminExistRepository terminExistRepository;
     private final CRUDRDFRepository crudrdfRepository;
     private final MarshallingService marshallingService;
-    private final InteresovanjeService interesovanjeService;
+    private final AuthenticationService authenticationService;
 
     @Override
     public Termin addTermin(String termin) {
@@ -53,16 +57,20 @@ public class TerminServiceImpl implements TerminService{
     }
 
     @Override
-    public Termin zakaziPrviSlobodan(String uuid, LocalDateTime localDateTime) throws DatatypeConfigurationException {
+    public Termin zakaziPrviSlobodan(String interesovanjeUri, LocalDateTime localDateTime) throws DatatypeConfigurationException {
         if (localDateTime == null) localDateTime = findFreeTermin();
         if (localDateTime == null) return null;
 
         Termin termin = new Termin();
+        String uuid = ZajednickoUtil.getIdFromUri(interesovanjeUri);
 
         XMLGregorianCalendar xmlGregorianCalendar =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.toString() + ":00");
         termin.setDatumVrijeme(xmlGregorianCalendar);
-        termin.setKorisnikId(ZajednickoUtil.getIdFromUri(uuid));
+
+        String korisnikUri = crudrdfRepository.findFirstBySubjectAndPred("rdf", ZajednickoUtil.XML_PREFIX + "interesovanje/" + uuid, "interesovanje_korisnik");
+        termin.setKorisnikId(ZajednickoUtil.getIdFromUri(korisnikUri));
+        termin.setInteresovanjeId(uuid);
         String varijabla = marshallingService.marshall(termin, Termin.class);
         Termin t = addTermin(varijabla);
         saveMetadata(t);
@@ -80,18 +88,18 @@ public class TerminServiceImpl implements TerminService{
             broj_termina.put(LocalDate.now().plusDays(i), 0);
         }
 
-//        List<Termin> termini = getAll();
-//        for (Termin t : termini) {
-//            LocalDate localDate = LocalDate.of(
-//                    t.getDatumVrijeme().getYear(),
-//                    t.getDatumVrijeme().getMonth(),
-//                    t.getDatumVrijeme().getDay());
-//
-//            if (localDate.isBefore(startDate) || localDate.isAfter(endDate)) continue;
-//
-//            Integer br = broj_termina.getOrDefault(localDate, 0) + 1;
-//            broj_termina.put(localDate, br);
-//        }
+        List<Termin> termini = getAll();
+        for (Termin t : termini) {
+            LocalDate localDate = LocalDate.of(
+                    t.getDatumVrijeme().getYear(),
+                    t.getDatumVrijeme().getMonth(),
+                    t.getDatumVrijeme().getDay());
+
+            if (localDate.isBefore(startDate) || localDate.isAfter(endDate)) continue;
+
+            Integer br = broj_termina.getOrDefault(localDate, 0) + 1;
+            broj_termina.put(localDate, br);
+        }
 
         LocalDate freeDay;
         LocalDateTime freeAppointment;
@@ -112,11 +120,13 @@ public class TerminServiceImpl implements TerminService{
     @Override
     public void saveMetadata(Termin termin) {
         crudrdfRepository.uploadTriplet("rdf",ZajednickoUtil.XML_PREFIX + "korisnik/" + termin.getKorisnikId().toString(), "termin", ZajednickoUtil.XML_PREFIX + "termin/" + termin.getId());
-        crudrdfRepository.uploadTriplet("rdf",ZajednickoUtil.XML_PREFIX + "termin/" + termin.getId(), "termin_ceka_potvrdu", "true");
+        crudrdfRepository.uploadTriplet("rdf",ZajednickoUtil.XML_PREFIX + "termin/" + termin.getId(), "termin_ceka_potvrdu", ZajednickoUtil.XML_PREFIX + "korisnik/" + termin.getKorisnikId());
     }
 
     @Override
+    @Scheduled(cron = "0 0 * * * ?") // Svaki sat u *:00:00
     public void terminZaInteresovanje() {
+        System.out.println("CRON ----- TerminServiceImpl.terminZaInteresovanje");
         ResultSet results = crudrdfRepository.findByPredicate("rdf", "ceka_od");
 
         Map<String, String> zahtevi = new HashMap<>();
@@ -153,7 +163,12 @@ public class TerminServiceImpl implements TerminService{
 
     @Override
     public Termin dobaviTerminBezSaglasnosti() {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "termin_ceka_potvrdu", "true");
+
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        String query = "?s <" + ZajednickoUtil.RDF_PREDICATE + "termin_ceka_potvrdu> <" + ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() + ">";
+
+        ResultSet results = crudrdfRepository.findWhere("rdf", query);
         if (!results.hasNext()) return null;
 
         QuerySolution s = results.next();

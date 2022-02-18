@@ -15,7 +15,7 @@
                 <form>
                     <label for="vaccine">
                         <span>Тип вакцине:</span>
-                        <input disabled v-model="tip" id="vaccine" type="text">
+                        <input disabled v-model="naziv" id="vaccine" type="text">
                     </label>
                     <label for="currentAmount">
                         <span>Тренутна количина:</span>
@@ -23,7 +23,7 @@
                     </label>
                     <label for="amount">
                         <span>Количина за додавање:</span>
-                        <input v-model="vakcinaKolicina.kolicina" id="amount" type="number" min="0">
+                        <input v-model="vakcina.kolicina" id="amount" type="number" min="0">
                     </label>
                 </form>
             </div>
@@ -48,10 +48,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="vaccine in vaccines" :key="vaccine.id">
-                                <td><span>{{ vaccine.tip }}</span></td>
-                                <td><span>{{ vaccine.kolicina }}</span></td>
-                                <td><button @click="addAmount(vaccine)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAmountModal">Додај количину</button></td>
+                            <tr v-for="vakcina in vakcine" :key="vakcina.id">
+                                <td><span>{{ vakcina.naziv }}</span></td>
+                                <td><span>{{ vakcina.kolicina }}</span></td>
+                                <td><button @click="addAmount(vakcina)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAmountModal">Додај количину</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -71,46 +71,42 @@ export default {
 
     data() {
         return {
-            vaccines: [
-                {
-                    tip: "Phizer, BioNTech",
-                    kolicina: 5
-                },
-                {
-                    tip: "Sinopharm",
-                    kolicina: 300
-                },
-                {
-                    tip: "Sputnik V",
-                    kolicina: 17
-                },
-                {
-                    tip: "AstraZeneca",
-                    kolicina: 5
-                }
-            ],
+            vakcine: [],
 
-            tip: "",
+            naziv: "",
             kolicina: "",
             
-            vakcinaKolicina: {
-                nazivVakcine: "",
+            vakcina: {
+                naziv: "",
                 kolicina: 0,
             }
         };
     },
 
+    created() {
+        this.loadVakcine();
+    },
+
     methods: {
 
-        addAmount(vaccine) {
-            this.tip = vaccine.tip;
-            this.kolicina = vaccine.kolicina;
+        loadVakcine() {
+            VakcinaService.loadVakcine()
+                .then(response => {
+                    console.log(response.data);
+                    this.vakcine = response.data;
+                })
+                .catch(console.log("greska"))
+        },
+
+        addAmount(vakcina) {
+            this.naziv = vakcina.naziv;
+            this.kolicina = vakcina.kolicina;
         },
 
         confirm() {
-            this.vakcinaKolicina.nazivVakcine = this.tip;
+            this.vakcina.naziv = this.naziv;
 
-            let data = "<vakcinaKolicina>" + xmljs.json2xml(this.vakcinaKolicina, {compact: true, spaces: 4}) + "</vakcinaKolicina>";
+            let data = "<vakcina>" + xmljs.json2xml(this.vakcine, {compact: true, spaces: 4}) + "</vakcina>";
             VakcinaService.addKolicina(data)
                 .then(response => console.log(response))
                 .catch(console.log("greska"))

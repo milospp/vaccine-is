@@ -19,6 +19,8 @@ public interface CRUDRDFRepository {
 
     ResultSet findByPredicateAndObject(String graphUri, String predicate, String object);
 
+    String findFirstBySubjectAndPred(String graphUri, String subject, String predicate);
+
     void uploadTriplet(String graphUri, String resource, String property, String literal);
     void deleteTriplet(String graphUri, String resource, String property, String literal);
     void addStatement(String graphUri, Statement statement);

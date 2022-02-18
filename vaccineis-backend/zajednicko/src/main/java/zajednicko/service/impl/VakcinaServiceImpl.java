@@ -7,6 +7,7 @@ import zajednicko.model.vakcina.Vakcina;
 import zajednicko.repository.VakcinaExistRepository;
 import zajednicko.service.VakcinaService;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -14,6 +15,16 @@ import java.util.Optional;
 public class VakcinaServiceImpl implements VakcinaService {
 
     private final VakcinaExistRepository vakcinaExistRepository;
+
+    @Override
+    public List<Vakcina> findAll() {
+        return vakcinaExistRepository.findAll();
+    }
+
+    @Override
+    public Vakcina create(String xmlString) {
+        return vakcinaExistRepository.create(xmlString);
+    }
 
     @Override
     public void addKolicina(String nazivVakcine, Integer kolicina) {

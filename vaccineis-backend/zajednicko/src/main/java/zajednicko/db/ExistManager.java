@@ -200,8 +200,10 @@ public class ExistManager {
             for (String s : col.listResources()) {
                 nodes.add(((XMLResource) col.getResource(s)).getContentAsDOM());
             }
-            
-        } finally {
+        } catch (NullPointerException e) {
+            return new ArrayList<>();
+
+        }  finally {
             if (col != null) {
                 col.close();
                 System.out.println("ExistManager.load CLOSE");

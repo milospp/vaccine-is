@@ -12,17 +12,17 @@
         </select>
     </div>
 
-    <div class="row card-group" v-for="n in Math.ceil(documents.length/4)" :key="n.id">
-        <div class="col-3" v-for="doc in documents.slice((n-1)*4, n*4)" :key="doc.id">
+    <div class="row card-group">
+        <div class="col-3" v-for="doc in docs" :key="doc.id._text">
             <div class="card">
 <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                 <router-link class="routerLink" :to="{}">
-                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewSertifikatPdf()">
-                    <div class="card-header"><b>{{ doc.name }}</b></div>
+                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                    <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                 </router-link>
                 <div class="card-body">
-                    <a v-on:click="getInteresovanjePdf()" class="card-link">PDF</a>
-                    <a v-on:click="getInteresovanjeHtml()" class="card-link">XHTML</a>
+                    <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                    <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
                     <a href="#" class="card-link">RDF</a>
                     <a href="#" class="card-link">JSON</a>
                 </div>
@@ -36,12 +36,15 @@
 <script>
 import InteresovanjeService from '@/service/InteresovanjeService';
 import DigitalniZeleniSertifikatService from "@/service/DigitalniZeleniSertifikatService";
+import xmljs from "xml-js";
 
 export default {
     name: "DocumentList",
 
     data() {
         return {
+            docs: [],
+
             documents: [
                 {
                     name: "Saglasnost neka"
@@ -69,12 +72,12 @@ export default {
         filterDocuments() {
         },
 
-        getInteresovanjePdf() {
-          InteresovanjeService.getInteresovanjePdf();
+        getInteresovanjePdf(uuid) {
+          InteresovanjeService.getInteresovanjePdf(uuid);
         },
 
-        getInteresovanjeHtml() {
-          InteresovanjeService.getInteresovanjeHtml();
+        getInteresovanjeHtml(uuid) {
+          InteresovanjeService.getInteresovanjeHtml(uuid);
         },
 
         viewInteresovanjePdf() {
@@ -84,7 +87,35 @@ export default {
         viewSertifikatPdf() {
             DigitalniZeleniSertifikatService.viewSertifikatPdf();
         },
+
+        getDocs() {
+            InteresovanjeService.mojaInteresovanja().then(response => {
+                let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4})); 
+                console.log(data);
+                data = data['docDatas']['docData'];
+
+               this.docs = data;
+            }) 
+        },
+        
+        fromatDate(string) {
+            let dateObj = new Date(string);
+            return dateObj.toLocaleDateString('sr-RS');
+        },
+
+        fromatTime(string) {
+            let dateObj = new Date(string);
+            return dateObj.toLocaleTimeString('sr-RS').slice(0,5);
+        },
+
+        fromatDateTime(string) {
+            return this.fromatDate(string) + " " + this.fromatTime(string);
+        }
     },
+
+    created() {
+        this.getDocs();
+    }
 };
 </script>
 

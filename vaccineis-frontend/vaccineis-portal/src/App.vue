@@ -13,6 +13,8 @@ export default {
         
         let token = localStorage.getItem('token');
         axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+        console.log("Token: " +  axios.defaults.headers.common['Authorization']);
+
         axios.interceptors.response.use(function (response) {
             return response;
         }, function (error) {

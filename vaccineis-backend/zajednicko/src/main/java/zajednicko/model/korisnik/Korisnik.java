@@ -37,7 +37,6 @@ import java.util.List;
  *         &lt;element name="prezime" type="{http://www.ftn.uns.ac.rs/zajednicka}STprezime"/&gt;
  *         &lt;element name="email" type="{http://www.ftn.uns.ac.rs/zajednicka}STemail"/&gt;
  *         &lt;element name="sifra" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="jmbg" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="rola" type="{http://www.ftn.uns.ac.rs/korisnik}STrola"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;

@@ -46,14 +46,25 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 
     @Override
     public ResultSet findByObject(String graphUri, String object) {
-        String query = "?s ?p " + "\"" + object + "\"";
+        String query = "?s ?p " + ZajednickoUtil.literalQuotes(object);
         return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
     public ResultSet findByPredicateAndObject(String graphUri, String predicate, String object) {
-        String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + "> " + "\"" + object + "\"";
+
+
+        String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + "> " + ZajednickoUtil.literalQuotes(object);
         return fusekiManager.queryRDF(graphUri, query);
+    }
+
+    @Override
+    public String findFirstBySubjectAndPred(String graphUri, String subject, String predicate) {
+        String query =  "<" + subject + "> <" + ZajednickoUtil.RDF_PREDICATE + predicate + "> ?l";
+        ResultSet result = fusekiManager.queryRDF(graphUri, query);
+
+        if (!result.hasNext()) return null;
+        return result.next().get("l").toString();
     }
 
     @Override

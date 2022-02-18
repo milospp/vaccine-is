@@ -4,13 +4,10 @@ const API_URL = "http://localhost:8081/api/authentication"
 
 class AuthenticationService {
 
-    getAuthorizedUser(token) {
+    getAuthorizedUser() {
         return axios({
             method: 'GET',
-            url: `${API_URL}/authority`,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
+            url: `${API_URL}/authority`
         });
     }
 

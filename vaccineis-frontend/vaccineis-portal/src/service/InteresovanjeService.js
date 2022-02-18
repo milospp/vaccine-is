@@ -16,10 +16,10 @@ class InteresovanjeService {
         });
     }
 
-    getInteresovanjePdf() {
+    getInteresovanjePdf(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-pdf`,
+            url: `${API_URL}/get-pdf/${uuid}`,
             responseType: 'blob'
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
@@ -33,10 +33,10 @@ class InteresovanjeService {
         });
     }
 
-    getInteresovanjeHtml() {
+    getInteresovanjeHtml(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-html`,
+            url: `${API_URL}/get-html/${uuid}`,
             responseType: 'blob'
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
@@ -58,6 +58,16 @@ class InteresovanjeService {
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
             window.open(fileURL);
+        });
+    }
+
+    mojaInteresovanja() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/moja-interesovanja`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
         });
     }
 }

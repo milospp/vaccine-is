@@ -1,5 +1,6 @@
 package zajednicko.service.impl;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import zajednicko.exception.XMLSchemaValidationException;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+@Scope("prototype")
 @Service
 public class MarshallingServiceImpl implements MarshallingService {
 

@@ -5,18 +5,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
+import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import zajednicko.model.docdatas.DocDatas;
+import zajednicko.model.korisnik.Korisnik;
 
+import javax.websocket.server.PathParam;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -24,6 +26,7 @@ import java.io.IOException;
 public class InteresovanjeController {
 
     private final InteresovanjeService interesovanjeService;
+    private final AuthenticationService authenticationService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -35,14 +38,27 @@ public class InteresovanjeController {
 
 
 //    @PreAuthorize("hasRole('GRADJANIN')")
-    @GetMapping(value = "/get-pdf")
-    public ResponseEntity<?> getInteresovanjePdf() throws IOException, ParserConfigurationException, SAXException {
-        return interesovanjeService.getPdf(2); // id za dok
+    @GetMapping(value = "/get-pdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjePdf(@PathVariable("uuid") String uuid) throws IOException, ParserConfigurationException, SAXException {
+        return interesovanjeService.getPdf(uuid); // id za dok
     }
 
-//    @PreAuthorize("hasRole('GRADJANIN')")
-    @GetMapping(value = "/get-html")
-    public ResponseEntity<?> getInteresovanjeHtml() throws IOException, ParserConfigurationException, SAXException {
-        return interesovanjeService.getHtml(2);
+    //    @PreAuthorize("hasRole('GRADJANIN')")
+    @GetMapping(value = "/get-html/{uuid}")
+    public ResponseEntity<?> getInteresovanjeHtml(@PathVariable("uuid") String uuid) throws IOException, ParserConfigurationException, SAXException {
+        return interesovanjeService.getHtml(uuid);
+    }
+
+
+    //    @PreAuthorize("hasRole('GRADJANIN')")
+    @GetMapping(value = "/moja-interesovanja", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public ResponseEntity<DocDatas> getMojaInteresovanja
+    () throws IOException, ParserConfigurationException, SAXException {
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(korisnik.getId());
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }
 }

@@ -1,13 +1,11 @@
 package zajednicko.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
 import zajednicko.exception.XMLSchemaValidationException;
 import zajednicko.model.korisnik.Korisnik;
-import zajednicko.model.korisnik.STrola;
 import zajednicko.service.MarshallingService;
 import zajednicko.db.ExistManager;
 
@@ -20,7 +18,7 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
 
     @Autowired
     public UserExistRepository(ExistManager existManager, MarshallingService marshallingService, PasswordEncoder passwordEncoder) {
-        super("db/korisnici", "schemas/korisnik.xsd", existManager, marshallingService);
+        super("db/korisnik", "schemas/korisnik.xsd", existManager, marshallingService);
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -52,14 +50,6 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     }
 
     public Korisnik findUserByEmail(String email) {
-//        Korisnik korisnik = new Korisnik();
-//        korisnik.setId(String.valueOf(UUID.randomUUID()));
-//        korisnik.setIme("mile");
-//        korisnik.setPrezime("mile");
-//        korisnik.setEmail("mile@gmail.com");
-//        korisnik.setSifra(passwordEncoder.encode("mile123"));
-//        korisnik.setRola(STrola.SLUZBENIK);
         return findAll().stream().filter(x -> x.getEmail().equalsIgnoreCase(email.trim())).findFirst().orElse(null);
-//        return korisnik;
     }
 }

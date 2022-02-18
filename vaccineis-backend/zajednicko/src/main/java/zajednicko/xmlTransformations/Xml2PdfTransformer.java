@@ -32,6 +32,17 @@ public class Xml2PdfTransformer {
 
     public static String OUTPUT_FILE = "./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf";
 
+
+    public Xml2PdfTransformer(String inputXSL) throws IOException, SAXException {
+        // Initialize FOP factory object
+        fopFactory = FopFactory.newInstance(new File("zajednicko/src/fop.xconf"));
+
+        // Setup the XSLT transformer factory
+        transformerFactory = new TransformerFactoryImpl();
+
+        XSL_FILE = inputXSL;
+    }
+
     public Xml2PdfTransformer(String inputXML, String inputXSL, String outputPDF) throws SAXException, IOException {
 
         // Initialize FOP factory object
@@ -45,7 +56,7 @@ public class Xml2PdfTransformer {
         OUTPUT_FILE = outputPDF;
     }
 
-    private void generatePDF() throws Exception {
+    public byte[] generatePDF(String input) throws Exception {
 
         System.out.println("[INFO] " + Xml2PdfTransformer.class.getSimpleName());
 
@@ -75,33 +86,37 @@ public class Xml2PdfTransformer {
 
         // Start XSLT transformation and FOP processing
 
-        String temp = new String(Files.readAllBytes(Paths.get(INPUT_FILE)));
+        String temp = input;
         System.out.println(temp);
         temp = temp.replace("&amp;lt;", "<").replace("&amp;gt;", ">").replace("&amp;quot;", "\"");
         System.out.println(temp);
         StreamSource inputStream = new StreamSource(new StringReader(temp));
 
+
+
         xslFoTransformer.transform(inputStream, res);
 
-        // Generate PDF file
-        File pdfFile = new File(OUTPUT_FILE);
-        if (!pdfFile.getParentFile().exists()) {
-            System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
-            pdfFile.getParentFile().mkdir();
-        }
+        return outStream.toByteArray();
 
-        OutputStream out = new BufferedOutputStream(new FileOutputStream(pdfFile));
-        out.write(outStream.toByteArray());
-
-        System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
-        out.close();
-
-        System.out.println("[INFO] End.");
+//        // Generate PDF file
+//        File pdfFile = new File(OUTPUT_FILE);
+//        if (!pdfFile.getParentFile().exists()) {
+//            System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
+//            pdfFile.getParentFile().mkdir();
+//        }
+//
+//        OutputStream out = new BufferedOutputStream(new FileOutputStream(pdfFile));
+//        out.write(outStream.toByteArray());
+//
+//        System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
+//        out.close();
+//
+//        System.out.println("[INFO] End.");
 
     }
 
     public static void main(String[] args) throws Exception {
-        new Xml2PdfTransformer("./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xsl-fo/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.pdf").generatePDF();
+//        new Xml2PdfTransformer("./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xsl-fo/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.pdf").generatePDF();
     }
 
     /*
