@@ -1,5 +1,6 @@
 package zajednicko.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
@@ -10,6 +11,7 @@ import zajednicko.util.ZajednickoUtil;
 
 import java.util.Collection;
 
+@Slf4j
 @Component
 public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 

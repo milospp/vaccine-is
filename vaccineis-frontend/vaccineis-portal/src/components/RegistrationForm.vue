@@ -61,10 +61,13 @@ export default {
 
             let data = "<korisnik xmlns='http://www.ftn.uns.ac.rs/korisnik'>" + xmljs.json2xml(this.user, {compact: true, spaces: 4}) + "</korisnik>";
             AuthenticationService.register(data)
-                .then(response => { console.log(xmljs.xml2json(response.data)) })
+                .then(() => { 
+                    this.toast("Успешно сте се регистровали!", "success");
+                    this.$router.push({ name: "Login" })
+                })
                 .catch((error) => {
                     console.log(error);
-                    this.toast("Greska", "error")    
+                    this.toast("Невалидан унос података!", "error")    
                 })
         },
 

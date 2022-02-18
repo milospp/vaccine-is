@@ -62,7 +62,7 @@ public class FusekiManager {
         model.write(out, SparqlUtil.NTRIPLES);
 
         // Updating the named graph with the triples from RDF model
-        String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + graphUri, new String(out.toByteArray()));
+        String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + graphUri, out.toString());
 
         // UpdateRequest represents a unit of execution
         UpdateRequest update = UpdateFactory.create(sparqlUpdate);

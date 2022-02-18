@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserExistRepository(ExistManager existManager, MarshallingService marshallingService, PasswordEncoder passwordEncoder) {
