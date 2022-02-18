@@ -24,16 +24,16 @@
     <div class="form-group">
         <label>Пол?</label>
         <div class="checkbox-from-control">
-            <input v-model="zahtev.podnosilac.pol._text" type="radio" name="specificVaccinationDateChecked" value="Мушко" class="" id="pol" title=""><span>Мушко</span>
+            <input v-model="zahtev.podnosilac.pol._text" type="radio" name="specificVaccinationDateChecked" value="Мушко" class="" id="pol1" title=""><span>Мушко</span>
         </div>
         <div class="checkbox-from-control">
-            <input v-model="zahtev.podnosilac.pol._text" type="radio" name="specificVaccinationDateChecked" value="Женско" class="" id="pol" title=""><span>Женско</span>
+            <input v-model="zahtev.podnosilac.pol._text" type="radio" name="specificVaccinationDateChecked" value="Женско" class="" id="pol2" title=""><span>Женско</span>
         </div>
         <div class="invalid-feedback">Невалидан формат</div>
     </div>
     <br>
     <div class="form-group">
-        <label for="pasos">Број пасоша</label>
+        <label for="brojPasosa">Број пасоша</label>
         <input minlength="8" v-model="zahtev.podnosilac.brojPasosa._text" type="text" id="brojPasosa" class="form-control" required>
         <span class="validation-error" data-bind="validationMessage: patientInformation.contactPhone" style="display: none;"></span>
     </div>
@@ -207,6 +207,7 @@ export default {
         onChange(html, text) {
           console.log(html.length, text.length);
           let temp = html.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+          this.zahtev.razlog = temp;
           console.log(text);
           console.log(html);
           console.log(temp);

@@ -44,7 +44,7 @@
         <obrazac:datumSaglasnosti>2021-11-30</obrazac:datumSaglasnosti>
     </obrazac:podaciPacijenta>
     
-    
+
     <obrazac:evidencijaVakcinacije>
         <obrazac:zdravstvenaUstanova>
             <obrazac:nazivZdravstveneUstanove>Дом здравља Нови Сад</obrazac:nazivZdravstveneUstanove>
@@ -65,7 +65,7 @@
                 <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
                 <obrazac:nezeljenaReakcija>Алергија на чоколаду</obrazac:nezeljenaReakcija>
             </obrazac:vakcinacija>
-            
+
             <obrazac:vakcinacija>
                 <obrazac:nazivVakcine>Pfizer-BioNTech</obrazac:nazivVakcine>
                 <obrazac:datumDavanjaVakcine>2021-11-22</obrazac:datumDavanjaVakcine>
@@ -75,7 +75,7 @@
                 <obrazac:proizvodjac>BioNTech</obrazac:proizvodjac>
                 <obrazac:nezeljenaReakcija>Температура након једења чварака</obrazac:nezeljenaReakcija>
             </obrazac:vakcinacija>
-            
+
             <obrazac:privremeneKontraindikacije>
                 <obrazac:kontraindikacija>
                     <obrazac:datumUtvrdjivanja>2021-11-25</obrazac:datumUtvrdjivanja>

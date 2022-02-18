@@ -91,7 +91,11 @@
                     <div style="position:absolute;left:385px;top:591px" class="cls_003"><span class="cls_003">Zdravstvena ustanova / Medical institution</span></div>
                     <div style="position:absolute;left:34px;top:690px" class="cls_002"><span class="cls_002">Ова потврда важи без потписа и печата</span></div>
                     <div style="position:absolute;left:34px;top:703px" class="cls_003"><span class="cls_003">Ova potvrda važi bez potpisa i pečata / This certificate is valid without signatures and seals</span></div>
-                    <img src="../../../static/images/Screenshot from 2022-02-08 02-51-26.png" style="position: absolute; right: 34px; top: 610px; height: 105px;"/>
+                    <img style="position: absolute; right: 34px; top: 610px; height: 105px;">
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="//potvrda:QRKod"/>
+                        </xsl:attribute>
+                    </img>
                 </div>
 
             </body>

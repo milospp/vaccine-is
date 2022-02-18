@@ -10,7 +10,7 @@
                 <xs:element name="id" type="zaj:STid"/>
                 <xs:element name="drzavljanstvo" type="CTvrstaDrzavljanstva"/>
                 <xs:element name="podaciPacijenta" type="CTpacijentSaglasnost"/>
-                <xs:element name="evidencijaVakcinacije" type="CTevidencijaVakcinacije"/>
+                <xs:element minOccurs="0" name="evidencijaVakcinacije" type="CTevidencijaVakcinacije"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

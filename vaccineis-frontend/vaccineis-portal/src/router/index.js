@@ -40,6 +40,11 @@ const routes = [
     name: "ImmunizationConsentRequest",
     component: () => import("@/views/ImmunizationConsentRequest.vue"),
 },
+{
+    path: encodeURI("/потврда/645155822"),
+    name: "ViewGreenCertificate",
+    component: () => import("@/components/ViewDocument.vue"),
+},
 ];
 
 const router = new VueRouter({

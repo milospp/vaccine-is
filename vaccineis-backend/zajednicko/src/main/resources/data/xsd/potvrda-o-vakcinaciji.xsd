@@ -10,7 +10,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="podaciVakcinisanog" type="zaj:CTpodaciVakcinisanog"/>
-                <xs:element name="podaciVakcinacije" type="CTvakcinacijaPodaciPotvrda"></xs:element>
+                <xs:element name="podaciVakcinacije" type="CTvakcinacijaPodaciPotvrda"/>
                 <xs:element name="QRKod" type="xs:string"/>
             </xs:sequence>
             

@@ -3,8 +3,8 @@
     xsi:schemaLocation="http://www.ftn.uns.ac.rs/digitalni-sertifikat ../xsd/digitalni-sertifikat.xsd"
     xmlns:sertifikat = "http://www.ftn.uns.ac.rs/digitalni-sertifikat"
     xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
-    brojSertifikata="6451558/22" datumVrijemeIzdavanja="2021-11-22T09:00:00">
-    <sertifikat:qrKod/>
+    brojSertifikata="645155822" datumVrijemeIzdavanja="2021-11-22T09:00:00">
+    <sertifikat:qrKod>https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=http://localhost:9092/дигитални/645155822</sertifikat:qrKod>
     
     <sertifikat:podaciVakcinisanog>
         <zaj:ime>Зоран</zaj:ime>

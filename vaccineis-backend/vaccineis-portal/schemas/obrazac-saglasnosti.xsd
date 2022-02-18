@@ -7,7 +7,7 @@
     <xs:element name="saglasnost">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="id" type="zaj:STid"/>
+                <xs:element minOccurs="0" name="id" type="zaj:STid"/>
                 <xs:element name="drzavljanstvo" type="CTvrstaDrzavljanstva"/>
                 <xs:element name="podaciPacijenta" type="CTpacijentSaglasnost"/>
                 <xs:element minOccurs="0" name="evidencijaVakcinacije" type="CTevidencijaVakcinacije"/>
