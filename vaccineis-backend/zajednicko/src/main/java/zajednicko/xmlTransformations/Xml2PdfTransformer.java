@@ -1,13 +1,11 @@
 package zajednicko.xmlTransformations;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.xml.transform.Result;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
@@ -17,6 +15,8 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.apache.jena.base.Sys;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import net.sf.saxon.TransformerFactoryImpl;
@@ -56,7 +56,7 @@ public class Xml2PdfTransformer {
         StreamSource transformSource = new StreamSource(xslFile);
 
         // Initialize the transformation subject
-        StreamSource source = new StreamSource(new File(INPUT_FILE));
+        // StreamSource source = new StreamSource(new File(INPUT_FILE));
 
         // Initialize user agent needed for the transformation
         FOUserAgent userAgent = fopFactory.newFOUserAgent();
@@ -74,7 +74,14 @@ public class Xml2PdfTransformer {
         Result res = new SAXResult(fop.getDefaultHandler());
 
         // Start XSLT transformation and FOP processing
-        xslFoTransformer.transform(source, res);
+
+        String temp = new String(Files.readAllBytes(Paths.get(INPUT_FILE)));
+        System.out.println(temp);
+        temp = temp.replace("&amp;lt;", "<").replace("&amp;gt;", ">").replace("&amp;quot;", "\"");
+        System.out.println(temp);
+        StreamSource inputStream = new StreamSource(new StringReader(temp));
+
+        xslFoTransformer.transform(inputStream, res);
 
         // Generate PDF file
         File pdfFile = new File(OUTPUT_FILE);
@@ -94,7 +101,7 @@ public class Xml2PdfTransformer {
     }
 
     public static void main(String[] args) throws Exception {
-        new Xml2PdfTransformer("./src/main/resources/data/xml/zahtjev-za-sertifikat.xml", "./src/main/resources/data/xsl-fo/zahtjev-za-sertifikat.xsl","./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.pdf").generatePDF();
+        new Xml2PdfTransformer("./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xsl-fo/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.pdf").generatePDF();
     }
 
     /*

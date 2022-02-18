@@ -34,7 +34,11 @@
 
                         <fo:inline-container inline-progression-dimension="20%">
                             <fo:block margin-left="-10px">
-                                <fo:external-graphic src='url("/home/dalibor/Desktop/vaccine-is/vaccineis-backend/zajednicko/src/main/resources/static/images/Screenshot from 2022-02-08 02-51-26.png")'  height="20px" content-width="1.7in" scaling="non-uniform"/>
+                                <fo:external-graphic height="20px" content-width="1.7in" scaling="non-uniform">
+                                    <xsl:attribute name="src">
+                                        <xsl:value-of select="//sertifikat:qrKod" />
+                                    </xsl:attribute>
+                                </fo:external-graphic>
                             </fo:block>
                         </fo:inline-container>
                     </fo:block>

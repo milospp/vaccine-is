@@ -34,6 +34,6 @@
         <pov:datumIzdavanjaPotvrde>2021-11-26</pov:datumIzdavanjaPotvrde>
     </pov:podaciVakcinacije>
     
-    <pov:QRKod/> <!-- atribut type -->
+    <pov:QRKod>https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=http://localhost:9092/потврда/645155822</pov:QRKod> <!-- atribut type -->
 </pov:potvrdaVakcinacije>
 

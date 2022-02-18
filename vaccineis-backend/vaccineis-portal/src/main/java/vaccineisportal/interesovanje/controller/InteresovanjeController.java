@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -31,13 +34,13 @@ public class InteresovanjeController {
 
 //    @PreAuthorize("hasRole('GRADJANIN')")
     @GetMapping(value = "/get-pdf")
-    public ResponseEntity<byte[]> getInteresovanjePdf() throws IOException {
+    public ResponseEntity<?> getInteresovanjePdf() throws IOException, ParserConfigurationException, SAXException {
         return interesovanjeService.getPdf(2); // id za dok
     }
 
 //    @PreAuthorize("hasRole('GRADJANIN')")
     @GetMapping(value = "/get-html")
-    public ResponseEntity<byte[]> getInteresovanjeHtml() throws IOException {
+    public ResponseEntity<?> getInteresovanjeHtml() throws IOException, ParserConfigurationException, SAXException {
         return interesovanjeService.getHtml(2);
     }
 }

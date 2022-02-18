@@ -60,6 +60,16 @@ const routes = [
         authorize: ['ZDRAVSTVENI_RADNIK']
     }
 },
+{
+    path: encodeURI("/потврда/645155822"),
+    name: "ViewGreenCertificate",
+    component: () => import("@/components/ViewDocument.vue"),
+},
+{
+    path: encodeURI("/дигитални/645155822"),
+    name: "ViewGreenCertificate",
+    component: () => import("@/components/ViewDocument.vue"),
+}
 ];
 
 const router = new VueRouter({

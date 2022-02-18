@@ -1,10 +1,8 @@
 package zajednicko.xmlTransformations;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.TransformerFactoryImpl;
 import com.itextpdf.text.DocumentException;
+import org.xml.sax.InputSource;
 
 public class Xml2HtmlTransformer {
     private static final DocumentBuilderFactory documentFactory;
@@ -55,7 +54,11 @@ public class Xml2HtmlTransformer {
         try {
 
             DocumentBuilder builder = documentFactory.newDocumentBuilder();
-            document = builder.parse(new File(filePath));
+            File file = new File(filePath);
+            String temp = new String(Files.readAllBytes(Paths.get(filePath)));
+            temp = temp.replace("&amp;lt", "&lt").replace("&amp;gt", "&gt").replace("&amp;quot", "&quot");
+
+            document = builder.parse(new InputSource(new StringReader(temp))); //builder.parse(file);
 
             if (document != null)
                 System.out.println("[INFO] File parsed with no errors.");
@@ -99,7 +102,7 @@ public class Xml2HtmlTransformer {
 
         System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
 
-        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/zahtjev-za-sertifikat.xml", "./src/main/resources/data/xslt/zahtjev-za-sertifikat.xsl","./src/main/resources/data/gen/itext/zahtjev-za-sertifikat.html");
+        Xml2HtmlTransformer pdfTransformer = new Xml2HtmlTransformer( "./src/main/resources/data/xml/potvrda-o-vakcinaciji.xml", "./src/main/resources/data/xslt/potvrda-o-vakcinaciji.xsl","./src/main/resources/data/gen/itext/potvrda-o-vakcinaciji.html");
 
         pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
 

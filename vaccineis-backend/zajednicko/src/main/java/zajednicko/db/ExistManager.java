@@ -18,11 +18,13 @@ import org.xmldb.api.modules.XUpdateQueryService;
 
 import javax.xml.transform.OutputKeys;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ExistManager {
 
-    private final static String TARGET_NAMESPACE = "http://random.com";
+    private final static String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs";
 
     public static final String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
             + "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
@@ -184,6 +186,29 @@ public class ExistManager {
         }
     }
 
+    public List<Node> loadAll(String collectionUri) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        List<Node> nodes = new ArrayList<>();
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+        
+            for (String s : col.listResources()) {
+                nodes.add(((XMLResource) col.getResource(s)).getContentAsDOM());
+            }
+            
+        } finally {
+            if (col != null) {
+                col.close();
+                System.out.println("ExistManager.load CLOSE");
+            }
+        }
+        return nodes;
+    }
 
     public ResourceSet retrieve(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         createConnection();

@@ -7,7 +7,7 @@
     <xs:element name="zeleniSertifikat">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="qrKod"/>
+                <xs:element name="qrKod" type="xs:string"/>
                 <xs:element name="podaciVakcinisanog" type="zaj:CTpodnosilacZahtjeva"/>
                 <xs:element name="vakcinacija" type="CTvakcinacijaPodaciSertifikat"/>
                 <xs:element name="testovi" type="CTtest"/>

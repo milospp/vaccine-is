@@ -141,7 +141,11 @@
 
                             <fo:inline-container inline-progression-dimension="20%">
                                 <fo:block>
-                                    <fo:external-graphic src='url("/home/dalibor/Desktop/vaccine-is/vaccineis-backend/zajednicko/src/main/resources/static/images/Screenshot from 2022-02-08 02-51-26.png")' content-height="scale-to-fit" height="100px" content-width="1.3in" scaling="non-uniform"/>
+                                    <fo:external-graphic content-height="scale-to-fit" height="100px" content-width="1.3in" scaling="non-uniform">
+                                        <xsl:attribute name="src">
+                                            <xsl:value-of select="//potvrda:QRKod" />
+                                        </xsl:attribute>
+                                    </fo:external-graphic>
                                 </fo:block>
                             </fo:inline-container>
                         </fo:block>

@@ -38,7 +38,11 @@
                         <img width="594" height="841"/>
                     </div>
                     <img src="../../../static/images/Screenshot from 2022-02-08 11-17-12.png" style="position: absolute; left: 66px; top: 10px; height: 120px;"/>
-                    <img src="../../../static/images/Screenshot from 2022-02-08 02-51-26.png" style="position: absolute; right: 23px; top: 10px; height: 138px; width: 120px;"/>
+                    <img style="position: absolute; right: 23px; top: 10px; height: 138px; width: 120px;">
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="//sertifikat:qrKod"/>
+                        </xsl:attribute>
+                    </img>
                     <div style="position:absolute;left:188.66px;top:38.26px" class="cls_004"><span class="cls_004">ДИГИТАЛНИ ЗЕЛЕНИ СЕРТИФИКАТ</span></div>
                     <div style="position:absolute;left:194.82px;top:55.17px" class="cls_005"><span class="cls_005">Потврда о извршеној вакцинацији против</span></div>
                     <div style="position:absolute;left:213.09px;top:69.29px" class="cls_005"><span class="cls_005">COVID-19 и резултатима тестирања</span></div>
