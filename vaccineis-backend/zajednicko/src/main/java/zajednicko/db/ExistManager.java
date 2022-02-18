@@ -5,6 +5,7 @@ import org.exist.xmldb.EXistResource;
 import org.exist.xupdate.XUpdateProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Node;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -17,11 +18,13 @@ import org.xmldb.api.modules.XUpdateQueryService;
 
 import javax.xml.transform.OutputKeys;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ExistManager {
 
-    private final static String TARGET_NAMESPACE = "http://random.com";
+    private final static String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs";
 
     public static final String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
             + "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
@@ -121,6 +124,7 @@ public class ExistManager {
         }
     }
 
+    @Deprecated
     public XMLResource load(String collectionUri, String documentId) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         createConnection();
         Collection col = null;
@@ -134,8 +138,76 @@ public class ExistManager {
         } finally {
             if (col != null) {
                 col.close();
+                System.out.println("ExistManager.load CLOSE");
             }
         }
+    }
+
+
+    public Node loadDOM(String collectionUri, String documentId) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+            res = (XMLResource) col.getResource(documentId);
+            return res.getContentAsDOM();
+        } finally {
+            if (col != null) {
+                col.close();
+                System.out.println("ExistManager.load CLOSE");
+            }
+        }    }
+
+    public ResourceSet loadXPath(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri);
+
+            // get an instance of xpath query service
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("", TARGET_NAMESPACE);
+
+            // execute xpath expression
+            ResourceSet result = xpathService.query(xpathExp);
+            return result;
+        } finally {
+            if (col != null) {
+                col.close();
+            }
+        }
+    }
+
+    public List<Node> loadAll(String collectionUri) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        createConnection();
+        Collection col = null;
+        XMLResource res = null;
+
+        List<Node> nodes = new ArrayList<>();
+
+        try {
+            col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+        
+            for (String s : col.listResources()) {
+                nodes.add(((XMLResource) col.getResource(s)).getContentAsDOM());
+            }
+            
+        } finally {
+            if (col != null) {
+                col.close();
+                System.out.println("ExistManager.load CLOSE");
+            }
+        }
+        return nodes;
     }
 
     public ResourceSet retrieve(String collectionUri, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {

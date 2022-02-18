@@ -1,66 +1,73 @@
 package zajednicko.repository;
 
-import lombok.AllArgsConstructor;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.xmldb.api.base.XMLDBException;
-import zajednicko.db.ExistManager;
 import zajednicko.db.FusekiManager;
-import zajednicko.service.MarshallingService;
+import zajednicko.util.ZajednickoUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
-@AllArgsConstructor
 @Component
-public abstract class CRUDRDFRepositoryImpl {
+public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
+
     protected final FusekiManager fusekiManager;
 
-//    @Override
+    @Autowired
+    public CRUDRDFRepositoryImpl(FusekiManager fusekiManager) {
+        this.fusekiManager = fusekiManager;
+    }
+
+    @Override
     public ResultSet findAll(String graphUri) {
         return fusekiManager.getAllRDF(graphUri);
     }
 
-//    @Override
-    public ResultSet findWhere(String whereStatement) {
-        return null;
+    @Override
+    public ResultSet findWhere(String graphUri, String whereStatement) {
+        return fusekiManager.queryRDF(graphUri, whereStatement);
     }
 
-//    @Override
+    @Override
     public ResultSet findBySubject(String graphUri, String subject) {
-        return null;
+        String query = "<" + subject + ">" + " ?p ?o";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
-//    @Override
+    @Override
     public ResultSet findByPredicate(String graphUri, String predicate) {
-        return null;
+        String query =  "?s " + "<" + predicate + ">" + " ?o";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
-//    @Override
+    @Override
     public ResultSet findByObject(String graphUri, String object) {
-        return null;
+        String query = "?s ?p " + "\"" + object + "\"";
+        return fusekiManager.queryRDF(graphUri, query);
     }
 
-//    @Override
+    @Override
     public void dropRDF(String graphUri, String uri) {
 
     }
 
-//    @Override
-    public void addStatement(Statement statement) {
-        Model model = fusekiManager.createRDFModel(statement);
-        fusekiManager.uploadRDFModel(model);
+    @Override
+    public void uploadTriplet(String graphUri, String resource, String property, String literal) {
+        Model model = fusekiManager.createRDFModel(ZajednickoUtil.XML_PREFIX + resource, property, literal);
+        fusekiManager.uploadRDFModel(graphUri, model);
     }
 
-//    @Override
-    public void addStatement(Collection<Statement> statement) {
+    @Override
+    public void addStatement(String graphUri, Statement statement) {
         Model model = fusekiManager.createRDFModel(statement);
-        fusekiManager.uploadRDFModel(model);
+        fusekiManager.uploadRDFModel(ZajednickoUtil.XML_PREFIX + graphUri, model);
+    }
+
+    @Override
+    public void addStatement(String graphUri, Collection<Statement> statement) {
+        Model model = fusekiManager.createRDFModel(statement);
+        fusekiManager.uploadRDFModel(ZajednickoUtil.XML_PREFIX + graphUri, model);
     }
 }

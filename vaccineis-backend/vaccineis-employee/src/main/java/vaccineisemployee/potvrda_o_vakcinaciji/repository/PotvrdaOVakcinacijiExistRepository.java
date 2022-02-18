@@ -3,24 +3,17 @@ package vaccineisemployee.potvrda_o_vakcinaciji.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.xmldb.api.base.XMLDBException;
 import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
 import zajednicko.db.ExistManager;
-import zajednicko.repository.CRUDRepositoryImpl;
+import zajednicko.repository.CRUDExistRepositoryImpl;
 import zajednicko.service.impl.MarshallingServiceImpl;
 
-import java.util.UUID;
-
 @Repository
-public class PotvrdaOVakcinacijiExistRepository extends CRUDRepositoryImpl<PotvrdaVakcinacije> {
+public class PotvrdaOVakcinacijiExistRepository extends CRUDExistRepositoryImpl<PotvrdaVakcinacije> {
 
     @Autowired
     public PotvrdaOVakcinacijiExistRepository(ExistManager existManager, MarshallingServiceImpl marshallingService) {
-        super("db/potvrdeOVakcinaciji", existManager, marshallingService);
-    }
-
-    public void savePotvrdaOVakcinaciji(String text) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        existManager.storeFromText(collectionId, String.valueOf(UUID.randomUUID()), text);
+        super("db/potvrdeOVakcinaciji", "schemas/potvrda-o-vakcinaciji.xsd" ,existManager, marshallingService);
     }
 
     @Override

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pov:potvrdaVakcinacije
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji ../xsd/potvrda-o-vakcinaciji.xsd"
+    xmlns:pov = "http://www.ftn.uns.ac.rs/potvrda-o-vakcinaciji"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka"
+    sifra="65455165">
+
+    <pov:podaciVakcinisanog>
+        <zaj:ime>Душан</zaj:ime>
+        <zaj:prezime>Ердељан</zaj:prezime>
+        <zaj:pol>Мушко</zaj:pol>
+        <zaj:datumRodjenja>1998-02-01</zaj:datumRodjenja>
+        <zaj:jmbg>0102998152031</zaj:jmbg>
+    </pov:podaciVakcinisanog>
+    
+    <pov:podaciVakcinacije>
+        <pov:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-01</zaj:datumDavanjaDoze>
+            <zaj:brojDoze>1</zaj:brojDoze>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+            <zaj:serijaDoze>456184364</zaj:serijaDoze>
+        </pov:vakcinaPodaci>
+        
+        <pov:vakcinaPodaci>
+            <zaj:datumDavanjaDoze>2021-11-22</zaj:datumDavanjaDoze>
+            <zaj:brojDoze>2</zaj:brojDoze>
+            <zaj:nazivVakcine>Pfizer-BioNTech</zaj:nazivVakcine>
+            <zaj:zdravstvenaUstanova>Дом здравља Нови Сад</zaj:zdravstvenaUstanova>
+            <zaj:serijaDoze>456184458</zaj:serijaDoze>
+        </pov:vakcinaPodaci>
+        
+        <pov:datumIzdavanjaPotvrde>2021-11-26</pov:datumIzdavanjaPotvrde>
+    </pov:podaciVakcinacije>
+    
+    <pov:QRKod>https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=http://localhost:9092/потврда/645155822</pov:QRKod> <!-- atribut type -->
+</pov:potvrdaVakcinacije>
+

@@ -16,11 +16,11 @@ import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import zajednicko.util.AuthenticationUtilities;
+import zajednicko.util.FusekiAuthenticationUtilities;
 import zajednicko.util.SparqlUtil;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
@@ -33,12 +33,13 @@ public class FusekiManager {
 
 
     private HttpContext httpContext;
-    AuthenticationUtilities.ConnectionProperties conn;
 
+    private final FusekiAuthenticationUtilities conn;
 
-    public FusekiManager() throws IOException {
+    @Autowired
+    public FusekiManager(FusekiAuthenticationUtilities conn) throws IOException {
+        this.conn = conn;
         this.httpContext = getCredentialsContext();
-        this.conn = AuthenticationUtilities.loadProperties();
     }
 
     public HttpContext getCredentialsContext() {
@@ -51,7 +52,9 @@ public class FusekiManager {
         return httpContext;
     }
 
-    public void uploadRDFModel(Model model) {
+    public void uploadRDFModel(String graphUri, Model model) {
+        if (graphUri != null && !graphUri.startsWith("/")) graphUri = "/" + graphUri;
+
         model.write(System.out, SparqlUtil.RDF_XML);
 
         // Issuing the SPARQL update...
@@ -59,7 +62,7 @@ public class FusekiManager {
         model.write(out, SparqlUtil.NTRIPLES);
 
         // Updating the named graph with the triples from RDF model
-        String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + PERSON_NAMED_GRAPH_URI, new String(out.toByteArray()));
+        String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + graphUri, new String(out.toByteArray()));
 
         // UpdateRequest represents a unit of execution
         UpdateRequest update = UpdateFactory.create(sparqlUpdate);
@@ -91,8 +94,32 @@ public class FusekiManager {
         return model;
     }
 
+    public Model createRDFModel (String resource, String propery, String literal) {
+
+        Model model = ModelFactory.createDefaultModel();
+        model.setNsPrefix("pred", PREDICATE_NAMESPACE);
+
+        Resource resourceData = model.createResource(resource);
+
+        Property property1 = model.createProperty(PREDICATE_NAMESPACE,propery);
+        Literal literal1 = model.createLiteral(literal);
+
+        Statement statement = model.createStatement(resourceData, property1, literal1);
+
+        model.add(statement);
+
+        return model;
+    }
+
     public ResultSet getAllRDF(String uri) {
-        String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + PERSON_NAMED_GRAPH_URI, "?s ?p ?o");
+        return queryRDF(uri, "?s ?p ?o");
+
+    }
+
+    public ResultSet queryRDF(String uri, String whereQuery) {
+        if (uri != null && !uri.startsWith("/")) uri = "/" + uri;
+
+        String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + uri, whereQuery);
 
         // Create a QueryExecution that will access a SPARQL service over HTTP
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);

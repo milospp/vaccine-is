@@ -12,13 +12,14 @@ import java.util.UUID;
 public interface CRUDRDFRepository {
 
     ResultSet findAll(String graphUri);
-    ResultSet findWhere(String whereStatement);
+    ResultSet findWhere(String graphUri, String whereStatement);
     ResultSet findBySubject(String graphUri, String subject);
     ResultSet findByPredicate(String graphUri, String predicate);
     ResultSet findByObject(String graphUri, String object);
 
-    void addStatement(Statement statement);
-    void addStatement(Collection<Statement> statement);
+    void uploadTriplet(String graphUri, String resource, String property, String literal);
+    void addStatement(String graphUri, Statement statement);
+    void addStatement(String graphUri, Collection<Statement> statement);
 
     void dropRDF(String graphUri, String uri);
 }

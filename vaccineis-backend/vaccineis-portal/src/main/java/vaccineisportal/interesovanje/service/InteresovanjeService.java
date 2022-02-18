@@ -1,34 +1,18 @@
 package vaccineisportal.interesovanje.service;
 
-import lombok.AllArgsConstructor;
-import org.apache.jena.rdf.model.*;
-import org.springframework.stereotype.Service;
-import zajednicko.db.ExistManager;
-import zajednicko.db.FusekiManager;
-import zajednicko.repository.CRUDRDFRepository;
-import zajednicko.repository.CRUDRDFRepositoryImpl;
-import zajednicko.repository.CRUDRepository;
+import org.springframework.http.ResponseEntity;
 
-@Service
-@AllArgsConstructor
-public class InteresovanjeService {
+import org.xml.sax.SAXException;
+import vaccineisportal.interesovanje.model.Interesovanje;
 
-    protected final FusekiManager fusekiManager;
-    protected final ExistManager existManager;
-    public void writeSomething() {
-        Model model = ModelFactory.createDefaultModel();
-        model.setNsPrefix("pred", "http://www.ftn.uns.ac.rs/rdf/examples/predicate/");
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
-        Resource resource = model.createResource("http://www.ftn.uns.ac.rs/rdf/examples/person/Petar_Petrovic");
+public interface InteresovanjeService {
 
-        Property property1 = model.createProperty("http://www.ftn.uns.ac.rs/rdf/examples/predicate/","livesIn");
-        Literal literal1 = model.createLiteral("Novi Sad BREEE");
+    Interesovanje create(String xmlString);
 
-        Statement statement = model.createStatement(resource, property1, literal1);
+    ResponseEntity<?> getPdf(int id) throws IOException, ParserConfigurationException, SAXException;
 
-        model.add(statement);
-
-//        Model model = fusekiManager.createRDFModel(statement);
-        fusekiManager.testUpload();
-    }
+    ResponseEntity<?> getHtml(int id) throws IOException, ParserConfigurationException, SAXException;
 }

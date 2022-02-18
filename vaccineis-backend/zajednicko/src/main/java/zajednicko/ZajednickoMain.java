@@ -9,5 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ZajednickoMain {
 
     public static void main(String[] args) throws IOException {
+//        FusekiManager fm = new FusekiManager(conn);
+//        fm.testUpload();
     }
 }

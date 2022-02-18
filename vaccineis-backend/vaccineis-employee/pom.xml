@@ -57,7 +57,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -108,13 +107,6 @@
 			<groupId>com.evolvedbinary.j8fu</groupId>
 			<artifactId>j8fu</artifactId>
 			<version>1.23.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>apache-jena-libs</artifactId>
-			<type>pom</type>
-			<version>4.3.2</version>
 		</dependency>
 
 		<dependency>

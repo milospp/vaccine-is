@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+    targetNamespace="http://www.ftn.uns.ac.rs/izvjestaj" xmlns="http://www.ftn.uns.ac.rs/izvjestaj"
+    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zajednicka" schemaLocation="zajednicka.xsd"/>
+    <xs:element name="izvjestaj">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
+                <xs:element name="period">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="pocetakPerioda" type="zaj:STdatum"/>
+                            <xs:element name="krajPerioda" type="zaj:STdatum"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="brojInteresovanjaImunizacija" type="zaj:STpozitivanBroj"/>
+                <xs:element name="sertifikatInfo">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="brojZahtjeva" type="zaj:STpozitivanBroj"/>
+                            <xs:element name="izdatoZahtjeva" type="zaj:STpozitivanBroj"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="brojDoza" type="zaj:STbrojDoze"/>
+                <xs:element name="dozeVakcinaInfo">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="dozaInfo">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="redniBrojDoze" type="zaj:STbrojDoze"/>
+                                        <xs:element name="brojDatihDoza" type="zaj:STbrojDoze"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="raspodjelaDoza">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="tipVakcineInfo">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="nazivProizvodjaca" type="xs:string"/>
+                                        <xs:element name="brojDoza" type="zaj:STbrojDoze"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="datumIzdavanjaIzvjestaja" type="zaj:STdatum"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

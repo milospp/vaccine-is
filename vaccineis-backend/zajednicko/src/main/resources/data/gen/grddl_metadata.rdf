@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xml:lang="en"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/"
+    xml:base="http://www.ftn.uns.ac.rs/#"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    >
+
+
+    <rdf:Description rdf:about="#digitalni-sertifikat">
+        <pred:izdat rdf:resource="#zahtjev-za-sertifikat"/>
+        <pred:poseduje rdf:resource="#zajednicki"/>
+
+
+
+    </rdf:Description>
+
+
+</rdf:RDF>

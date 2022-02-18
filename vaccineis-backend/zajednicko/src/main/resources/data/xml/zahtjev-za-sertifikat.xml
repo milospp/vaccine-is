@@ -1,0 +1,38 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<?xml-stylesheet type="text/xsl" href="../xslt/zahtjev-za-sertifikat.xsl"?>-->
+<!--<zah:zahtjev xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zahtjevSertifikata ../xsd/zahtjev-za-sertifikat.xsd"-->
+<!--    xmlns:zah = "http://www.ftn.uns.ac.rs/zahtjevSertifikata"-->
+<!--    xmlns:zaj="http://www.ftn.uns.ac.rs/zajednicka">-->
+<!--    <zah:podnosilac>-->
+<!--        <zaj:ime>Димитрије</zaj:ime>-->
+<!--        <zaj:prezime>Каранфиловић</zaj:prezime>-->
+<!--        <zaj:pol>Мушко</zaj:pol>-->
+<!--        <zaj:datumRodjenja>1998-02-01</zaj:datumRodjenja>-->
+<!--        <zaj:jmbg>0102998152031</zaj:jmbg>-->
+<!--        <zaj:brojPasosa>008490806</zaj:brojPasosa>-->
+<!--    </zah:podnosilac>-->
+<!--    <zah:razlog>-->
+<!--        &lt;h1&gt; aw&lt;strong style="color: rgb(230, 0, 0);"&gt;&lt;em&gt;&lt;u&gt;dawdawdawd&lt;/u&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/h1&gt;-->
+<!--    </zah:razlog>-->
+<!--    <zah:mjestoDatum>-->
+<!--        <zah:lokacija>Нови Сад</zah:lokacija>-->
+<!--        <zah:datum>2021-12-01</zah:datum>-->
+<!--    </zah:mjestoDatum>-->
+<!--</zah:zahtjev>-->
+<ns2:zahtjev xmlns="http://www.ftn.uns.ac.rs/zajednicka" xmlns:ns2="http://www.ftn.uns.ac.rs/zahtjevSertifikata">
+    <id>087da1f1-601c-4cfb-8a40-be25b3917044</id>
+    <ns2:podnosilac>
+        <ime>marko</ime>
+        <prezime>markovic</prezime>
+        <pol>Мушко</pol>
+        <datumRodjenja>2008-02-06</datumRodjenja>
+        <jmbg>1212998156489</jmbg>
+        <brojPasosa>6655615611</brojPasosa>
+    </ns2:podnosilac>
+    <ns2:razlog>&amp;lt;h2&amp;gt;&amp;lt;strong style=&amp;quot;color: rgb(0, 102, 204);&amp;quot;&amp;gt;&amp;lt;u&amp;gt;Aawdawdawd&amp;lt;/u&amp;gt;&amp;lt;/strong&amp;gt;&amp;lt;/h2&amp;gt;</ns2:razlog>
+    <ns2:mjestoDatum>
+        <ns2:lokacija>Novi sad</ns2:lokacija>
+        <ns2:datum>2022-02-17</ns2:datum>
+    </ns2:mjestoDatum>
+</ns2:zahtjev>
