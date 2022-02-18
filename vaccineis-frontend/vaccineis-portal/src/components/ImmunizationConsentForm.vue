@@ -26,11 +26,6 @@
         <input v-model="saglasnost.drzavljanstvo.stranoDrzavljanstvo" type="text" id="stranoDrzavljanstvo" class="form-control">
         <span class="validation-error" data-bind="validationMessage: patientInformation.JMBG" style="display: none;"></span>
     </div>
-    <div v-if="drzavljanstvoIzbor == '1'" class="form-group">
-        <label for="jmbg">Бр. пасоша</label>
-        <input v-model="saglasnost.drzavljanstvo.brojPasosa" type="text" id="brojPasosa" class="form-control">
-        <span class="validation-error" data-bind="validationMessage: patientInformation.JMBG" style="display: none;"></span>
-    </div>
     <div v-if="drzavljanstvoIzbor == '2'" class="form-group">
         <label for="jmbg">Бр. пасоша или ЕБС за стране држављане</label>
         <input v-model="saglasnost.drzavljanstvo.EBS" type="text" id="ebs" class="form-control">
@@ -52,7 +47,7 @@
         <span class="validation-error" data-bind="validationMessage: patientInformation.firstName" style="display: none;"></span>
     </div>
     <div class="form-group">
-        <label for="pol">Пол (*)</label>
+        <label for="pol">Пол</label>
         <div>
             <input v-model="saglasnost.podaciPacijenta.pol._text" type="radio" id="musko" name="pol" value="Мушко">
             <label for="musko">Мушко</label>
@@ -64,7 +59,7 @@
     </div>
     <div class="form-group">
         <label for="dateOfBirth">Датум рођења</label>
-        <input v-model="saglasnost.podaciPacijenta.datumRodjenja._text" type="date" id="dateOfBirth" class="form-control" required> 
+        <input v-model="saglasnost.podaciPacijenta.datumRodjenja._text" type="date" id="datumRodjenja" class="form-control"  :max="date16YrsAgo" required> 
     </div>
     <div class="form-group">
         <label for="placeOfBirth">Место рођења</label>
@@ -88,11 +83,11 @@
     </div>
     <div class="form-group">
         <label for="homePhoneNumber">Тел. фиксни</label>
-        <input v-model="saglasnost.podaciPacijenta.kontaktPodaci.fiksniTelefon._text" type="text" id="fiksniTelefon" class="form-control">
+        <input v-model="saglasnost.podaciPacijenta.kontaktPodaci.fiksniTelefon._text" type="text" id="fiksni" class="form-control">
     </div>
     <div class="form-group">
         <label for="mobilePhoneNumber">Тел. мобилни</label>
-        <input v-model="saglasnost.podaciPacijenta.kontaktPodaci.mobilniTelefon._text" type="text" id="mobilniTelefon" class="form-control" required>
+        <input v-model="saglasnost.podaciPacijenta.kontaktPodaci.mobilniTelefon._text" type="text" id="mobilni" class="form-control" required>
     </div>
     <div class="form-group">
         <label for="email">Имејл</label>
@@ -193,7 +188,7 @@
         </div>
     </div>
 
-    <div class="bottom">
+    <div v-if="saglasnost.podaciPacijenta.izjavaSaglasnosti.saglasan === 'САГЛАСАН САМ'" class="bottom">
         <button class="button secondary" type="submit">Поднеси захтев</button>
     </div>
 
@@ -345,7 +340,10 @@ export default {
 
     computed: {
         ...mapState([
-            'user'
+            'user',
+            'brojFiksnogRegex',
+            'brojMobilnogRegex',
+            'emailRegex'
         ])
     },
 
@@ -444,8 +442,16 @@ export default {
                 },
             },
 
-            ustanova: ""
+            ustanova: "",
+            date16YrsAgo: new Date()
         };
+    },
+
+    created() {
+        this.date16YrsAgo.setFullYear(this.date16YrsAgo.getFullYear() - 16);
+        let d = this.date16YrsAgo;
+
+        this.date16YrsAgo =  d.getFullYear() +  "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
     },
 
     methods: {
@@ -482,6 +488,22 @@ export default {
             if (!form.checkValidity())
                 return false;
 
+            // eslint-disable-next-line
+            if (!this.emailRegex.test(this.saglasnost.podaciPacijenta.kontaktPodaci.email._text)) {
+                this.setInputInvalid(form, "email");
+                return false;
+            }
+
+            if (!this.brojFiksnogRegex.test(this.saglasnost.podaciPacijenta.kontaktPodaci.fiksniTelefon._text)) {
+                this.setInputInvalid(form, "fiksni");
+                return false;       
+            }
+
+            if (!this.brojMobilnogRegex.test(this.saglasnost.podaciPacijenta.kontaktPodaci.mobilniTelefon._text)) {
+                this.setInputInvalid(form, "mobilni");
+                return false;
+            }
+
             return true;
         },
 
@@ -493,6 +515,7 @@ export default {
             } else {
                 delete this.saglasnost.drzavljanstvo.drzavljanstvoSrbije;
                 delete this.saglasnost.drzavljanstvo.jmbg;
+                delete this.saglasnost.drzavljanstvo.brojPasosa;
             }
 
             if (this.saglasnost.podaciPacijenta.radniStatus !== "запослен")
@@ -528,13 +551,22 @@ export default {
                 if (item.value !== checkbox) item.checked = false
             });
         },
+
+        toast(message, type) {
+            this.$toasted.show(message, {
+                type: type,
+                theme: "toasted-primary",
+                position: "top-center",
+                duration: 3000,
+            });
+        },
     },
 
     filters: {
         date: function(date) {
             return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
         }
-    }
+    },
 };
 </script>
 
