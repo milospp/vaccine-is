@@ -1,5 +1,10 @@
 package zajednicko.util;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDate;
+
 public class ZajednickoUtil {
     public static String XML_PREFIX = "http://www.ftn.uns.ac.rs/";
     public static String RDF_PREDICATE = "http://www.ftn.uns.ac.rs/predicate/";
@@ -21,5 +26,14 @@ public class ZajednickoUtil {
         } else {
             return "\"" + literal + "\"";
         }
+    }
+
+    public static XMLGregorianCalendar localDateToGregorian(LocalDate date) {
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(date.toString());
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
