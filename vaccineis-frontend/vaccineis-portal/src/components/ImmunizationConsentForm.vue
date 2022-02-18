@@ -257,14 +257,13 @@
             <th>Серија вакцине (лот)</th>
             <th>Произвођач</th>
             <th>Нежељена реакција</th>
-            <th>Потпис лекара</th>
         </thead>
         <tbody>
             <tr>
                 <td><input v-model="saglasnost.podaciVakcinacija.nazivVakcine" type="text" id="vaccineName" class="form-control"></td>
                 <td><input v-model="saglasnost.podaciVakcinacija.datumDavanjaVakcine" type="date" id="vaccineDate" class="form-control"></td>
-                <td><input v-model="saglasnost.podaciVakcinacija.nacinDavanjaVakcine">ИМ</td>
-                <td><input v-model="saglasnost.podaciVakcinacija.ekstremitet">1) ДР, 2) ЛР</td>
+                <td><input v-model="saglasnost.podaciVakcinacija.nacinDavanjaVakcine"></td>
+                <td><input v-model="saglasnost.podaciVakcinacija.ekstremitet"></td>
                 <td>
                     <input v-model="saglasnost.podaciVakcinacija.serijaVakcine" type="text" id="vaccineLot" class="form-control">
                 </td>
@@ -273,9 +272,6 @@
                 </td>
                 <td>
                     <input v-model="saglasnost.podaciVakcinacija.nezeljenaReakcija" type="text" id="vaccineReaction" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="doctorSignature" class="form-control">
                 </td>
             </tr>
             <tr>
@@ -446,6 +442,9 @@ export default {
     },
 
     created() {
+        this.saglasnost.podaciPacijenta.ime._text = this.user.ime;
+        this.saglasnost.podaciPacijenta.prezime._text = this.user.prezime;
+
         this.date16YrsAgo.setFullYear(this.date16YrsAgo.getFullYear() - 16);
         let d = this.date16YrsAgo;
 
@@ -540,6 +539,11 @@ export default {
             delete this.saglasnost.podaciVakcinacija;
             delete this.saglasnost.privremeneKontraindikacije;
             delete this.saglasnost.odlukaKomisije;
+        },
+
+        prepareDrugiDeoSaglasnosti() {
+            if (this.saglasnost.odlukaKomisije !== "Да")
+                this.saglasnost.odlukaKomisije = "Не";
         },
 
         setInputInvalid(form, inputId) {

@@ -25,6 +25,11 @@ const routes = [
     name: "ImmunizationReportRequest",
     component: () => import("@/views/ImmunizationReportRequest.vue"),
 },
+{
+    path: encodeURI("/dzs-zahtevi"),
+    name: "DigitalGreenCertificateRequests",
+    component: () => import("@/views/DigitalGreenCertificateRequests.vue"),
+},
 ]
 
 const router = new VueRouter({

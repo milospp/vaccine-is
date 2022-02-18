@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
@@ -16,6 +17,7 @@ public class ObrazacSaglasnostiController {
 
     private final ObrazacSaglasnostiService obrazacSaglasnostiService;
 
+    @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Saglasnost> createObrazacSaglasnosti(@RequestBody String obrazacSaglasnosti) {
 

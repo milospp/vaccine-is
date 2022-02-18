@@ -5,13 +5,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public interface ZahtevSertifikataService {
 
     Zahtjev create(String xmlString);
 
-    public ResponseEntity<byte[]> getPdf(int id) throws IOException;
+    List<Zahtjev> findZahteviByStatusPodnet();
 
-    public ResponseEntity<byte[]> getHtml(int id) throws IOException;
+    void extractMetadata(Zahtjev zahtevSertifikata);
+
+    ResponseEntity<byte[]> getPdf(int id) throws IOException;
+
+    ResponseEntity<byte[]> getHtml(int id) throws IOException;
 }

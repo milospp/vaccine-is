@@ -81,7 +81,7 @@
             <label for="Moderna">Moderna</label>
         </div>
         <div class="checkbox" style="width: 100%;">
-            <input type="checkbox" name="vaccinetypes" value="Bilo koja" id="Moderna" @click="onlyOneCheckbox('Bilo koja')">
+            <input type="checkbox" name="vaccinetypes" value="Bilo koja" id="Moderna" @click="onlyOneCheckbox('Било која')">
             <label for="Moderna">Било која</label>
         </div>
     </div>
@@ -180,7 +180,7 @@ export default {
             let data = "<interesovanje xmlns='http://www.ftn.uns.ac.rs/interesovanje'>" + xmljs.json2xml(this.interesovanje, {compact: true, spaces: 4}) + "</interesovanje>";
             InteresovanjeService.createInteresovanje(data)
                 .then(() => { this.toast("Успешно сте поднели захтев за вакцинисање против COVID-19", "success"); })
-                .catch(error => { this.toast("Невалидан унос података! Покушајте поново.", "error"); console.log(error.response.data.message) });
+                .catch(error => { this.toast("Невалидан унос података! Покушајте поново.", "error"); console.log(error.response.data) });
         },
 
         resetInvalidStates() {

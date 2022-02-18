@@ -95,8 +95,6 @@ public class TerminController {
             System.out.println("s = " + s);
         }
 
-
-
         return new ResponseEntity<>("Triplet se resio \n" + res, HttpStatus.OK);
     }
 }
