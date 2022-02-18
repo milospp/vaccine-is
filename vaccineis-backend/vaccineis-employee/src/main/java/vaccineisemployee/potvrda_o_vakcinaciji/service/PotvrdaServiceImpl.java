@@ -1,16 +1,15 @@
-package vaccineisemployee.izvestaj.service;
+package vaccineisemployee.potvrda_o_vakcinaciji.service;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
-import org.apache.jena.base.Sys;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import vaccineisemployee.authentication.service.AuthenticationService;
-import vaccineisemployee.izvestaj.model.Izvjestaj;
-import vaccineisemployee.izvestaj.repository.IzvestajExistRepository;
+import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
+import vaccineisemployee.potvrda_o_vakcinaciji.repository.PotvrdaOVakcinacijiExistRepository;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
 
@@ -23,29 +22,29 @@ import java.util.Collections;
 
 @AllArgsConstructor
 @Service
-public class IzvestajServiceImpl implements IzvestajService{
-    private final IzvestajExistRepository izvestajExistRepository;
+public class PotvrdaServiceImpl implements PotvrdaService{
+    private final PotvrdaOVakcinacijiExistRepository existRepository;
     private final AuthenticationService authenticationService;
     private final CRUDRDFRepository crudrdfRepository;
 
     @Override
-    public Izvjestaj create(String xmlString) {
-        Izvjestaj izvjestaj = izvestajExistRepository.create(xmlString);
-        extractMetadataIzvestaj(izvjestaj);
-        return izvjestaj;
+    public PotvrdaVakcinacije create(String xmlString) {
+        PotvrdaVakcinacije potvrdaVakcinacije = existRepository.create(xmlString);
+        extractMetadataPotvrda(potvrdaVakcinacije);
+        return potvrdaVakcinacije;
     }
 
     @Override
-    public Izvjestaj findOne(String id) {
-        return izvestajExistRepository.findOne(id);
+    public PotvrdaVakcinacije findOne(String id) {
+        return existRepository.findOne(id);
     }
 
     @Override
-    public void extractMetadataIzvestaj(Izvjestaj izvjestaj) {
+    public void extractMetadataPotvrda(PotvrdaVakcinacije potvrdaVakcinacije) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
-        crudrdfRepository.uploadTriplet("rdf", "izvjestaj/" + izvjestaj.getId(), "korisnik", localDateTime.toString() );
-        crudrdfRepository.uploadTriplet("metadates", "izvjestaj/" + izvjestaj.getId(), "korisnik", korisnik.getId() );
+        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", localDateTime.toString());
+        crudrdfRepository.uploadTriplet("metadates", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", korisnik.getId() );
     }
 
     @Override
@@ -59,7 +58,7 @@ public class IzvestajServiceImpl implements IzvestajService{
     }
 
     private static ResponseEntity<?> getDocument(String type) throws IOException {
-        File file = new File("./src/main/resources/data/gen/files/izvjestaj." + type);
+        File file = new File("./src/main/resources/data/gen/files/potvrda-o-vakcinaciji" + type);
         byte[] arr = FileUtils.readFileToByteArray(file);
         System.out.println(Arrays.toString(arr));
         String ret = new String(arr, StandardCharsets.UTF_8);
