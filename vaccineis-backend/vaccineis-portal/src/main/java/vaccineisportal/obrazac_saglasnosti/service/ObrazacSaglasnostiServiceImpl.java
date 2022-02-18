@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
+import vaccineisportal.obrazac_saglasnosti.repository.ObrazacSaglasnostiExistRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,13 @@ import java.util.Collections;
 @AllArgsConstructor
 @Service
 public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService {
+
+    private ObrazacSaglasnostiExistRepository obrazacSaglasnostiExistRepository;
+
+    @Override
+    public Saglasnost create(String xmlString) {
+        return obrazacSaglasnostiExistRepository.create(xmlString);
+    }
 
     public ResponseEntity<byte[]> getPdf(int id) throws IOException {
         return getDocument("pdf");
