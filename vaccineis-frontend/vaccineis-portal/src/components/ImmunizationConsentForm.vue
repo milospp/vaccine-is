@@ -198,7 +198,7 @@
 
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-    <div :style="[user.rola != 'ZDRAVSTVENI_RADNIK' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
+    <div :style="[user.rola !== 'ZDRAVSTVENI_RADNIK`' ? {'pointer-events': 'none'} : {}]" id="vaccine-interest-form">
     <br><br>
 
     <div id="title2">
@@ -209,18 +209,37 @@
     <br><br>
 
     <div class="form-group">
-        <label for="healthInstitution">Здравствена установа (*)</label>
-        <input type="text" id="healthInstitution" class="form-control">
+        <label for="healthInstitution">Здравствена установа</label>
+        <input v-model="saglasnost.zdravstvenaUstanova.nazivZdravstveneUstanove" type="text" id="healthInstitution" class="form-control">
     </div>
 
     <div class="form-group">
-        <label for="vaccinationPoint">Вакцинацијски пункт (*)</label>
-        <input type="text" id="vaccinationPoint" class="form-control">
+        <label for="healthInstitution">Вакцинацијски пункт</label>
+        <input v-model="saglasnost.zdravstvenaUstanova.vakcinacijskiPunkt" type="text" id="healthInstitution" class="form-control">
     </div>
 
+
     <div class="form-group">
-        <label for="doctorInfo">Име, презиме, факсимил и бр. телефона лекара (*)</label>
-        <input type="text" id="doctorInfo" class="form-control">
+        <label for="doctorInfo">Име доктора</label>
+        <input v-model="saglasnost.podaciLjekara.ime._text" type="text" id="doctorInfo" class="form-control">
+    </div>
+
+
+    <div class="form-group">
+        <label for="doctorInfo">Презиме доктора</label>
+        <input v-model="saglasnost.podaciLjekara.prezime._text" type="text" id="doctorInfo" class="form-control">
+    </div>
+
+
+    <div class="form-group">
+        <label for="doctorInfo">Факсимил доктора</label>
+        <input v-model="saglasnost.podaciLjekara.faksimil" type="text" id="doctorInfo" class="form-control">
+    </div>
+
+
+    <div class="form-group">
+        <label for="doctorInfo">Број телефона доктора</label>
+        <input v-model="saglasnost.podaciLjekara.brojTelefona._text" type="text" id="doctorInfo" class="form-control">
     </div>
 
     <p>
@@ -231,79 +250,29 @@
 
     <table border="1">
         <thead>
-            <th>
-                Назив вакцине
-            </th>
-            <th>
-                Датум давања вакцине (V1 i V2)
-            </th>
-            <th>
-                Начин давања вакцине
-            </th>
-            <th>
-                Екстремитет
-            </th>
-            <th>
-                Серија вакцине (лот)
-            </th>
-            <th>
-                Произвођач
-            </th>
-            <th>
-                Нежељена реакција
-            </th>
-            <th>
-                Потпис лекара
-            </th>
+            <th>Назив вакцине</th>
+            <th>Датум давања вакцине (V1 i V2)</th>
+            <th>Начин давања вакцине</th>
+            <th>Екстремитет</th>
+            <th>Серија вакцине (лот)</th>
+            <th>Произвођач</th>
+            <th>Нежељена реакција</th>
+            <th>Потпис лекара</th>
         </thead>
         <tbody>
             <tr>
+                <td><input v-model="saglasnost.podaciVakcinacija.nazivVakcine" type="text" id="vaccineName" class="form-control"></td>
+                <td><input v-model="saglasnost.podaciVakcinacija.datumDavanjaVakcine" type="date" id="vaccineDate" class="form-control"></td>
+                <td><input v-model="saglasnost.podaciVakcinacija.nacinDavanjaVakcine">ИМ</td>
+                <td><input v-model="saglasnost.podaciVakcinacija.ekstremitet">1) ДР, 2) ЛР</td>
                 <td>
-                    <input type="text" id="vaccineName" class="form-control">
+                    <input v-model="saglasnost.podaciVakcinacija.serijaVakcine" type="text" id="vaccineLot" class="form-control">
                 </td>
                 <td>
-                    <input type="text" id="vaccineDate" class="form-control">
+                    <input v-model="saglasnost.podaciVakcinacija.proizvodjac" type="text" id="vaccineProducer" class="form-control">
                 </td>
                 <td>
-                    ИМ
-                </td>
-                <td>
-                    1) ДР, 2) ЛР
-                </td>
-                <td>
-                    <input type="text" id="vaccineLot" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="vaccineProducer" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="vaccineReaction" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="doctorSignature" class="form-control">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="vaccineName" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="vaccineDate" class="form-control">
-                </td>
-                <td>
-                    ИМ
-                </td>
-                <td>
-                    1) ДР, 2) ЛР
-                </td>
-                <td>
-                    <input type="text" id="vaccineLot" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="vaccineProducer" class="form-control">
-                </td>
-                <td>
-                    <input type="text" id="vaccineReaction" class="form-control">
+                    <input v-model="saglasnost.podaciVakcinacija.nezeljenaReakcija" type="text" id="vaccineReaction" class="form-control">
                 </td>
                 <td>
                     <input type="text" id="doctorSignature" class="form-control">
@@ -311,14 +280,20 @@
             </tr>
             <tr>
                 <td colspan="8">
-                    Привремене контраиндикације (датум утврђивања и дијагноза): 
-                    <input type="text" id="vaccineTemporaryContraindication" class="form-control">
+                    Привремене контраиндикације (датум утврђивања): 
+                    <input v-model="saglasnost.privremeneKontraindikacije.datumUtvrdjivanja" type="date" id="vaccineTemporaryContraindication" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    Привремене контраиндикације (дијагноза): 
+                    <input v-model="saglasnost.privremeneKontraindikacije.dijagnoza" type="text" id="vaccineTemporaryContraindication" class="form-control">
                 </td>
             </tr>
             <tr>
                 <td colspan="8">
                     Одлука комисије за трајне контраиндикације (ако постоји, уписати Да): 
-                    <input type="text" id="vaccinePermanentContraindication" class="form-control">
+                    <input v-model="saglasnost.podaciVakcinacija.odlukaKomisije" type="text" id="vaccinePermanentContraindication" class="form-control">
                 </td>
             </tr>
         </tbody>
@@ -440,6 +415,29 @@ export default {
                     },
                     datumSaglasnosti: new Date()
                 },
+
+                zdravstvenaUstanova: {
+                    nazivZdravstveneUstanove: "",
+                    vakcinacijskiPunkt: ""
+                },
+
+                podaciLjekara: {
+                    ime: "",
+                    prezime: "",
+                    faksimil: "",
+                    brojTelefona: ""
+                },
+                
+                podaciVakcinacija: {
+                    
+                },
+
+                privremeneKontraindikacije: {
+                    datumUtvrdjivanja: "",
+                    dijagnoza: ""
+                },
+
+                odlukaKomisije: ""
             },
 
             ustanova: "",
@@ -536,6 +534,12 @@ export default {
                 delete this.saglasnost.podaciPacijenta.izjavaSaglasnosti.saglasan;
                 delete this.saglasnost.podaciPacijenta.izjavaSaglasnosti.imeLijeka;
             }
+
+            delete this.saglasnost.zdravstvenaUstanova;
+            delete this.saglasnost.podaciLjekara;
+            delete this.saglasnost.podaciVakcinacija;
+            delete this.saglasnost.privremeneKontraindikacije;
+            delete this.saglasnost.odlukaKomisije;
         },
 
         setInputInvalid(form, inputId) {
