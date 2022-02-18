@@ -26,6 +26,9 @@ export default new Vuex.Store({
     getters: {
         rola: state => { 
             return (state.user.rola) ? state.user.rola : undefined; 
+        },
+        user: state => {
+            return state.user;
         }
     },
 

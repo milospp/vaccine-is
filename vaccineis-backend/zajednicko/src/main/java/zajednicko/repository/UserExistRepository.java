@@ -28,7 +28,7 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
         korisnik.setJmbg("2006999183897");
         korisnik.setEmail("marko@gmail.com");
         korisnik.setSifra("$2a$10$QD6Kbt74UFyyK9RIhXfZM.tmIZdGUGo82G6FFMfsES0P0/lLi3wuK");
-        korisnik.setRola(STrola.GRADJANIN);
+        korisnik.setRola(STrola.ZDRAVSTVENI_RADNIK);
         return korisnik;
     }
 }
