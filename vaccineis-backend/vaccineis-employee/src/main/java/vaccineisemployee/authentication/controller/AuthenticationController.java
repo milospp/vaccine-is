@@ -43,7 +43,7 @@ public class AuthenticationController {
         if (korisnik == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getJmbg(), korisnik.getEmail(), korisnik.getRola().value());
+        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value());
         return new ResponseEntity<>(retVal,  HttpStatus.OK);
     }
 
@@ -57,7 +57,7 @@ public class AuthenticationController {
         Korisnik korisnik = (Korisnik) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(korisnik);
 
-        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getJmbg(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
+        var retVal = new AuthenticationResponseDTO(korisnik.getIme(), korisnik.getPrezime(), korisnik.getEmail(), korisnik.getRola().value(), jwt);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
