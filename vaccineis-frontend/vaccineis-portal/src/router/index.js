@@ -65,6 +65,11 @@ const routes = [
     name: "ViewGreenCertificate",
     component: () => import("@/components/ViewDocument.vue"),
 },
+{
+    path: encodeURI("/дигитални/645155822"),
+    name: "ViewGreenCertificate",
+    component: () => import("@/components/ViewDocument.vue"),
+}
 ];
 
 const router = new VueRouter({

@@ -13,7 +13,7 @@ public class ObrazacSaglasnostiExistRepository extends CRUDExistRepositoryImpl<S
 
     @Autowired
     public ObrazacSaglasnostiExistRepository(ExistManager existManager, MarshallingService marshallingService) {
-        super("db/obrasciSaglasnosti", "schemas/obrazac_saglasnosti.xsc", existManager, marshallingService);
+        super("db/obrasciSaglasnosti", "schemas/obrazac-saglasnosti.xsd", existManager, marshallingService);
     }
 
     @Override
