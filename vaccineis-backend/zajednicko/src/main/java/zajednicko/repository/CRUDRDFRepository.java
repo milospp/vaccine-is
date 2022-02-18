@@ -18,6 +18,7 @@ public interface CRUDRDFRepository {
     ResultSet findByObject(String graphUri, String object);
 
     void uploadTriplet(String graphUri, String resource, String property, String literal);
+    void deleteTriplet(String graphUri, String resource, String property, String literal);
     void addStatement(String graphUri, Statement statement);
     void addStatement(String graphUri, Collection<Statement> statement);
 

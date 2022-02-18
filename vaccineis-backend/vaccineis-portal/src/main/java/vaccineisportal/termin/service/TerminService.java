@@ -1,6 +1,7 @@
-package vaccineisemployee.termin.service;
+package vaccineisportal.termin.service;
 
-import vaccineisemployee.termin.model.Termin;
+import vaccineisportal.interesovanje.model.Interesovanje;
+import vaccineisportal.termin.model.Termin;
 import zajednicko.model.CTlicniPodaci;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -12,6 +13,9 @@ public interface TerminService {
     Termin getTermin(String uuid);
     List<Termin> findTermin(String query);
     List<Termin> getAll();
+
+
+    void terminZaInteresovanje();
 
     //TODO: Testirati
     Termin zakaziPrviSlobodan(CTlicniPodaci cTlicniPodaci) throws DatatypeConfigurationException;

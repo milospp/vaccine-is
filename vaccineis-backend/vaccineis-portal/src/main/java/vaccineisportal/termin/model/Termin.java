@@ -6,7 +6,7 @@
 //
 
 
-package vaccineisemployee.termin.model;
+package vaccineisportal.termin.model;
 
 import zajednicko.model.BaseModel;
 import zajednicko.model.CTlicniPodaci;

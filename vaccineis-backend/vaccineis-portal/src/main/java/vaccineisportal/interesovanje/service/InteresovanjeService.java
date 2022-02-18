@@ -12,9 +12,13 @@ public interface InteresovanjeService {
 
     Interesovanje create(String xmlString);
 
+    Interesovanje findOne(String id);
+
     void extractMetadataInteresovanje(Interesovanje interesovanje);
 
     ResponseEntity<?> getPdf(int id) throws IOException, ParserConfigurationException, SAXException;
 
     ResponseEntity<?> getHtml(int id) throws IOException, ParserConfigurationException, SAXException;
+
+    void obradiTermine();
 }

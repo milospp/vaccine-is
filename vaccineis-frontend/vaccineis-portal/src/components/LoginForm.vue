@@ -46,8 +46,8 @@ export default {
                     user.rola = user.rola._text;
 
                     let token = data["AuthenticationResponseDTO"]["jwt"]["_text"]
-
-                    localStorage.setItem('token', JSON.stringify(token));
+                    console.log(token);
+                    localStorage.setItem('token', token);
                     localStorage.setItem('user', JSON.stringify(user));
                     axios.defaults.headers.common['Authorization'] = "Bearer " + JSON.stringify(token);
 

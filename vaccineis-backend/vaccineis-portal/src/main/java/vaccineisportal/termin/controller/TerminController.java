@@ -1,4 +1,4 @@
-package vaccineisemployee.termin.controller;
+package vaccineisportal.termin.controller;
 
 import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
@@ -6,8 +6,8 @@ import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vaccineisemployee.termin.model.Termin;
-import vaccineisemployee.termin.service.TerminService;
+import vaccineisportal.termin.model.Termin;
+import vaccineisportal.termin.service.TerminService;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.model.STpol;
 import zajednicko.repository.CRUDRDFRepository;
