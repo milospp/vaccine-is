@@ -43,39 +43,23 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "korisnik",
+    "korisnikId",
     "datumVrijeme"
 })
 @XmlRootElement(name = "termin")
 public class Termin extends BaseModel {
     @XmlElement(required = true)
-    protected CTlicniPodaci korisnik;
+    protected String korisnikId;
     @XmlElement(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar datumVrijeme;
 
-    /**
-     * Gets the value of the korisnik property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CTlicniPodaci }
-     *     
-     */
-    public CTlicniPodaci getKorisnik() {
-        return korisnik;
+    public String getKorisnikId() {
+        return korisnikId;
     }
 
-    /**
-     * Sets the value of the korisnik property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CTlicniPodaci }
-     *     
-     */
-    public void setKorisnik(CTlicniPodaci value) {
-        this.korisnik = value;
+    public void setKorisnikId(String korisnikId) {
+        this.korisnikId = korisnikId;
     }
 
     /**

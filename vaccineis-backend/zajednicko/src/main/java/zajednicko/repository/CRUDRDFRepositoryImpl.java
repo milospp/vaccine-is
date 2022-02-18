@@ -63,13 +63,13 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
 
     @Override
     public void uploadTriplet(String graphUri, String resource, String property, String literal) {
-        Model model = fusekiManager.createRDFModel(ZajednickoUtil.RDF_PREDICATE + resource, property, literal);
+        Model model = fusekiManager.createRDFModel(resource, property, literal);
         fusekiManager.uploadRDFModel(graphUri, model);
     }
 
     @Override
     public void deleteTriplet(String graphUri, String resource, String property, String literal) {
-        Model model = fusekiManager.createRDFModel(ZajednickoUtil.XML_PREFIX + resource, property, literal);
+        Model model = fusekiManager.createRDFModel(resource, property, literal);
         fusekiManager.deleteRDFModel(graphUri, model);
     }
 
