@@ -2,6 +2,8 @@ package vaccineisportal.interesovanje.service;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -38,11 +40,17 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     }
 
     @Override
+    public Interesovanje findOne(String id) {
+        return interesovanjeExistRepository.findOne(id);
+    }
+
+    @Override
     public void extractMetadataInteresovanje(Interesovanje interesovanje) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
-        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId() );
-        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "ceka_od", localDateTime.toString() );
+        
+        crudrdfRepository.uploadTriplet("rdf", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId()) );
+        crudrdfRepository.uploadTriplet("rdf", "interesovanje/" + interesovanje.getId(), "ceka_od", localDateTime.toString() );
 
         crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId() );
     }
@@ -69,5 +77,15 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
         responseHeaders.setContentType(MediaType.valueOf("application/" + type));
         responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile." + type));
         return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    @Override
+    public void obradiTermine() {
+
+
+
+
+
+
     }
 }

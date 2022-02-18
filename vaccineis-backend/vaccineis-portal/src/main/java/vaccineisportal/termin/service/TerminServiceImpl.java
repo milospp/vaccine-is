@@ -1,9 +1,13 @@
-package vaccineisemployee.termin.service;
+package vaccineisportal.termin.service;
 
 import lombok.AllArgsConstructor;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.springframework.stereotype.Service;
-import vaccineisemployee.termin.model.Termin;
-import vaccineisemployee.termin.repository.TerminExistRepository;
+import vaccineisportal.interesovanje.model.Interesovanje;
+import vaccineisportal.interesovanje.service.InteresovanjeService;
+import vaccineisportal.termin.model.Termin;
+import vaccineisportal.termin.repository.TerminExistRepository;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MarshallingService;
@@ -23,6 +27,7 @@ public class TerminServiceImpl implements TerminService{
     protected final TerminExistRepository terminExistRepository;
     private final CRUDRDFRepository crudrdfRepository;
     private final MarshallingService marshallingService;
+    private final InteresovanjeService interesovanjeService;
 
     @Override
     public Termin addTermin(String termin) {
@@ -38,6 +43,7 @@ public class TerminServiceImpl implements TerminService{
     public List<Termin> findTermin(String query) {
         return terminExistRepository.findXpath(query);
     }
+
 
 
     @Override
@@ -108,5 +114,36 @@ public class TerminServiceImpl implements TerminService{
     @Override
     public void saveMetadata(Termin termin) {
         crudrdfRepository.uploadTriplet("gradjanin","korisnik/" + termin.getKorisnik().getId().toString(), "termin", termin.getId().toString());
+    }
+
+    @Override
+    public void terminZaInteresovanje() {
+        ResultSet results = crudrdfRepository.findByPredicate("rdf", "ceka_od");
+
+        Map<String, String> zahtevi = new HashMap<>();
+
+        for (ResultSet it = results; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            zahtevi.put(s.get("s").toString(), s.get("o").toString());
+        }
+
+        if (zahtevi.size() == 0) return;
+
+        List<Map.Entry<String, String>> zahteviList = new ArrayList<>(zahtevi.entrySet());
+        zahteviList.sort(Comparator.comparing(Map.Entry::getValue));
+
+
+        for (Map.Entry<String, String> entry : zahteviList){
+            LocalDateTime dobijen = srediTerminZa(entry.getKey(), entry.getValue());
+            if (dobijen == null) return;
+        }
+    }
+
+    private LocalDateTime srediTerminZa(String uri, String ceka_od) {
+        LocalDateTime freeTermin = this.findFreeTermin();
+        if (freeTermin == null) return null;
+
+        crudrdfRepository.deleteTriplet("rdf", uri, "ceka_od", ceka_od);
+        return freeTermin;
     }
 }

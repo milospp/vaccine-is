@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ftn.uns.ac.rs/termin", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package vaccineisemployee.termin.model;
+package vaccineisportal.termin.model;

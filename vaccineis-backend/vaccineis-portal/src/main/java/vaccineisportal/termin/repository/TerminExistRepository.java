@@ -1,8 +1,8 @@
-package vaccineisemployee.termin.repository;
+package vaccineisportal.termin.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import vaccineisemployee.termin.model.Termin;
+import vaccineisportal.termin.model.Termin;
 import zajednicko.db.ExistManager;
 import zajednicko.repository.CRUDExistRepositoryImpl;
 import zajednicko.service.MarshallingService;

@@ -43,7 +43,7 @@ export default {
 
                     let token = data["AuthenticationResponseDTO"]["jwt"]["_text"]
 
-                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('token', token);
                     axios.defaults.headers.common['Authorization'] = "Bearer " + JSON.stringify(token);
 
                     this.$store.dispatch('loadAuthorizedUser');

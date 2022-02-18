@@ -19,6 +19,7 @@ import zajednicko.security.TokenUtils;
 import zajednicko.service.UserService;
 import zajednicko.support.IConverter;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 @AllArgsConstructor
@@ -33,6 +34,7 @@ public class AuthenticationController {
 
     private final IConverter<UserRegistrationDTO, Korisnik> toKorisnik;
 
+    @PermitAll
     @GetMapping(value = "/authority", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<AuthenticationResponseDTO> getAuthorizedUser()  {
 
@@ -57,6 +59,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(korisnik, HttpStatus.OK);
     }
 
+    @PermitAll
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<AuthenticationResponseDTO> login(@Valid @RequestBody AuthenticationRequestDTO authenticationRequest)  {
 

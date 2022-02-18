@@ -33,7 +33,7 @@ export default new Vuex.Store({
             if (!localStorage.getItem('token'))
                 return;
 
-            let token = localStorage.getItem('token').substring(1, localStorage.getItem('token').length-1);
+            let token = localStorage.getItem('token');
 
             AuthenticationService.getAuthorizedUser(token)
                 .then(response => { 

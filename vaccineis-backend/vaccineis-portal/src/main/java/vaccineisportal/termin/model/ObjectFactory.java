@@ -6,7 +6,7 @@
 //
 
 
-package vaccineisemployee.termin.model;
+package vaccineisportal.termin.model;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
