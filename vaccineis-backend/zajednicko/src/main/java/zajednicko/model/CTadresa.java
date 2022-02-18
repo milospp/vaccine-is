@@ -46,6 +46,14 @@ public class CTadresa {
     @XmlElement(required = true)
     protected Object broj;
 
+    public CTadresa() {
+    }
+
+    public CTadresa(Object ulica, Object broj) {
+        this.ulica = ulica;
+        this.broj = broj;
+    }
+
     /**
      * Gets the value of the ulica property.
      * 

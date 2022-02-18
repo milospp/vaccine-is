@@ -50,10 +50,10 @@ class InteresovanjeService {
         });
     }
 
-    viewInteresovanjePdf() {
+    viewInteresovanjePdf(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-pdf`,
+            url: `${API_URL}/get-pdf/${uuid}`,
             responseType: 'blob'
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
