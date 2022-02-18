@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "email",
         "sifra"
-
 })
 @XmlRootElement(name = "AuthenticationRequestDTO")
 public class AuthenticationRequestDTO {
