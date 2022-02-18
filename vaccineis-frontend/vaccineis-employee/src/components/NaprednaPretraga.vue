@@ -7,7 +7,7 @@
                     <e-column field='id' label='ИД' type='string' :operators="operatorsString" />
                     <e-column field='ime' label='Име' type='string' :operators="operatorsString" />
                     <e-column field='prezime' label='Презиме' type='string' :operators="operatorsString" />
-                    <e-column field='Boolean' label='Булеан' type='boolean' :values="values" :operators="operatorsBoolean" />
+                    <e-column field='boolean' label='Булеан' type='boolean' :values="values" :operators="operatorsBoolean" />
                     <e-column field='datum' label='Датум' type='date' format='dd/MM/yyyy' :operators="operatorsDate"/>
                 </e-columns>
             </ejs-querybuilder>
@@ -89,19 +89,43 @@
                     oneRule[1] = this.operatorsDict[oneRule[1]];
 
                     if(count === 0) {
-                        finalArr[0] = oneRule[0];
-                        finalArr[1] = oneRule[1];
-                        finalArr[2] = oneRule[2];
+                        if(oneRule[1] === "STRSTARTS" || oneRule[1] === "STRENDS" || oneRule[1] === "CONTAINS") {
+                            if(oneRule[0][0] === "(") {
+                                finalArr[0] = "(" + oneRule[1];
+                                finalArr[1] = oneRule[0] + ", ";
+                                finalArr[2] = '"' + oneRule[2] + '"' + ")"
+                            } else {
+                                finalArr[0] = oneRule[1];
+                                finalArr[1] = "(" + oneRule[0] + ", ";
+                                finalArr[2] = '"' + oneRule[2] + '"' + ")"
+                            }
+                        } else {
+                            finalArr[0] = oneRule[0];
+                            finalArr[1] = oneRule[1];
+                            finalArr[2] = '"' + oneRule[2] + '"';
+                        }
                     } else {
-                        finalArr[count * 4] = oneRule[0];
-                        finalArr[count * 4 + 1] = oneRule[1];
-                        finalArr[count * 4 + 2] = oneRule[2];
+                        if(oneRule[1] === "STRSTARTS" || oneRule[1] === "STRENDS" || oneRule[1] === "CONTAINS") {
+                            if (oneRule[0][0] === "(") {
+                                finalArr[count * 4] = "(" + oneRule[1];
+                                finalArr[count * 4 + 1] = oneRule[0] + ", ";
+                                finalArr[count * 4 + 2] = '"' + oneRule[2] + '"' + ")"
+                            } else {
+                                finalArr[count * 4] = oneRule[1];
+                                finalArr[count * 4 + 1] = "(" + oneRule[0] + ", ";
+                                finalArr[count * 4 + 2] = '"' + oneRule[2] + '"' + ")"
+                            }
+                        } else {
+                            finalArr[count * 4] = oneRule[0];
+                            finalArr[count * 4 + 1] = oneRule[1];
+                            finalArr[count * 4 + 2] = '"' + oneRule[2] + '"';
+                        }
                     }
                     count += 1;
                 }
 
                 this.finalString = finalArr.join(" ");
-                this.finalString = this.finalString.replace("AND", "&&").replace("OR", "||");
+                this.finalString = this.finalString.replace(/AND/g, "&&").replace(/OR/g, "||");
             },
 
             recursiveJsonToString(str) {
