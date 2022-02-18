@@ -12,6 +12,7 @@ public class UserRegistrationDTOToKorisnik extends AbstractConverter<UserRegistr
     @Override
     public Korisnik convert(UserRegistrationDTO userRegistrationDTO) {
         Korisnik korisnik = new Korisnik();
+
         korisnik.setIme(userRegistrationDTO.getIme());
         korisnik.setPrezime(userRegistrationDTO.getPrezime());
         korisnik.setEmail(userRegistrationDTO.getEmail());

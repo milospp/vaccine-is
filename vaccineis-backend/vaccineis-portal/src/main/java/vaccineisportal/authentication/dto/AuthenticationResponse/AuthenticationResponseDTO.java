@@ -4,6 +4,7 @@ package vaccineisportal.authentication.dto.AuthenticationResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import zajednicko.model.BaseModel;
 
 import javax.xml.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.*;
 @NoArgsConstructor @AllArgsConstructor @Getter
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "ime",
         "prezime",
         "email",
@@ -18,8 +20,10 @@ import javax.xml.bind.annotation.*;
         "jwt"
 })
 @XmlRootElement(name = "AuthenticationResponseDTO")
-public class AuthenticationResponseDTO {
+public class AuthenticationResponseDTO extends BaseModel {
 
+    @XmlElement(required = false)
+    private String id;
     @XmlElement(required = true)
     private String ime;
     @XmlElement(required = true)
@@ -31,7 +35,8 @@ public class AuthenticationResponseDTO {
     @XmlElement(required = false)
     private String jwt;
 
-    public AuthenticationResponseDTO(String ime, String prezime, String email, String rola) {
+    public AuthenticationResponseDTO(String id, String ime, String prezime, String email, String rola) {
+        this.id = id;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;

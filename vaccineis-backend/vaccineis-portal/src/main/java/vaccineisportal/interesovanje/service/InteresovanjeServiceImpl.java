@@ -7,12 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.interesovanje.model.Interesovanje;
 import vaccineisportal.interesovanje.repository.InteresovanjeExistRepository;
+import zajednicko.model.korisnik.Korisnik;
+import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
+import zajednicko.service.MarshallingService;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 @AllArgsConstructor
@@ -21,10 +27,25 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
     private final InteresovanjeExistRepository interesovanjeExistRepository;
     private final MailService mailService;
+    private final CRUDRDFRepository crudrdfRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public Interesovanje create(String xmlString) {
-        return interesovanjeExistRepository.create(xmlString);
+
+        Interesovanje interesovanje = interesovanjeExistRepository.create(xmlString);
+        extractMetadataInteresovanje(interesovanje);
+        return interesovanje;
+    }
+
+    @Override
+    public void extractMetadataInteresovanje(Interesovanje interesovanje) {
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "korisnik", localDateTime.toString() );
+        crudrdfRepository.uploadTriplet("interesovanje", "interesovanje/" + interesovanje.getId(), "ceka_od", localDateTime.toString() );
+
+        crudrdfRepository.uploadTriplet("metadates", "interesovanje/" + interesovanje.getId(), "korisnik", korisnik.getId() );
     }
 
     @Override

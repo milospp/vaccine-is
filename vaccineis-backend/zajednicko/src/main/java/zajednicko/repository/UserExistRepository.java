@@ -1,6 +1,8 @@
 package zajednicko.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
 import zajednicko.exception.XMLSchemaValidationException;
@@ -14,9 +16,12 @@ import java.util.UUID;
 @Repository
 public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserExistRepository(ExistManager existManager, MarshallingService marshallingService) {
+    public UserExistRepository(ExistManager existManager, MarshallingService marshallingService, PasswordEncoder passwordEncoder) {
         super("db/korisnici", "schemas/korisnik.xsd", existManager, marshallingService);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,8 +34,10 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
         try {
             Korisnik entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
 
+
             String id = String.valueOf(UUID.randomUUID());
             entity.setId(id);
+            entity.setSifra(passwordEncoder.encode(entity.getSifra()));
 
             String korisnik = marshallingService.marshall(entity, getEntityClass());
             System.out.println(korisnik);
@@ -44,12 +51,6 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     }
 
     public Korisnik findUserByEmail(String email) {
-        var korisnik = new Korisnik();
-        korisnik.setIme("marko");
-        korisnik.setPrezime("markovic");
-        korisnik.setEmail("marko@gmail.com");
-        korisnik.setSifra("$2a$10$QD6Kbt74UFyyK9RIhXfZM.tmIZdGUGo82G6FFMfsES0P0/lLi3wuK");
-        korisnik.setRola(STrola.GRADJANIN);
-        return korisnik;
+        return findAll().stream().filter(x -> x.getEmail().equalsIgnoreCase(email.trim())).findFirst().orElse(null);
     }
 }
