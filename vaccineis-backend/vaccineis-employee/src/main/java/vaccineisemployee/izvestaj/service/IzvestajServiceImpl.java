@@ -1,17 +1,16 @@
 package vaccineisemployee.izvestaj.service;
 
 import lombok.AllArgsConstructor;
-import org.apache.commons.io.FileUtils;
-import org.apache.jena.base.Sys;
+
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import vaccineisemployee.authentication.service.AuthenticationService;
-import vaccineisemployee.digitalni_sertifikat.model.ZeleniSertifikat;
 import vaccineisemployee.izvestaj.model.Izvjestaj;
 import vaccineisemployee.izvestaj.repository.IzvestajExistRepository;
 import zajednicko.model.docdatas.DocDatas;
@@ -23,11 +22,9 @@ import zajednicko.util.ZajednickoUtil;
 import zajednicko.xmlTransformations.Xml2HtmlTransformer;
 import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 
 @AllArgsConstructor

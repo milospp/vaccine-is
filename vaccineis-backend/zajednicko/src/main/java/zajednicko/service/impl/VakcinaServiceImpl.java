@@ -31,9 +31,10 @@ public class VakcinaServiceImpl implements VakcinaService {
     public void addKolicina(STtipVakcine naziv, Integer kolicina) {
         Optional<Vakcina> vakcina = vakcinaExistRepository.findAll().stream().filter(v -> v.getNaziv().equals(naziv)).findFirst();
 
-        if (vakcina.isEmpty())
+        if (vakcina.isEmpty()) {
+            System.out.println("emptyyyyy");
             throw new NotFoundException("Vakcina " + naziv + "is not found");
-
+        }
         vakcina.get().setKolicina(vakcina.get().getKolicina() + kolicina);
         vakcinaExistRepository.save(vakcina.get());
     }

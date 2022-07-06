@@ -2,6 +2,7 @@ package vaccineisemployee.util;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import zajednicko.exception.BadRequestException;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.model.vakcina.Vakcina;
 import zajednicko.service.MarshallingService;
@@ -24,17 +25,20 @@ public class DbInit {
 
         // KORISNIK
         Korisnik korisnik = KorisnikConstants.getSluzbenik();
-        if (userService.findUserByEmail(korisnik.getEmail()) == null)
+        try {
             userService.create(marshallingService.marshall(korisnik, Korisnik.class));
+        } catch (BadRequestException e) {
+            System.out.println("korisnik dodat");
+        }
 
         // VAKCINE
-//        List<Vakcina> vakcine = VakcinaConstants.getSveDefaultVakcine();
-//        for (Vakcina vakcina: vakcine) {
-//            try {
-//                vakcinaService.addKolicina(String.valueOf(vakcina.getNaziv()), 1);
-//            } catch (Exception e) {
-//                vakcinaService.create(marshallingService.marshall(vakcina, Vakcina.class));
-//            }
-//        }
+        List<Vakcina> vakcine = VakcinaConstants.getSveDefaultVakcine();
+        for (Vakcina vakcina: vakcine) {
+            try {
+                vakcinaService.addKolicina(vakcina.getNaziv(), 1);
+            } catch (Exception e) {
+                vakcinaService.create(marshallingService.marshall(vakcina, Vakcina.class));
+            }
+        }
     }
 }

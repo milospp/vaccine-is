@@ -106,10 +106,10 @@ public class TerminServiceImpl implements TerminService{
 
         List<LocalDate> dates = new ArrayList<>(broj_termina.keySet());
         dates.sort(LocalDate::compareTo);
-        for ( Map.Entry<LocalDate, Integer> entry : broj_termina.entrySet()){
-            if (entry.getValue() < max_termina) {
-                freeDay = entry.getKey();
-                return freeDay.atTime(LocalTime.of(8,0, 0)).plusHours(entry.getValue());
+        for ( LocalDate key : dates){
+            if (broj_termina.get(key) < max_termina) {
+                freeDay = key;
+                return freeDay.atTime(LocalTime.of(8,0, 0)).plusHours(broj_termina.get(key));
 
             }
         }

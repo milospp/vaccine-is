@@ -31,7 +31,6 @@ public class InteresovanjeController {
     }
 
     @GetMapping(value = "/moja-interesovanja", produces = MediaType.APPLICATION_XML_VALUE)
-    @ResponseBody
     public ResponseEntity<DocDatas> getMojaInteresovanja() {
         Korisnik korisnik = authenticationService.getLoggedInUser();
 
