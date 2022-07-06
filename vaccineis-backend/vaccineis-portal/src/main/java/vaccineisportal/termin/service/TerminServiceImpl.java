@@ -145,7 +145,12 @@ public class TerminServiceImpl implements TerminService{
         for (Map.Entry<String, String> entry : zahteviList){
             LocalDateTime dobijen = srediTerminZa(entry.getKey(), entry.getValue());
             if (dobijen == null) return;
+
+            System.out.println("TerminServiceImpl.terminZaInteresovanje - Posalti mejl, bata je dobio termin!!!");
+            //TODO: send email
         }
+
+
     }
 
     private LocalDateTime srediTerminZa(String uri, String ceka_od) {
