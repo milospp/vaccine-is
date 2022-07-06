@@ -32,7 +32,7 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     public Korisnik create(String xmlString) {
         try {
             Korisnik entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
-            if (findUserByEmail(entity.getEmail()) == null)
+            if (findUserByEmail(entity.getEmail()) != null)
                 throw new BadRequestException("User with email: " + entity.getEmail() + " already exist");
 
             String id = String.valueOf(UUID.randomUUID());
