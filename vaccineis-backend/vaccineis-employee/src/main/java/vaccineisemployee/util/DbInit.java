@@ -23,19 +23,21 @@ public class DbInit {
     @PostConstruct
     private void postConstruct() {
 
-        // KORISNIK
-        Korisnik korisnik = KorisnikConstants.getSluzbenik();
+        Korisnik zdravstveniRadnik = KorisnikConstants.createZdravstveniRadnik();
+        Korisnik sluzbenik = KorisnikConstants.createSluzbenik();
+
         try {
-            userService.create(marshallingService.marshall(korisnik, Korisnik.class));
+            userService.create(marshallingService.marshall(zdravstveniRadnik, Korisnik.class));
+            userService.create(marshallingService.marshall(sluzbenik, Korisnik.class));
         } catch (BadRequestException e) {
-            System.out.println("korisnik dodat");
+            System.out.println("Korisnici su vec dodati u bazu.");
         }
 
         // VAKCINE
         List<Vakcina> vakcine = VakcinaConstants.getSveDefaultVakcine();
         for (Vakcina vakcina: vakcine) {
             try {
-                vakcinaService.addKolicina(vakcina.getNaziv(), 1);
+                vakcinaService.addKolicina(vakcina.getNaziv(), vakcina.getKolicina());
             } catch (Exception e) {
                 vakcinaService.create(marshallingService.marshall(vakcina, Vakcina.class));
             }
