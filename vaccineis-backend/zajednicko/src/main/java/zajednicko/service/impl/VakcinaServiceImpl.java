@@ -3,6 +3,7 @@ package zajednicko.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import zajednicko.exception.NotFoundException;
+import zajednicko.model.STtipVakcine;
 import zajednicko.model.vakcina.Vakcina;
 import zajednicko.repository.VakcinaExistRepository;
 import zajednicko.service.VakcinaService;
@@ -27,12 +28,13 @@ public class VakcinaServiceImpl implements VakcinaService {
     }
 
     @Override
-    public void addKolicina(String nazivVakcine, Integer kolicina) {
-        Optional<Vakcina> vakcina = vakcinaExistRepository.findAll().stream().filter(v -> v.getNaziv().value().equals(nazivVakcine)).findFirst();
+    public void addKolicina(STtipVakcine naziv, Integer kolicina) {
+        Optional<Vakcina> vakcina = vakcinaExistRepository.findAll().stream().filter(v -> v.getNaziv().equals(naziv)).findFirst();
 
-        if (vakcina.isEmpty())
-            throw new NotFoundException("Vakcina " + nazivVakcine + "is not found");
-
+        if (vakcina.isEmpty()) {
+            System.out.println("emptyyyyy");
+            throw new NotFoundException("Vakcina " + naziv + "is not found");
+        }
         vakcina.get().setKolicina(vakcina.get().getKolicina() + kolicina);
         vakcinaExistRepository.save(vakcina.get());
     }

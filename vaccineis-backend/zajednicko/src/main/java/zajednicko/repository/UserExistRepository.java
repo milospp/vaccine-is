@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
+import zajednicko.exception.BadRequestException;
 import zajednicko.exception.XMLSchemaValidationException;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.service.MarshallingService;
@@ -30,16 +31,15 @@ public class UserExistRepository extends CRUDExistRepositoryImpl<Korisnik> {
     @Override
     public Korisnik create(String xmlString) {
         try {
-            System.out.println(xmlString);
             Korisnik entity = marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
-
+            if (findUserByEmail(entity.getEmail()) == null)
+                throw new BadRequestException("User with email: " + entity.getEmail() + " already exist");
 
             String id = String.valueOf(UUID.randomUUID());
             entity.setId(id);
             entity.setSifra(passwordEncoder.encode(entity.getSifra()));
 
             String korisnik = marshallingService.marshall(entity, getEntityClass());
-            System.out.println(korisnik);
 
             existManager.storeFromText(collectionId, id, korisnik);
             return entity;

@@ -2,6 +2,7 @@ package vaccineisemployee.potvrda_o_vakcinaciji.service;
 
 import org.springframework.http.ResponseEntity;
 import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
+import zajednicko.model.docdatas.DocDatas;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,9 +14,11 @@ public interface PotvrdaService {
 
     void extractMetadataPotvrda(PotvrdaVakcinacije potvrdaVakcinacije);
 
+    ResponseEntity<?> getPdf(String id) throws IOException;
+
     PotvrdaVakcinacije getPoslednjuPotvrdu(String uuid);
 
-    ResponseEntity<?> getPdf(int id) throws IOException;
+    ResponseEntity<?> getHtml(String id) throws IOException;
 
-    ResponseEntity<?> getHtml(int id) throws IOException;
+    DocDatas getPotvrdeByUser(String uuid);
 }

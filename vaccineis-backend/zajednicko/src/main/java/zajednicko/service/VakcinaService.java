@@ -1,5 +1,6 @@
 package zajednicko.service;
 
+import zajednicko.model.STtipVakcine;
 import zajednicko.model.vakcina.Vakcina;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface VakcinaService {
 
     Vakcina create(String xmlString);
 
-    void addKolicina(String nazivVakcine, Integer kolicina);
+    void addKolicina(STtipVakcine naziv, Integer kolicina);
 }

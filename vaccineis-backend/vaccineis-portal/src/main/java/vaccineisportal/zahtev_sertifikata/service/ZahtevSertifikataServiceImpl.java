@@ -10,15 +10,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import vaccineisportal.authentication.service.AuthenticationService;
+import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.zahtev_sertifikata.model.ZahtevZaSertifikatStatus;
 import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 import vaccineisportal.zahtev_sertifikata.repository.ZahtevSertifikataExistRepository;
+import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.repository.CRUDRDFRepository;
+import zajednicko.service.MailService;
+import zajednicko.service.MarshallingService;
 import zajednicko.util.ZajednickoUtil;
+import zajednicko.xmlTransformations.Xml2HtmlTransformer;
+import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
@@ -30,6 +37,8 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
     private final ZahtevSertifikataExistRepository zahtevSertifikataExistRepository;
     private final CRUDRDFRepository crudrdfRepository;
     private final AuthenticationService authenticationService;
+    private final MailService mailService;
+    private final MarshallingService marshallingService;
 
     @Override
     public Zahtjev create(String xmlString) {
@@ -59,9 +68,6 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
         return retVal;
     }
 
-
-
-
     @Override
     public void extractMetadata(Zahtjev zahtevSertifikata) {
         Korisnik korisnik = authenticationService.getLoggedInUser();
@@ -79,23 +85,82 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
     }
 
     @Override
-    public ResponseEntity<byte[]> getPdf(int id) throws IOException {
-        return getDocument("pdf");
+    public ResponseEntity<?> getPdf(String id) throws IOException {
+        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+
+        Zahtjev i = findOne(id);
+        try {
+            return this.getPdfDocument(i);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public ResponseEntity<byte[]> getHtml(int id) throws IOException {
-        return getDocument("html");
+    public ResponseEntity<?> getHtml(String id) throws IOException {
+        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+
+        Zahtjev i = findOne(id);
+        return this.getHtmlDocument(i);
     }
 
-    public static ResponseEntity<byte[]> getDocument(String type) throws IOException {
-        File file = new File("./src/main/resources/files/interesovanje." + type);
-        byte[] arr = FileUtils.readFileToByteArray(file);
+    public ResponseEntity<?> getHtmlDocument(Zahtjev zahtjev) throws IOException {
+        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
+
+        String xmlString = marshallingService.marshall(zahtjev, Zahtjev.class);
+
+        Xml2HtmlTransformer htmlTransformer = new Xml2HtmlTransformer();
+        String htmlData = htmlTransformer.generateHTML(xmlString, ZajednickoUtil.ZAHTEV_ZA_ZS_XSLT);
+        byte[] arr = htmlData.getBytes(StandardCharsets.UTF_8);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentLength(arr.length);
-        responseHeaders.setContentType(MediaType.valueOf("application/" + type));
-        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile." + type));
-        return new ResponseEntity<byte[]>(arr, responseHeaders, HttpStatus.OK);
+        responseHeaders.setContentType(MediaType.valueOf("application/html"));
+        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile.html"));
+        return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getPdfDocument(Zahtjev saglasnost) throws Exception {
+        System.out.println("[INFO] " + Xml2HtmlTransformer.class.getSimpleName());
+
+        String xmlString = marshallingService.marshall(saglasnost, Zahtjev.class);
+
+        Xml2PdfTransformer pdfTransformer = new Xml2PdfTransformer(ZajednickoUtil.ZAHTEV_ZA_ZS_PDF);
+        byte[] arr =  pdfTransformer.generatePDF(xmlString);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentLength(arr.length);
+        responseHeaders.setContentType(MediaType.valueOf("application/pdf"));
+        responseHeaders.put("Content-Disposition", Collections.singletonList("attachment; filename=somefile.pdf"));
+        return new ResponseEntity<>(arr, responseHeaders, HttpStatus.OK);
+    }
+
+    @Override
+    public DocDatas getZahtjeviByUser(String uuid) {
+        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+
+        DocDatas a = new DocDatas();
+
+        for (ResultSet it = results; it.hasNext(); ) {
+            QuerySolution s = it.next();
+            Zahtjev i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
+            DocDatas.DocData data = new DocDatas.DocData();
+            data.setId(i.getId());
+            data.setNaziv("Zahtjev");
+            data.setDatum(i.getMjestoDatum().getDatum());
+            data.setType("zahtjev");
+            data.setUri(ZajednickoUtil.XML_PREFIX + "zahtev/" + i.getId());
+            data.setIme(i.getPodnosilac().getIme());
+            data.setPrezime(i.getPodnosilac().getPrezime());
+            a.getDocData().add(data);
+        }
+
+        return a;
+    }
+
+    @Override
+    public Zahtjev findOne(String id) {
+        return zahtevSertifikataExistRepository.findOne(id);
     }
 }

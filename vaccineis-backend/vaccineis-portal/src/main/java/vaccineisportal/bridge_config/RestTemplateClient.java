@@ -1,4 +1,4 @@
-package vaccineisportal.bridge_controllers;
+package vaccineisportal.bridge_config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

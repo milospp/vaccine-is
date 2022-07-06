@@ -14,6 +14,16 @@ class ObrazacSaglasnostiService {
             data: data,
         });
     }
+
+    mojiObrasci() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/moji-obrasci`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
 }
 
 export default new ObrazacSaglasnostiService();

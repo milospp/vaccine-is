@@ -60,6 +60,26 @@ class DigitalniZeleniSertifikatService {
             window.open(fileURL);
         });
     }
+
+    mojiSertifikati() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/moji-sertifikati`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
+
+    mojiDigitalniSertifikati() {
+        return axios({
+            method: 'GET',
+            url: `${API_BRIDGE}/moji-sertifikati`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
 }
 
 export default new DigitalniZeleniSertifikatService();

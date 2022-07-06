@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
-                <button @click="confirm" type="button" class="btn btn-primary">Потврди</button>
+                <button @click="confirm" type="button" class="btn btn-primary" data-dismiss="modal">Потврди</button>
             </div>
         </div>
     </div>
@@ -48,9 +48,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="vakcina in vakcine" :key="vakcina.id">
-                                <td><span>{{ vakcina.naziv }}</span></td>
-                                <td><span>{{ vakcina.kolicina }}</span></td>
+                            <tr v-for="vakcina in vakcine" :key="vakcina.id._text">
+                                <td><span>{{ vakcina.naziv._text }}</span></td>
+                                <td><span>{{ vakcina.kolicina._text }}</span></td>
                                 <td><button @click="addAmount(vakcina)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAmountModal">Додај количину</button></td>
                             </tr>
                         </tbody>
@@ -77,6 +77,7 @@ export default {
             kolicina: "",
             
             vakcina: {
+                id: "",
                 naziv: "",
                 kolicina: 0,
             }
@@ -92,26 +93,38 @@ export default {
         loadVakcine() {
             VakcinaService.loadVakcine()
                 .then(response => {
-                    console.log(response.data);
-                    this.vakcine = response.data;
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    this.vakcine = data["vakcinaKolicina"]["vakcine"];
                 })
-                .catch(console.log("greska"))
+                .catch((error) => console.log(error.message))
         },
 
         addAmount(vakcina) {
-            this.naziv = vakcina.naziv;
-            this.kolicina = vakcina.kolicina;
+            this.vakcina.id = vakcina.id._text;
+            this.naziv = vakcina.naziv._text;
+            this.kolicina = vakcina.kolicina._text;
         },
 
         confirm() {
             this.vakcina.naziv = this.naziv;
 
-            let data = "<vakcina>" + xmljs.json2xml(this.vakcine, {compact: true, spaces: 4}) + "</vakcina>";
+            let data = "<vakcinaKolicina>" + xmljs.json2xml(this.vakcina, {compact: true, spaces: 4}) + "</vakcinaKolicina>";
             VakcinaService.addKolicina(data)
-                .then(response => console.log(response))
-                .catch(console.log("greska"))
+                .then(() => {
+                    this.toast("Успешно сте ажурирали количину вакцина!", "success");
+                    this.loadVakcine();
+                })
+                .catch((error) => console.log(error.message))
+        },
 
-        }
+        toast(message, type) {
+            this.$toasted.show(message, {
+                type: type,
+                theme: "toasted-primary",
+                position: "top-center",
+                duration: 3000,
+            });
+        },
     },
 };
 </script>
