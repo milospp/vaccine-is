@@ -62,6 +62,7 @@ public class MarshallingServiceImpl implements MarshallingService {
             JAXBContext context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
+            System.out.println("xmlDOM = " + xmlDOM);
             var unmarshalledObject = unmarshaller.unmarshal(xmlDOM);
             return clazz.cast(unmarshalledObject);
         } catch (JAXBException e) {

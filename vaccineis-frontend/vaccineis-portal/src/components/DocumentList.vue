@@ -3,7 +3,7 @@
 
     <div class="sort-filter">
         <h3>Филтер: </h3>
-        <select class="filter-select" @change=filterDocuments($event)>
+        <select class="filter-select" v-model="filterData" @change=filterDocuments($event)>
             <option disabled value="">Изабери критеријум</option>
             <option value="city-ascending">Интересовање за пријем вакцине</option>
             <option value="city-descending">Сагласност за спровођење имунизавије</option>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="row card-group">
-        <div class="col-3" v-for="doc in docs" :key="doc.id._text">
+        <div class="col-3" v-for="doc in docsObr" :key="doc.id._text">
             <div class="card">
 <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                 <router-link class="routerLink" :to="{}">
@@ -48,6 +48,11 @@ export default {
     data() {
         return {
             docs: [],
+            docsInt: [],
+            docsObr: [],
+            docsZah: [],
+            docsDig: [],
+            docsPot: [],
 
             documents: [
                 {
@@ -68,8 +73,16 @@ export default {
                 {
                     name: "Saglasnost druga"
                 }
-            ]
+            ],
+
+            filterData: "city-ascending",
         };
+    },
+
+    computed: {
+        filtered() {
+            return [];
+        }
     },
 
     methods: {
@@ -100,7 +113,8 @@ export default {
                     data = data['docDatas']['docData'];
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs = data;
+                    this.docs.push.apply(data);
+                    this.docsInt = data;
                 }
             });
 
@@ -111,7 +125,9 @@ export default {
                     data = data['docDatas']['docData'];
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.concat(data);
+                    this.docs.push.apply(data);
+                    this.docsObr = data;
+
                 }
             });
 
@@ -122,7 +138,9 @@ export default {
                     data = data['docDatas']['docData'];
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.concat(data);
+                    this.docs.push.apply(data);
+                    this.docsZah = data;
+
                 }
             });
 
@@ -133,7 +151,8 @@ export default {
                     data = data['docDatas']['docData'];
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.concat(data);
+                    this.docs.push.apply(data);
+                    this.docsDig = data;
                 }
             });
 
@@ -144,7 +163,9 @@ export default {
                     data = data['docDatas']['docData'];
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.concat(data);
+                    this.docs.push.apply(data);
+                    this.docsPot = data;
+                    
                 }
             });
         },
