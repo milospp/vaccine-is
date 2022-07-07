@@ -14,7 +14,7 @@ public interface ObrazacSaglasnostiService {
 
     Saglasnost create(String xmlString);
 
-    Saglasnost update(String xmlString);
+    Saglasnost update(String id, String xmlString);
 
     Saglasnost findOne(String id);
 

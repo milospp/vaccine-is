@@ -20,7 +20,10 @@ public class DbInit {
     private void postConstruct() {
 
         Korisnik gradjanin = KorisnikConstants.createGradjanin();
+        Korisnik zdravstveniRadnik = KorisnikConstants.createZdravstveniRadnik();
+
         try {
+            userService.create(marshallingService.marshall(zdravstveniRadnik, Korisnik.class));
             userService.create(marshallingService.marshall(gradjanin, Korisnik.class));
         } catch (BadRequestException e) {
             System.out.println("Korisnik je vec dodat.");

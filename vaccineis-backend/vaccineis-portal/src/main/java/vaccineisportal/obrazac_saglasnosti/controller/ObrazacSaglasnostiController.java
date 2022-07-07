@@ -67,4 +67,12 @@ public class ObrazacSaglasnostiController {
 
         return new ResponseEntity<>(marshallingService.marshall(retVal, ListaSaglasnosti.class), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyAuthority('ZDRAVSTVENI_RADNIK')")
+    @PutMapping(value = "/odgovori-na-obrazac/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Saglasnost> zameniObrazacSaglasnosti(@PathVariable String id, @RequestBody String obrazacSaglasnosti) {
+
+        Saglasnost saglasnost = obrazacSaglasnostiService.update(id, obrazacSaglasnosti);
+        return new ResponseEntity<>(saglasnost, HttpStatus.OK);
+    }
 }
