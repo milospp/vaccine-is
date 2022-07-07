@@ -13,6 +13,7 @@ import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
 import vaccineisemployee.potvrda_o_vakcinaciji.repository.PotvrdaOVakcinacijiExistRepository;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -113,31 +114,38 @@ public class PotvrdaServiceImpl implements PotvrdaService{
     @Override
     public PotvrdaVakcinacije getPoslednjuPotvrdu(String uuid) {
 
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
 
         for (ResultSet it = results; it.hasNext(); ) {
             QuerySolution s = it.next();
             PotvrdaVakcinacije i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
+            resultsCon.closeConnection();
             return i;
         }
+        resultsCon.closeConnection();
 
         return null;
     }
 
     private void cleanLastJmbg(String uuid){
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_jmbg", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
+
         for (ResultSet it = results; it.hasNext(); ) {
             QuerySolution s = it.next();
             String sub = s.get("s").toString();
             crudrdfRepository.deleteTriplet("rdf", sub, "poslednja_potvrda_jmbg", uuid);
         }
 
+        resultsCon.closeConnection();
+
     }
 
     @Override
     public DocDatas getPotvrdeByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("metadates", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
-
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("metadates", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
         DocDatas a = new DocDatas();
 
         for (ResultSet it = results; it.hasNext(); ) {
@@ -154,6 +162,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
             a.getDocData().add(data);
         }
 
+        resultsCon.closeConnection();
         return a;
     }
 }

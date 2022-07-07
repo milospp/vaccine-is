@@ -8,6 +8,7 @@ import zajednicko.model.docdatas.DocDatas;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 public interface ObrazacSaglasnostiService {
@@ -27,4 +28,7 @@ public interface ObrazacSaglasnostiService {
     ResponseEntity<?> getHtml(String id) throws IOException;
 
     DocDatas getObrasciByUser(String uuid);
+
+    String getRdfXml(String uuid);
+    String getRdfJson(String uuid);
 }

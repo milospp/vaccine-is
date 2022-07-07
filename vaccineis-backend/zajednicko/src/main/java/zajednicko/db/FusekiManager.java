@@ -1,5 +1,6 @@
 package zajednicko.db;
 
+import lombok.Synchronized;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -18,6 +19,7 @@ import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.util.FusekiAuthenticationUtilities;
 import zajednicko.util.SparqlUtil;
 import zajednicko.util.ZajednickoUtil;
@@ -138,12 +140,13 @@ public class FusekiManager {
         return model;
     }
 
-    public ResultSet getAllRDF(String uri) {
+    public ResultSetConnection getAllRDF(String uri) {
         return queryRDF(uri, "?s ?p ?o");
 
     }
 
-    public ResultSet queryRDF(String uri, String whereQuery) {
+    @Synchronized
+    public ResultSetConnection queryRDF(String uri, String whereQuery) {
         if (uri != null && !uri.startsWith("/")) uri = "/" + uri;
 
         String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + uri, whereQuery);
@@ -152,9 +155,11 @@ public class FusekiManager {
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
 
         // Query the SPARQL endpoint, iterate over the result set...
-        ResultSet results = query.execSelect();
 
-        return results;
+        System.out.println("START query = " + whereQuery);
+        ResultSet results = query.execSelect();
+        System.out.println("END query = " + whereQuery);
+        return new ResultSetConnection(results, query);
 
     }
 

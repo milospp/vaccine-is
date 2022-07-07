@@ -49,6 +49,18 @@ public class InteresovanjeController {
         return interesovanjeService.getHtml(uuid);
     }
 
+    @GetMapping(value = "/get-rdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
+        String xml = interesovanjeService.getRdfXml(uuid);
+        return new ResponseEntity(xml, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get-json/{uuid}")
+    public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
+        String json = interesovanjeService.getRdfJson(uuid);
+        return new ResponseEntity(json, HttpStatus.OK);
+    }
+
 
     //    @PreAuthorize("hasRole('GRADJANIN')")
     @GetMapping(value = "/moja-interesovanja", produces = MediaType.APPLICATION_XML_VALUE)

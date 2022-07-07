@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import vaccineisportal.interesovanje.repository.InteresovanjeExistRepository;
 import vaccineisportal.termin.service.TerminService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -22,8 +24,10 @@ import zajednicko.util.ZajednickoUtil;
 import zajednicko.xmlTransformations.Xml2HtmlTransformer;
 import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -65,6 +69,9 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
         crudrdfRepository.uploadTriplet("rdf", uriResource, "ceka_od", localDateTime.toString() );
 
         crudrdfRepository.uploadTriplet("metadates", uriResource, "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "interesovanje_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId());
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "lokacija", interesovanje.getLokacijaPrimanja());
+
     }
 
     @Override
@@ -88,6 +95,31 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
         Interesovanje i = findOne(id);
         return this.getHtmlDocument(i);
     }
+
+    @Override
+    public String getRdfXml(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "interesovanje/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+        String asXml = ResultSetFormatter.asXMLString(resultSet);
+        resultSetConnection.closeConnection();
+
+        return asXml;
+
+    }
+
+    @Override
+    public String getRdfJson(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "interesovanje/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ResultSetFormatter.outputAsJSON(out, resultSet);
+        resultSetConnection.closeConnection();
+        String finalString = out.toString();
+
+        return finalString;
+    }
+
 
 //    public static ResponseEntity<?> getDocumentUUID(String uuid) throws IOException {
 //        File file = new File("./src/main/resources/files/interesovanje." + type);
@@ -154,7 +186,8 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
     @Override
     public DocDatas getInteresovanjaByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "interesovanje_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" +uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "interesovanje_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" +uuid);
+        ResultSet results = resultsCon.getResultSet();
 
         DocDatas a = new DocDatas();
 
@@ -171,6 +204,8 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
             data.setPrezime(i.getLicneInformacije().getPrezime());
             a.getDocData().add(data);
         }
+
+        resultsCon.closeConnection();
 
         return a;
     }

@@ -15,6 +15,7 @@ import vaccineisemployee.digitalni_sertifikat.model.ZeleniSertifikat;
 import vaccineisemployee.digitalni_sertifikat.repository.DigitalniSertifikatExistRepository;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -174,7 +175,8 @@ public class SertifikatServiceImpl implements SertifikatService{
 
     @Override
     public DocDatas getSertifikatiByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
 
         DocDatas a = new DocDatas();
 
@@ -191,7 +193,7 @@ public class SertifikatServiceImpl implements SertifikatService{
             data.setPrezime(i.getPodaciVakcinisanog().getPrezime());
             a.getDocData().add(data);
         }
-
+        resultsCon.closeConnection();
         return a;
     }
 

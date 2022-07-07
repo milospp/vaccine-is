@@ -5,29 +5,101 @@
         <h3>Филтер: </h3>
         <select class="filter-select" v-model="filterData" @change=filterDocuments($event)>
             <option disabled value="">Изабери критеријум</option>
-            <option value="city-ascending">Интересовање за пријем вакцине</option>
-            <option value="city-descending">Сагласност за спровођење имунизавије</option>
-            <option value="digital-green-certificate-request">Захтев за дигитални зелени сертификат</option>
-            <option value="digital-green-certificate">Дигитални зелени сертификат</option>
+            <option value="all">Све</option>
+            <option value="interesovanje">Интересовање за пријем вакцине</option>
+            <option value="obrazac">Сагласност за спровођење имунизавије</option>
+            <option value="zahtev">Захтев за дигитални зелени сертификат</option>
+            <option value="zeleni">Дигитални зелени сертификат</option>
+            <option value="potvrda">Потврда вакцинације</option>
         </select>
     </div>
 
     <div class="row card-group">
-        <div class="col-3" v-for="doc in docsObr" :key="doc.id._text">
-            <div class="card">
-<!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
-                <router-link class="routerLink" :to="{}">
-                    <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
-                    <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
-                </router-link>
-                <div class="card-body">
-                    <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                    <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
-                    <a href="#" class="card-link">RDF</a>
-                    <a href="#" class="card-link">JSON</a>
+        <template v-if="filterData === 'interesovanje' || filterData === 'all' || filterData === ''">
+            <div class="col-3" v-for="doc in docsInt" :key="doc.id._text">
+                <div class="card">
+    <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                    <router-link class="routerLink" :to="{}">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
+                    </router-link>
+                    <div class="card-body">
+                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf('interesovanje', doc.id._text)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson('interesovanje', doc.id._text)" class="card-link">JSON</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
+        <template v-if="filterData === 'obrazac' || filterData === 'all' || filterData === ''">
+            <div class="col-3" v-for="doc in docsObr" :key="doc.id._text">
+                <div class="card">
+    <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                    <router-link class="routerLink" :to="{}">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
+                    </router-link>
+                    <div class="card-body">
+                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a href="#" class="card-link">RDF</a>
+                        <a href="#" class="card-link">JSON</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-if="filterData === 'zahtev' || filterData === 'all' || filterData === ''">
+            <div class="col-3" v-for="doc in docsZah" :key="doc.id._text">
+                <div class="card">
+    <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                    <router-link class="routerLink" :to="{}">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
+                    </router-link>
+                    <div class="card-body">
+                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a href="#" class="card-link">RDF</a>
+                        <a href="#" class="card-link">JSON</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-if="filterData === 'zeleni' || filterData === 'all' || filterData === ''">
+            <div class="col-3" v-for="doc in docsDig" :key="doc.id._text">
+                <div class="card">
+    <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                    <router-link class="routerLink" :to="{}">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
+                    </router-link>
+                    <div class="card-body">
+                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a href="#" class="card-link">RDF</a>
+                        <a href="#" class="card-link">JSON</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-if="filterData === 'potvrda' || filterData === 'all' || filterData === ''">
+            <div class="col-3" v-for="doc in docsPot" :key="doc.id._text">
+                <div class="card">
+    <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
+                    <router-link class="routerLink" :to="{}">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
+                    </router-link>
+                    <div class="card-body">
+                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a href="#" class="card-link">RDF</a>
+                        <a href="#" class="card-link">JSON</a>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 
 </div>
@@ -75,13 +147,28 @@ export default {
                 }
             ],
 
-            filterData: "city-ascending",
+            filterData: "",
         };
     },
 
     computed: {
-        filtered() {
-            return [];
+        filterResult() {
+            switch (this.filterData) {
+                case 'all':
+                    return this.docs
+                case 'interesovanje':
+                    return this.docsInt
+                case 'obrazac':
+                    return this.docsObr
+                case 'zahtev':
+                    return this.docsZah
+                case 'zeleni':
+                    return this.docsDig
+                case 'potvrda':
+                    return this.docsPot
+                default:
+                    return this.docs
+            }
         }
     },
 
@@ -106,15 +193,17 @@ export default {
         },
 
         getDocs() {
+            let self = this;
             InteresovanjeService.mojaInteresovanja().then(response => {
                 if(response.data) {
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
                     console.log(data);
                     data = data['docDatas']['docData'];
+                    if (!data) return;
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.push.apply(data);
-                    this.docsInt = data;
+                    self.docs.push.apply(self.docs, data);
+                    self.docsInt = [...data];
                 }
             });
 
@@ -123,10 +212,11 @@ export default {
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
                     console.log(data);
                     data = data['docDatas']['docData'];
+                    if (!data) return;
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.push.apply(data);
-                    this.docsObr = data;
+                    this.docs.push.apply(this.docs, data);
+                    this.docsObr = [...data];
 
                 }
             });
@@ -136,10 +226,11 @@ export default {
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
                     console.log(data);
                     data = data['docDatas']['docData'];
+                    if (!data) return;
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.push.apply(data);
-                    this.docsZah = data;
+                    this.docs.push.apply(this.docs, data);
+                    this.docsZah = [...data];
 
                 }
             });
@@ -149,10 +240,11 @@ export default {
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
                     console.log(data);
                     data = data['docDatas']['docData'];
+                    if (!data) return;
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.push.apply(data);
-                    this.docsDig = data;
+                    this.docs.push.apply(this.docs, data);
+                    this.docsDig = [...data];
                 }
             });
 
@@ -161,13 +253,28 @@ export default {
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
                     console.log(data);
                     data = data['docDatas']['docData'];
+                    if (!data) return;
                     if (!(data instanceof Array)) data = [data];
 
-                    this.docs.push.apply(data);
-                    this.docsPot = data;
+                    this.docs.push.apply(this.docs, data);
+                    this.docsPot = [...data];
                     
                 }
             });
+        },
+
+        getDocRdf(docs, uuid) {
+            if (docs === "interesovanje") {
+                InteresovanjeService.getInteresovanjeRdf(uuid);
+            }
+
+        },
+
+        getDocJson(docs, uuid) {
+            if (docs === "interesovanje") {
+                InteresovanjeService.getInteresovanjeJson(uuid);
+            }
+
         },
         
         fromatDate(string) {
@@ -224,4 +331,7 @@ p {
     text-align: left;
 }
 
+a.card-link {
+    cursor: pointer;
+}
 </style>

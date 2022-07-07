@@ -25,4 +25,7 @@ public interface InteresovanjeService {
     DocDatas getInteresovanjaByUser(String uuid);
 
     void obradiTermine();
+
+    String getRdfXml(String uuid);
+    String getRdfJson(String uuid);
 }

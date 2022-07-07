@@ -16,6 +16,7 @@ import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 import vaccineisportal.zahtev_sertifikata.repository.ZahtevSertifikataExistRepository;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -50,7 +51,9 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
     @Override
     public List<Zahtjev> findZahteviByStatusPodnet() {
-        ResultSet rs = crudrdfRepository.findByPredicateAndObject("rdf", "status", String.valueOf(ZahtevZaSertifikatStatus.PODNET));
+        ResultSetConnection rsCon = crudrdfRepository.findByPredicateAndObject("rdf", "status", String.valueOf(ZahtevZaSertifikatStatus.PODNET));
+        ResultSet rs = rsCon.getResultSet();
+
         rs.getResultVars();
 
         List<String> ids = new ArrayList<>();
@@ -64,6 +67,8 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
         var retVal = new ArrayList<Zahtjev>();
         ids.forEach(id -> retVal.add(zahtevSertifikataExistRepository.findOne(id)));
+
+        rsCon.closeConnection();
 
         return retVal;
     }
@@ -138,25 +143,32 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
     @Override
     public DocDatas getZahtjeviByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+            ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+            ResultSet results = resultsCon.getResultSet();
+        try {
 
-        DocDatas a = new DocDatas();
+            DocDatas a = new DocDatas();
 
-        for (ResultSet it = results; it.hasNext(); ) {
-            QuerySolution s = it.next();
-            Zahtjev i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
-            DocDatas.DocData data = new DocDatas.DocData();
-            data.setId(i.getId());
-            data.setNaziv("Zahtjev");
-            data.setDatum(i.getMjestoDatum().getDatum());
-            data.setType("zahtjev");
-            data.setUri(ZajednickoUtil.XML_PREFIX + "zahtev/" + i.getId());
-            data.setIme(i.getPodnosilac().getIme());
-            data.setPrezime(i.getPodnosilac().getPrezime());
-            a.getDocData().add(data);
+            for (ResultSet it = results; it.hasNext(); ) {
+                QuerySolution s = it.next();
+                Zahtjev i = findOne(ZajednickoUtil.getIdFromUri(s.get("s").toString()));
+                DocDatas.DocData data = new DocDatas.DocData();
+                data.setId(i.getId());
+                data.setNaziv("Zahtjev");
+                data.setDatum(i.getMjestoDatum().getDatum());
+                data.setType("zahtjev");
+                data.setUri(ZajednickoUtil.XML_PREFIX + "zahtev/" + i.getId());
+                data.setIme(i.getPodnosilac().getIme());
+                data.setPrezime(i.getPodnosilac().getPrezime());
+                a.getDocData().add(data);
+            }
+
+            resultsCon.closeConnection();
+
+            return a;
+        } finally {
+            resultsCon.closeConnection();
         }
-
-        return a;
     }
 
     @Override

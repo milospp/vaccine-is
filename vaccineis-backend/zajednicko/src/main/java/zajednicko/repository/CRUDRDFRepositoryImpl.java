@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import zajednicko.db.FusekiManager;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.util.ZajednickoUtil;
 
 import java.util.Collection;
@@ -23,47 +24,59 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
     }
 
     @Override
-    public ResultSet findAll(String graphUri) {
+    public ResultSetConnection findAll(String graphUri) {
         return fusekiManager.getAllRDF(graphUri);
     }
 
     @Override
-    public ResultSet findWhere(String graphUri, String whereStatement) {
+    public ResultSetConnection findWhere(String graphUri, String whereStatement) {
         return fusekiManager.queryRDF(graphUri, whereStatement);
     }
 
     @Override
-    public ResultSet findBySubject(String graphUri, String subject) {
+    public ResultSetConnection findBySubject(String graphUri, String subject) {
         String query = "<" + subject + ">" + " ?p ?o";
         return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
-    public ResultSet findByPredicate(String graphUri, String predicate) {
+    public ResultSetConnection findByPredicate(String graphUri, String predicate) {
         String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + ">" + " ?o";
         return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
-    public ResultSet findByObject(String graphUri, String object) {
+    public ResultSetConnection findByObject(String graphUri, String object) {
         String query = "?s ?p " + ZajednickoUtil.literalQuotes(object);
         return fusekiManager.queryRDF(graphUri, query);
     }
 
     @Override
-    public ResultSet findByPredicateAndObject(String graphUri, String predicate, String object) {
+    public ResultSetConnection findByPredicateAndObject(String graphUri, String predicate, String object) {
 
 
         String query =  "?s " + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + "> " + ZajednickoUtil.literalQuotes(object);
         return fusekiManager.queryRDF(graphUri, query);
     }
 
+
+
+    @Override
+    public ResultSetConnection findBySubjectAndPredicate(String graphUri, String subject, String predicate) {
+        String query = ZajednickoUtil.literalQuotes(subject) + "<" + ZajednickoUtil.RDF_PREDICATE + predicate + "> " + "?o ";
+        return fusekiManager.queryRDF(graphUri, query);
+    }
+
     @Override
     public String findFirstBySubjectAndPred(String graphUri, String subject, String predicate) {
         String query =  "<" + subject + "> <" + ZajednickoUtil.RDF_PREDICATE + predicate + "> ?l";
-        ResultSet result = fusekiManager.queryRDF(graphUri, query);
+        ResultSetConnection resultCon = fusekiManager.queryRDF(graphUri, query);
+        ResultSet result = resultCon.getResultSet();
 
-        if (!result.hasNext()) return null;
+        if (!result.hasNext()) {
+            resultCon.closeConnection();
+            return null;
+        }
         return result.next().get("l").toString();
     }
 

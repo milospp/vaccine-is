@@ -3,6 +3,7 @@ package vaccineisportal.obrazac_saglasnosti.service;
 import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.repository.ObrazacSaglasnostiExistRepository;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -26,9 +28,11 @@ import zajednicko.xmlTransformations.Xml2PdfTransformer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -94,6 +98,7 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
         Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
         crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "saglasnost_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
 
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + "saglasnost/" + saglasnost.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
 
@@ -129,6 +134,31 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
         }
         return null;
     }
+
+    public String getRdfXml(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+        resultSetConnection.closeConnection();
+
+        String asXml = ResultSetFormatter.asXMLString(resultSet);
+        resultSetConnection.closeConnection();
+
+        return asXml;
+    }
+
+    @Override
+    public String getRdfJson(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ResultSetFormatter.outputAsJSON(out, resultSet);
+        resultSetConnection.closeConnection();
+        String finalString = out.toString();
+
+        return finalString;
+    }
+
 
     public ResponseEntity<?> getHtml(String id) throws IOException {
         mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
@@ -170,7 +200,8 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
 
     @Override
     public DocDatas getObrasciByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "saglasnost_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
 
         DocDatas a = new DocDatas();
 
@@ -187,6 +218,8 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
             data.setPrezime(i.getPodaciPacijenta().getPrezime());
             a.getDocData().add(data);
         }
+
+        resultsCon.closeConnection();
 
         return a;
     }

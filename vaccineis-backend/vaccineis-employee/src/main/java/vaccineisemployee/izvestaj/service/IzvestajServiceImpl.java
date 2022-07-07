@@ -15,6 +15,7 @@ import vaccineisemployee.izvestaj.model.Izvjestaj;
 import vaccineisemployee.izvestaj.repository.IzvestajExistRepository;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
@@ -110,7 +111,8 @@ public class IzvestajServiceImpl implements IzvestajService{
 
     @Override
     public DocDatas getIzvjestajiByUser(String uuid) {
-        ResultSet results = crudrdfRepository.findByPredicateAndObject("metadates", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("metadates", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSet results = resultsCon.getResultSet();
 
         DocDatas a = new DocDatas();
 
@@ -127,7 +129,7 @@ public class IzvestajServiceImpl implements IzvestajService{
             data.setPrezime("");
             a.getDocData().add(data);
         }
-
+        resultsCon.closeConnection();
         return a;
     }
 }

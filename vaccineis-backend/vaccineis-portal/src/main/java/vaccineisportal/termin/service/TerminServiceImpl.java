@@ -13,6 +13,7 @@ import vaccineisportal.termin.model.Termin;
 import vaccineisportal.termin.repository.TerminExistRepository;
 import zajednicko.model.CTlicniPodaci;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MarshallingService;
 import zajednicko.util.ZajednickoUtil;
@@ -127,7 +128,8 @@ public class TerminServiceImpl implements TerminService{
     @Scheduled(cron = "0 0 * * * ?") // Svaki sat u *:00:00
     public void terminZaInteresovanje() {
         System.out.println("CRON ----- TerminServiceImpl.terminZaInteresovanje");
-        ResultSet results = crudrdfRepository.findByPredicate("rdf", "ceka_od");
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicate("rdf", "ceka_od");
+        ResultSet results = resultsCon.getResultSet();
 
         Map<String, String> zahtevi = new HashMap<>();
 
@@ -136,7 +138,10 @@ public class TerminServiceImpl implements TerminService{
             zahtevi.put(s.get("s").toString(), s.get("o").toString());
         }
 
-        if (zahtevi.size() == 0) return;
+        if (zahtevi.size() == 0){
+            resultsCon.closeConnection();
+            return;
+        }
 
         List<Map.Entry<String, String>> zahteviList = new ArrayList<>(zahtevi.entrySet());
         zahteviList.sort(Comparator.comparing(Map.Entry::getValue));
@@ -144,11 +149,16 @@ public class TerminServiceImpl implements TerminService{
 
         for (Map.Entry<String, String> entry : zahteviList){
             LocalDateTime dobijen = srediTerminZa(entry.getKey(), entry.getValue());
-            if (dobijen == null) return;
+            if (dobijen == null) {
+                resultsCon.closeConnection();
+                return;
+            }
 
             System.out.println("TerminServiceImpl.terminZaInteresovanje - Posalti mejl, bata je dobio termin!!!");
             //TODO: send email
         }
+
+        resultsCon.closeConnection();
 
 
     }
@@ -173,10 +183,16 @@ public class TerminServiceImpl implements TerminService{
 
         String query = "?s <" + ZajednickoUtil.RDF_PREDICATE + "termin_ceka_potvrdu> <" + ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() + ">";
 
-        ResultSet results = crudrdfRepository.findWhere("rdf", query);
-        if (!results.hasNext()) return null;
+        ResultSetConnection resultsCon = crudrdfRepository.findWhere("rdf", query);
+        ResultSet results = resultsCon.getResultSet();
+
+        if (!results.hasNext()) {
+            resultsCon.closeConnection();
+            return null;
+        }
 
         QuerySolution s = results.next();
+        resultsCon.closeConnection();
         String terminUri = s.get("s").toString();
 
         String[] token = terminUri.split("/");
@@ -184,7 +200,6 @@ public class TerminServiceImpl implements TerminService{
 
 
         Termin termin = getTermin(terminId);
-
         return termin;
 
     }

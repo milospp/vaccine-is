@@ -48,6 +48,18 @@ public class ObrazacSaglasnostiController {
         return obrazacSaglasnostiService.getHtml(uuid);
     }
 
+    @GetMapping(value = "/get-rdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
+        String xml = obrazacSaglasnostiService.getRdfXml(uuid);
+        return new ResponseEntity(xml, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get-json/{uuid}")
+    public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
+        String json = obrazacSaglasnostiService.getRdfJson(uuid);
+        return new ResponseEntity(json, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/moji-obrasci", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<DocDatas> getMojeSaglasnosti() {
