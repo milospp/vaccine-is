@@ -63,8 +63,8 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
     }
 
     @Override
-    public Saglasnost update(String xmlString) {
-        return null;
+    public Saglasnost update(String id, String xmlString) {
+        return obrazacSaglasnostiExistRepository.update(id, xmlString);
     }
 
     @Override

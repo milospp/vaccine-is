@@ -53,6 +53,14 @@ const routes = [
     }
 },
 {
+    path: encodeURI("/образац-сагласности-за-имунизацију-одговор"),
+    name: "ImmunizationConsentRequestPart2",
+    component: () => import("@/views/ImmunizationConsentRequestPart2.vue"),
+    meta: {
+        authorize: ['ZDRAVSTVENI_RADNIK']
+    }
+},
+{
     path: encodeURI("/образци-сагласности-за-имунизацију"),
     name: "ImmunizationConsentRecords",
     component: () => import("@/views/ImmunizationConsentRecords.vue"),
