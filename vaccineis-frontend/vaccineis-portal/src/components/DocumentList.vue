@@ -20,12 +20,12 @@
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
-                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewDoc('interesovanje', doc.id._text)">
                         <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocPdf('interesovanje', doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml('interesovanje', doc.id._text)" class="card-link">XHTML</a>
                         <a v-on:click="getDocRdf('interesovanje', doc.id._text)" class="card-link">RDF</a>
                         <a v-on:click="getDocJson('interesovanje', doc.id._text)" class="card-link">JSON</a>
                     </div>
@@ -37,14 +37,14 @@
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
-                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewDoc('obrazac', doc.id._text)">
                         <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
-                        <a href="#" class="card-link">RDF</a>
-                        <a href="#" class="card-link">JSON</a>
+                        <a v-on:click="getDocPdf('obrazac', doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml('obrazac', doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf('obrazac', doc.id._text)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson('obrazac', doc.id._text)" class="card-link">JSON</a>
                     </div>
                 </div>
             </div>
@@ -54,14 +54,14 @@
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
-                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewDoc('zahtev', doc.id._text)">
                         <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
-                        <a href="#" class="card-link">RDF</a>
-                        <a href="#" class="card-link">JSON</a>
+                        <a v-on:click="getDocPdf('zahtev', doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml('zahtev', doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf('zahtev', doc.id._text)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson('zahtev', doc.id._text)" class="card-link">JSON</a>
                     </div>
                 </div>
             </div>
@@ -71,14 +71,14 @@
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
-                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewDoc('zeleni', doc.id._text)">
                         <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
-                        <a href="#" class="card-link">RDF</a>
-                        <a href="#" class="card-link">JSON</a>
+                        <a v-on:click="getDocPdf('zeleni', doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml('zeleni', doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf('zeleni', doc.id._text)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson('zeleni', doc.id._text)" class="card-link">JSON</a>
                     </div>
                 </div>
             </div>
@@ -88,14 +88,14 @@
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
-                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewInteresovanjePdf(doc.id._text)">
+                        <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" v-on:click="viewDoc('potvrda', doc.id._text)">
                         <div class="card-header"><b>{{ doc.naziv._text }} {{fromatDateTime(doc.datum._text)}}</b></div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getInteresovanjePdf(doc.id._text)" class="card-link">PDF</a>
-                        <a v-on:click="getInteresovanjeHtml(doc.id._text)" class="card-link">XHTML</a>
-                        <a href="#" class="card-link">RDF</a>
-                        <a href="#" class="card-link">JSON</a>
+                        <a v-on:click="getDocPdf('potvrda', doc.id._text)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml('potvrda', doc.id._text)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf('potvrda', doc.id._text)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson('potvrda', doc.id._text)" class="card-link">JSON</a>
                     </div>
                 </div>
             </div>
@@ -262,21 +262,47 @@ export default {
                 }
             });
         },
+        getDocPdf(docs, uuid) {
+            if (docs === "interesovanje") InteresovanjeService.getInteresovanjePdf(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.getSaglasnostPdf(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.getZahtevPdf(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.getSertifikatPdf(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.getPotvrdaPdf(uuid);
+
+        },
+        getDocHtml(docs, uuid) {
+            if (docs === "interesovanje") InteresovanjeService.getInteresovanjeHtml(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.getSaglasnostHtml(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.getZahtevHtml(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.getSertifikatHtml(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.getPotvrdaHtml(uuid);            
+
+        },
 
         getDocRdf(docs, uuid) {
-            if (docs === "interesovanje") {
-                InteresovanjeService.getInteresovanjeRdf(uuid);
-            }
-
+            if (docs === "interesovanje") InteresovanjeService.getInteresovanjeRdf(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.getSaglasnostRdf(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.getZahtevRdf(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.getSertifikatRdf(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.getPotvrdaRdf(uuid);
         },
 
         getDocJson(docs, uuid) {
-            if (docs === "interesovanje") {
-                InteresovanjeService.getInteresovanjeJson(uuid);
-            }
-
+            if (docs === "interesovanje") InteresovanjeService.getInteresovanjeJson(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.getSaglasnostJson(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.getZahtevJson(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.getSertifikatJson(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.getPotvrdaJson(uuid);
         },
         
+        viewDoc(docs, uuid) {
+            if (docs === "interesovanje") InteresovanjeService.viewInteresovanje(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.viewSaglasnost(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.viewZahtev(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.viewSertifikat(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.viewPotvrda(uuid);        
+        },
+
         fromatDate(string) {
             let dateObj = new Date(string);
             return dateObj.toLocaleDateString('sr-RS');

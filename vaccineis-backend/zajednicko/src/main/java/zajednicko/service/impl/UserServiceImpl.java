@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Korisnik findUserByUuid(String uuid) {
+        return userExistRepository.findOne(uuid);
+    }
+
+    @Override
     public Korisnik create(String xmlString) {
         return userExistRepository.create(xmlString);
     }

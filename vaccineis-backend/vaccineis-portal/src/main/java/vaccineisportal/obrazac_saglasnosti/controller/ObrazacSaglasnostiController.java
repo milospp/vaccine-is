@@ -14,7 +14,9 @@ import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.service.MarshallingService;
+import zajednicko.service.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +30,7 @@ public class ObrazacSaglasnostiController {
     private final ObrazacSaglasnostiService obrazacSaglasnostiService;
     private final AuthenticationService authenticationService;
     private final MarshallingService marshallingService;
+    private final UserService userService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -64,6 +67,17 @@ public class ObrazacSaglasnostiController {
     @ResponseBody
     public ResponseEntity<DocDatas> getMojeSaglasnosti() {
         Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        DocDatas interesovanjes = obrazacSaglasnostiService.getObrasciByUser(korisnik.getId());
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
+    }
+
+    @PermitAll
+    @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public ResponseEntity<DocDatas> getKorisnikSaglasnosti(@PathVariable("uuid") String uuid) {
+        Korisnik korisnik = userService.findUserByUuid(uuid);
 
         DocDatas interesovanjes = obrazacSaglasnostiService.getObrasciByUser(korisnik.getId());
 

@@ -62,7 +62,7 @@ export default {
 
     methods: {
         viewDocs() {
-            let route = this.$router.resolve({path: "/преглед-докумената/пацијент=16564"});
+            let route = this.$router.resolve({path: "/преглед-докумената/пацијент/52ad5ae6-10d6-4003-833a-07434c2aba0b"});
             window.open(route.href);
         },
 

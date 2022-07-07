@@ -50,7 +50,10 @@ class ObrazacSaglasnostiService {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -67,7 +70,10 @@ class ObrazacSaglasnostiService {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-html/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -84,7 +90,10 @@ class ObrazacSaglasnostiService {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-rdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -101,7 +110,10 @@ class ObrazacSaglasnostiService {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-json/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -119,10 +131,25 @@ class ObrazacSaglasnostiService {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
             window.open(fileURL);
+        });
+    }
+    
+    korisnikObrasci(uuid) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/korisnik/${uuid}`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+            },
+
         });
     }
 }

@@ -36,7 +36,7 @@ const routes = [
     component: () => import("@/views/DigitalGreenCertificateRequests.vue"),
 },
 {
-    path: encodeURI("/преглед-докумената/пацијент=16564"),
+    path: encodeURI("/преглед-докумената/пацијент/:uuid"),
     name: "DocumentsListForPacient",
     component: () => import("@/views/DocumentListView.vue"),
 },

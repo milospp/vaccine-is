@@ -1,56 +1,40 @@
+
 import axios from "axios";
 
-const API_URL = "http://localhost:8082/api/saglasnost"
+const API_URL = "http://localhost:8082/api/digitalni-zeleni-sertifikat-zahtev"
 
-class ObrazacSaglasnostiService {
+class ZahtjevZaSertifikatService {
 
-    createObrazacSaglasnosti(data) {
-        return axios({
-            method: 'POST',
-            url: `${API_URL}`,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-            data: data,
-        });
-    }
-
-    mojiObrasci() {
+    mojiZahtjevi() {
         return axios({
             method: 'GET',
-            url: `${API_URL}/moji-obrasci`,
+            url: `${API_URL}/moji-zahtjevi`,
             headers: {
                 'Content-Type': 'application/xml'
             },
         });
     }
 
-    getPodnetiObrasciSaglasnosti() {
+    korisnikZahtevi(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/podnete-saglasnosti`,
+            url: `${API_URL}/korisnik/${uuid}`,
             headers: {
-                'Content-Type': 'application/xml'
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
             },
+
         });
     }
 
-    odgovoriNaObrazac(id, obrazac) {
-        return axios({
-            method: 'PUT',
-            url: `${API_URL}/odgovori-na-obrazac/` + id,
-            data: obrazac,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    getSaglasnostPdf(uuid) {
+    getZahtevPdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -63,11 +47,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostHtml(uuid) {
+    getZahtevHtml(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-html/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -80,11 +67,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostRdf(uuid) {
+    getZahtevRdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-rdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -97,11 +87,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostJson(uuid) {
+    getZahtevJson(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-json/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -115,11 +108,14 @@ class ObrazacSaglasnostiService {
     }
 
 
-    viewSaglasnostPdf(uuid) {
+    viewZahtevPdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
             window.open(fileURL);
@@ -127,4 +123,4 @@ class ObrazacSaglasnostiService {
     }
 }
 
-export default new ObrazacSaglasnostiService();
+export default new ZahtjevZaSertifikatService();

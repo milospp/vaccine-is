@@ -7,5 +7,7 @@ public interface UserService extends UserDetailsService {
 
     Korisnik findUserByEmail(String email);
 
+    Korisnik findUserByUuid(String uuid);
+
     Korisnik create(String xmlString);
 }

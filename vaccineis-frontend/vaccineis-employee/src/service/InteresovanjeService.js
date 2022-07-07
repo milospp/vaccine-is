@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8082/api/saglasnost"
+const API_URL = "http://localhost:8082/api/interesovanje"
 
-class ObrazacSaglasnostiService {
+class InteresovanjeService {
 
-    createObrazacSaglasnosti(data) {
+    createInteresovanje(data) {
+        console.log("AAAAAAAA");
         return axios({
             method: 'POST',
             url: `${API_URL}`,
@@ -15,42 +16,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    mojiObrasci() {
-        return axios({
-            method: 'GET',
-            url: `${API_URL}/moji-obrasci`,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    getPodnetiObrasciSaglasnosti() {
-        return axios({
-            method: 'GET',
-            url: `${API_URL}/podnete-saglasnosti`,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    odgovoriNaObrazac(id, obrazac) {
-        return axios({
-            method: 'PUT',
-            url: `${API_URL}/odgovori-na-obrazac/` + id,
-            data: obrazac,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    getSaglasnostPdf(uuid) {
+    getInteresovanjePdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -63,11 +36,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostHtml(uuid) {
+    getInteresovanjeHtml(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-html/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -80,11 +56,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostRdf(uuid) {
+    getInteresovanjeRdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-rdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -97,11 +76,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostJson(uuid) {
+    getInteresovanjeJson(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-json/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -115,7 +97,7 @@ class ObrazacSaglasnostiService {
     }
 
 
-    viewSaglasnostPdf(uuid) {
+    viewInteresovanjePdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
@@ -125,6 +107,29 @@ class ObrazacSaglasnostiService {
             window.open(fileURL);
         });
     }
+
+    mojaInteresovanja() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/moja-interesovanja`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+            },
+        });
+    }
+
+    korisnikInteresovanja(uuid) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/korisnik/${uuid}`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+            },
+
+        });
+    }
 }
 
-export default new ObrazacSaglasnostiService();
+export default new InteresovanjeService();

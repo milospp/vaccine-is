@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8082/api/saglasnost"
+const API_URL = "http://localhost:8082/api/digitalni-zeleni-sertifikat-zahtev";
+const API_BRIDGE = "http://localhost:8082/api/digitalni-sertifikat";
 
-class ObrazacSaglasnostiService {
+class DigitalniZeleniSertifikatService {
 
-    createObrazacSaglasnosti(data) {
+    createZahtev(data) {
         return axios({
             method: 'POST',
             url: `${API_URL}`,
@@ -15,42 +16,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    mojiObrasci() {
-        return axios({
-            method: 'GET',
-            url: `${API_URL}/moji-obrasci`,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    getPodnetiObrasciSaglasnosti() {
-        return axios({
-            method: 'GET',
-            url: `${API_URL}/podnete-saglasnosti`,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    odgovoriNaObrazac(id, obrazac) {
-        return axios({
-            method: 'PUT',
-            url: `${API_URL}/odgovori-na-obrazac/` + id,
-            data: obrazac,
-            headers: {
-                'Content-Type': 'application/xml'
-            },
-        });
-    }
-
-    getSaglasnostPdf(uuid) {
+    getSertifikatPdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -63,11 +36,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostHtml(uuid) {
+    getSertifikatHtml(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-html/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -80,11 +56,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostRdf(uuid) {
+    getSertifikatRdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-rdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -97,11 +76,14 @@ class ObrazacSaglasnostiService {
         });
     }
 
-    getSaglasnostJson(uuid) {
+    getSertifikatJson(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-json/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -115,16 +97,53 @@ class ObrazacSaglasnostiService {
     }
 
 
-    viewSaglasnostPdf(uuid) {
+    viewSertifikatPdf(uuid) {
         return axios({
             method: 'GET',
             url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
             window.open(fileURL);
         });
     }
+
+    mojiSertifikati() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/moji-sertifikati`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+                
+            },
+        });
+    }
+
+    mojiDigitalniSertifikati() {
+        return axios({
+            method: 'GET',
+            url: `${API_BRIDGE}/moji-sertifikati`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
+
+    korisnikSertifikati(uuid) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/korisnik/${uuid}`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+            },
+
+        });
+    }
 }
 
-export default new ObrazacSaglasnostiService();
+export default new DigitalniZeleniSertifikatService();

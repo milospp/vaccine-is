@@ -9,6 +9,7 @@ import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.potvrda_vakcinacije_bridge.service.PotvrdaVakcinacijeService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.service.UserService;
 
 import java.io.IOException;
 
@@ -18,6 +19,8 @@ import java.io.IOException;
 public class PotvrdaVakcinacijeController {
     private final AuthenticationService authenticationService;
     private final PotvrdaVakcinacijeService potvrdaVakcinacijeService;
+    private final UserService userService;
+
 
     //    @PreAuthorize("hasRole('GRADJANIN')")
     @GetMapping(value = "/get-pdf/{uuid}")
@@ -34,6 +37,15 @@ public class PotvrdaVakcinacijeController {
     @ResponseBody
     public ResponseEntity<DocDatas> getMojiSertifikati() {
         Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        DocDatas potvrde = potvrdaVakcinacijeService.getPotvrdeByUser(korisnik.getId());
+
+        return new ResponseEntity<>(potvrde, HttpStatus.OK);
+    }
+    @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public ResponseEntity<DocDatas> getKorinsikSertifikati(@PathVariable("uuid") String uuid) {
+        Korisnik korisnik = userService.findUserByUuid(uuid);
 
         DocDatas potvrde = potvrdaVakcinacijeService.getPotvrdeByUser(korisnik.getId());
 

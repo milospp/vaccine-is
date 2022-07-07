@@ -13,7 +13,9 @@ import vaccineisportal.interesovanje.service.InteresovanjeService;
 
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.service.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.websocket.server.PathParam;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class InteresovanjeController {
 
     private final InteresovanjeService interesovanjeService;
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -68,6 +71,17 @@ public class InteresovanjeController {
     public ResponseEntity<DocDatas> getMojaInteresovanja
     () throws IOException, ParserConfigurationException, SAXException {
         Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(korisnik.getId());
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<DocDatas> getKorisnikInteresovanja (@PathVariable("uuid") String uuid) throws IOException, ParserConfigurationException, SAXException {
+        Korisnik korisnik = userService.findUserByUuid(uuid);
 
         DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(korisnik.getId());
 
