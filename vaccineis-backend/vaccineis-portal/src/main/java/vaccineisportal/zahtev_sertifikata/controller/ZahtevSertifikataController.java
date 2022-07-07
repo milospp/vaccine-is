@@ -27,7 +27,7 @@ public class ZahtevSertifikataController {
     private final ZahtevSertifikataService zahtevSertifikataService;
     private final AuthenticationService authenticationService;
 
-    @PreAuthorize("hasAnyAuthority('GRADJANIN')")
+//    @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Zahtjev> createInteresovanje(@RequestBody String zahtjev) {
 

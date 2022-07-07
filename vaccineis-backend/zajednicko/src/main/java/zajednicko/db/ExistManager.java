@@ -1,10 +1,12 @@
 package zajednicko.db;
 
+import org.apache.xerces.dom.DeferredDocumentImpl;
 import org.exist.xmldb.DatabaseImpl;
 import org.exist.xmldb.EXistResource;
 import org.exist.xupdate.XUpdateProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -151,7 +153,9 @@ public class ExistManager {
 
         try {
             col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
-            col.setProperty(OutputKeys.INDENT, "yes");
+            if (col != null) col.setProperty(OutputKeys.INDENT, "yes");
+            else return new DeferredDocumentImpl();
+
             res = (XMLResource) col.getResource(documentId);
             return res.getContentAsDOM();
         } finally {
