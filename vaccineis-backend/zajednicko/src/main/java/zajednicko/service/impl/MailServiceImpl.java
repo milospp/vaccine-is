@@ -7,11 +7,16 @@ import zajednicko.service.MailService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 @Service
 public class MailServiceImpl implements MailService {
+
     @Value("${spring.mail.username}")
     private String email;
     @Value("${spring.mail.password}")
@@ -19,15 +24,31 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendMail(String recipient, String subject, String messageContent) {
+    public void sendMail(String recipient, String subject, String messageContent, String filePath) {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        properties.put("mail.smtp.allow8bitmime", "true");
+        properties.put("mail.smtps.allow8bitmime", "true");
 
-        System.out.println("email = " + email);
+
+        String content = this.startOfMail;
+        content = content +
+                "                          " + subject + "\n" +
+                "                        </div>\n" +
+                "                      </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                      <td style='font-size:0px;padding:10px 25px;word-break:break-word;'>\n" +
+                "                        <div style=\"color:#187272;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:16px;line-height:20px;text-align:left;\">\n\n" +
+                "                          "+ messageContent +"\n";
+
+
+        content += this.endOfMail;
+
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -37,38 +58,32 @@ public class MailServiceImpl implements MailService {
         });
 
         try {
-            Message message = new MimeMessage(session);
+            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject(subject);
-            message.setContent(messageContent, "text/html");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(content, "text/html; charset=UTF-8");
+
+            MimeBodyPart attachmentPart = null;
+            if (filePath != null) {
+                attachmentPart = new MimeBodyPart();
+                attachmentPart.attachFile(new File(filePath));
+            }
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            if (attachmentPart != null)
+                multipart.addBodyPart(attachmentPart);
+
+            message.setContent(multipart);
             Transport.send(message);
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             System.out.println("e.getMessage() = " + e.getMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
-    }
-
-    @Async
-    public void sendSomeMail(String subjectMail, String messageTitle, String messageContent){
-        String recipient = "jasamperojasampero@gmail.com";
-        String subject = "Some mail";
-        String content = this.startOfMail;
-
-        content = content +
-                "                          " + messageTitle + "\n" +
-                "                        </div>\n" +
-                "                      </td>\n" +
-                "                    </tr>\n" +
-                "                    <tr>\n" +
-                "                      <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>\n" +
-                "                        <div style=\"color:#187272;font-family:'Droid Sans', 'Helvetica Neue', Arial, sans-serif;font-size:16px;line-height:20px;text-align:center;\">\n" +
-                "                          "+ messageContent +"\n";
-
-
-        content += this.endOfMail;
-
-        sendMail(recipient, subject, content);
     }
 
     private String startOfMail = "" +
