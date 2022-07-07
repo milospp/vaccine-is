@@ -123,7 +123,7 @@ public class SertifikatServiceImpl implements SertifikatService{
 
     @Override
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         ZeleniSertifikat i = findOne(id);
         try {
@@ -136,7 +136,7 @@ public class SertifikatServiceImpl implements SertifikatService{
 
     @Override
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
 
         ZeleniSertifikat i = findOne(id);
         return this.getHtmlDocument(i);

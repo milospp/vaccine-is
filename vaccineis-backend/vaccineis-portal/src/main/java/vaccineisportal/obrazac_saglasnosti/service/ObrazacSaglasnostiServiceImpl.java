@@ -9,12 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.repository.ObrazacSaglasnostiExistRepository;
+import vaccineisportal.util.dto.ListaVakcinaDTO;
+import vaccineisportal.util.dto.VakcinaDTO;
+import zajednicko.exception.BadRequestException;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.model.util.ResultSetConnection;
@@ -39,6 +43,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -64,7 +69,22 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
 
     @Override
     public Saglasnost update(String id, String xmlString) {
-        return obrazacSaglasnostiExistRepository.update(id, xmlString);
+        Saglasnost saglasnost = obrazacSaglasnostiExistRepository.update(id, xmlString);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8081/api/vakcine";
+        ResponseEntity<ListaVakcinaDTO> entity = restTemplate.getForEntity(url, ListaVakcinaDTO.class);
+
+        var vakcinacija = saglasnost.getEvidencijaVakcinacije().getPodaciVakcinacija().getVakcinacija();
+        if (entity.getBody() == null)
+            throw new BadRequestException("Body is null");
+
+        Optional<VakcinaDTO> vakcina = entity.getBody().getVakcine().stream().filter(v -> v.getNaziv().equals(vakcinacija.get(vakcinacija.size()-1).getNazivVakcine())).findFirst();
+        if (vakcina.isEmpty())
+            throw new BadRequestException("Vakcina is empty");
+
+        restTemplate.put(url + "/smanjiKolicinu", vakcina.get());
+        return saglasnost;
     }
 
     @Override

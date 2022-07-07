@@ -59,7 +59,7 @@ public class IzvestajServiceImpl implements IzvestajService{
 
     @Override
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         Izvjestaj i = findOne(id);
         try {
@@ -72,7 +72,7 @@ public class IzvestajServiceImpl implements IzvestajService{
 
     @Override
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
 
         Izvjestaj i = findOne(id);
         return this.getHtmlDocument(i);
