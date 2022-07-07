@@ -184,7 +184,14 @@
         </div>
         <div v-if="saglasnost.podaciPacijenta.izjavaSaglasnosti.saglasan === 'САГЛАСАН САМ'">
             <label for="drug">са спровођењем активне/пасивне имунизације (уписати назив имунолошког лека): </label>
-            <input type="text" name="drug" id="drug" class="form-control" v-model="saglasnost.podaciPacijenta.izjavaSaglasnosti.imeLijeka">
+
+            <select id="options" v-model="saglasnost.podaciPacijenta.izjavaSaglasnosti.imeLijeka" name="notResident" class="form-control" required>
+                <option value="Pfizer-BioNTech">Pfizer-BioNTech</option>
+                <option value="Sputnik V (Gamaleya истраживачки центар)">Sputnik V</option>
+                <option value="Sinopharm">Sinopharm</option>
+                <option value="AstraZeneca">AstraZeneca</option>
+                <option value="Moderna">Moderna</option>
+            </select>   
         </div>
     </div>
 
