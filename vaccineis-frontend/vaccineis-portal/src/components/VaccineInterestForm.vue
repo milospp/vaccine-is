@@ -81,8 +81,8 @@
             <label for="Moderna">Moderna</label>
         </div>
         <div class="checkbox" style="width: 100%;">
-            <input type="checkbox" name="vaccinetypes" value="Bilo koja" id="Moderna" @click="onlyOneCheckbox('Било која')">
-            <label for="Moderna">Било која</label>
+            <input type="checkbox" name="vaccinetypes" value="Bilo koja" id="Bilo koja" @click="onlyOneCheckbox('Било која')">
+            <label for="Bilo koja">Било која</label>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-package vaccineisemployee.util;
+package vaccineisportal.util;
 
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.model.korisnik.STrola;
