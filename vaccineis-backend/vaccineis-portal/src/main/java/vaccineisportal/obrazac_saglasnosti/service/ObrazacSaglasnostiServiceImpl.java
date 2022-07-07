@@ -124,7 +124,7 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
     }
 
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         Saglasnost i = findOne(id);
         try {
@@ -161,7 +161,7 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
 
 
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
 
         Saglasnost i = findOne(id);
         return this.getHtmlDocument(i);

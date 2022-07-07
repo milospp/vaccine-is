@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface InteresovanjeService {
 
-    Interesovanje create(String xmlString);
+    Interesovanje create(String xmlString) throws IOException;
 
     Interesovanje findOne(String id);
 

@@ -17,10 +17,11 @@ import zajednicko.service.UserService;
 
 import javax.annotation.security.PermitAll;
 import javax.websocket.server.PathParam;
+import zajednicko.service.MailService;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @AllArgsConstructor
 @RestController
@@ -28,13 +29,13 @@ import java.util.List;
 public class InteresovanjeController {
 
     private final InteresovanjeService interesovanjeService;
+    private final MailService mailService;
     private final AuthenticationService authenticationService;
     private final UserService userService;
 
     @PreAuthorize("hasAnyAuthority('GRADJANIN')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Interesovanje> createInteresovanje(@RequestBody String interesovanje) {
-        System.out.println("aaaa");
+    public ResponseEntity<Interesovanje> createInteresovanje(@RequestBody String interesovanje) throws IOException {
         Interesovanje retVal = interesovanjeService.create(interesovanje);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }

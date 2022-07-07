@@ -91,7 +91,7 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
     @Override
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         Zahtjev i = findOne(id);
         try {
@@ -104,7 +104,7 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
     @Override
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
 
         Zahtjev i = findOne(id);
         return this.getHtmlDocument(i);

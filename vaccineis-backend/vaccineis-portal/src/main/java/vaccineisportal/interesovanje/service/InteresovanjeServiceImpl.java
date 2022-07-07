@@ -27,8 +27,10 @@ import zajednicko.xmlTransformations.Xml2PdfTransformer;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -44,12 +46,26 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     private final MarshallingService marshallingService;
 
     @Override
-    public Interesovanje create(String xmlString) {
+    public Interesovanje create(String xmlString) throws IOException {
 
         Interesovanje interesovanje = interesovanjeExistRepository.create(xmlString);
         extractMetadataInteresovanje(interesovanje);
-        terminService.terminZaInteresovanje();
 
+        Path path = Paths.get("interesovanje.pdf");
+        Files.write(path, (byte[]) Objects.requireNonNull(getPdf(interesovanje.getId()).getBody()));
+
+        try {
+            mailService.sendMail(interesovanje.getLicneInformacije().getKontakt().getEmail(),
+                    "Исказивање интересовања за вакцинисање против COVID-19",
+                    "Успешно сте поднели захтев за вакцинисање против COVID-19.<br>" +
+                            "Добићете први слободан термин чим буде био доступан.<br><br>" +
+                    "У прилогу можете преузети поднети документ.",
+                    "interesovanje.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        terminService.terminZaInteresovanje();
         return interesovanje;
     }
 
@@ -76,7 +92,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
     @Override
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         Interesovanje i = findOne(id);
         try {
@@ -90,7 +106,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
     @Override
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text  ");
 
         Interesovanje i = findOne(id);
         return this.getHtmlDocument(i);

@@ -5,35 +5,39 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.Collection;
 import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.interesovanje.model.Interesovanje;
+import vaccineisportal.interesovanje.repository.InteresovanjeExistRepository;
 import vaccineisportal.interesovanje.service.InteresovanjeService;
 import vaccineisportal.termin.model.Termin;
 import vaccineisportal.termin.repository.TerminExistRepository;
-import zajednicko.model.CTlicniPodaci;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
+import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
 import zajednicko.util.ZajednickoUtil;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class TerminServiceImpl implements TerminService{
+
     protected final TerminExistRepository terminExistRepository;
     private final CRUDRDFRepository crudrdfRepository;
     private final MarshallingService marshallingService;
     private final AuthenticationService authenticationService;
+    private final MailService mailService;
+    private final InteresovanjeExistRepository interesovanjeExistRepository;
 
     @Override
     public Termin addTermin(String termin) {
@@ -146,7 +150,6 @@ public class TerminServiceImpl implements TerminService{
         List<Map.Entry<String, String>> zahteviList = new ArrayList<>(zahtevi.entrySet());
         zahteviList.sort(Comparator.comparing(Map.Entry::getValue));
 
-
         for (Map.Entry<String, String> entry : zahteviList){
             LocalDateTime dobijen = srediTerminZa(entry.getKey(), entry.getValue());
             if (dobijen == null) {
@@ -154,13 +157,23 @@ public class TerminServiceImpl implements TerminService{
                 return;
             }
 
-            System.out.println("TerminServiceImpl.terminZaInteresovanje - Posalti mejl, bata je dobio termin!!!");
-            //TODO: send email
+            List<String> splits = Arrays.asList(entry.getKey().split("/"));
+            String interesovanjeId = splits.get(splits.size() - 1);
+            Interesovanje interesovanje = interesovanjeExistRepository.findOne(interesovanjeId);
+
+            String email = interesovanje.getLicneInformacije().getKontakt().getEmail();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            String date = dobijen.format(formatter);
+
+            mailService.sendMail(email,
+                    "Слободан термин за пријем вакцине против COVID-19",
+                    "Поштовани " + interesovanje.getLicneInformacije().getIme() + ", <br><br>" +
+                            "Додељен вам је слободан термин за вакцинисање: <br><br>" + date,
+                    null);
         }
 
         resultsCon.closeConnection();
-
-
     }
 
     private LocalDateTime srediTerminZa(String uri, String ceka_od) {
