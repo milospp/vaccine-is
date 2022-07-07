@@ -48,9 +48,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="vakcina in vakcine" :key="vakcina.id._text">
-                                <td><span>{{ vakcina.naziv._text }}</span></td>
-                                <td><span>{{ vakcina.kolicina._text }}</span></td>
+                            <tr v-for="vakcina in vakcine" :key="vakcina.id">
+                                <td><span>{{ vakcina.naziv }}</span></td>
+                                <td><span>{{ vakcina.kolicina }}</span></td>
                                 <td><button @click="addAmount(vakcina)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAmountModal">Додај количину</button></td>
                             </tr>
                         </tbody>
@@ -64,7 +64,6 @@
 
 <script>
 import VakcinaService from "@/service/VakcinaService.js";
-import xmljs from "xml-js";
 
 export default {
     name: "VaccineList",
@@ -93,23 +92,23 @@ export default {
         loadVakcine() {
             VakcinaService.loadVakcine()
                 .then(response => {
-                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
-                    this.vakcine = data["vakcinaKolicina"]["vakcine"];
+                    console.log("data: ", response.data);
+                    this.vakcine = response.data.vakcine;
                 })
                 .catch((error) => console.log(error.message))
         },
 
         addAmount(vakcina) {
-            this.vakcina.id = vakcina.id._text;
-            this.naziv = vakcina.naziv._text;
-            this.kolicina = vakcina.kolicina._text;
+            this.vakcina.id = vakcina.id;
+            this.naziv = vakcina.naziv;
+            this.kolicina = vakcina.kolicina;
         },
 
         confirm() {
             this.vakcina.naziv = this.naziv;
-
-            let data = "<vakcinaKolicina>" + xmljs.json2xml(this.vakcina, {compact: true, spaces: 4}) + "</vakcinaKolicina>";
-            VakcinaService.addKolicina(data)
+            // let data = "<vakcinaKolicina>" + xmljs.json2xml(this.vakcina, {compact: true, spaces: 4}) + "</vakcinaKolicina>";
+            console.log(this.vakcina);
+            VakcinaService.addKolicina(this.vakcina)
                 .then(() => {
                     this.toast("Успешно сте ажурирали количину вакцина!", "success");
                     this.loadVakcine();

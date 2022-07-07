@@ -25,6 +25,16 @@ class ObrazacSaglasnostiService {
         });
     }
 
+    getObrazacById(id) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/` + id,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
+
     getPodnetiObrasciSaglasnosti() {
         return axios({
             method: 'GET',

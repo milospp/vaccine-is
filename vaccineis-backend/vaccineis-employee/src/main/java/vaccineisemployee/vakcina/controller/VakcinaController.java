@@ -30,8 +30,7 @@ public class VakcinaController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
-    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_XML_VALUE)
+    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addKolicina(@RequestBody VakcinaDTO vakcinaKolicina) {
 
         vakcinaService.addKolicina(vakcinaKolicina.getNaziv(), vakcinaKolicina.getKolicina());
