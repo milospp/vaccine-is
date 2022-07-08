@@ -12,9 +12,9 @@
             </thead>
             <tbody>
                 <tr v-for="zahtev in zahtevi" :key="zahtev.datum">
-                    <td>{{ zahtev.datum }}</td>
-                    <td>{{ zahtev.imePodnosioca }}</td>
-                    <td>{{ zahtev.prezimePodnosioca }}</td>
+                    <td>{{ zahtev['ns2:mjestoDatum']['ns2:datum']._text }}</td>
+                    <td>{{ zahtev['ns2:podnosilac']['ime']._text }}</td>
+                    <td>{{ zahtev['ns2:podnosilac']['prezime']._text }}</td>
                     <td><button class="btn btn-info" v-on:click="viewDocs()">Прегледај документе</button></td>
                     <td style="border-left: 1px solid black; padding-left: 30px"><button class="btn btn-primary" v-on:click="acceptRequest">Прихвати захтев</button></td>
                     <td><b-button class="btn btn-primary" style="background-color: red" v-b-modal.modal>Одбиј захтев</b-button></td>
@@ -33,29 +33,15 @@
 
 <script>
 import DigitalniSertifikatService from "@/service/DigitalniSertifikatService";
+import DigitalniZeleniertifikatService from "@/service/DigitalniZeleniSertifikatService";
+import xmljs from "xml-js";
 
 export default {
     name: "DigitalGreenCertificateRequestsTable",
 
     data() {
         return {
-            zahtevi: [
-                {
-                    datum: "01.08.2021",
-                    imePodnosioca: "Перо",
-                    prezimePodnosioca: "Перић"
-                },
-                {
-                    datum: "01.09.2021",
-                    imePodnosioca: "Марко",
-                    prezimePodnosioca: "Марковић"
-                },
-                {
-                    datum: "01.10.2021",
-                    imePodnosioca: "Шпиро",
-                    prezimePodnosioca: "Ђикић"
-                }
-            ],
+            zahtevi: [],
             declineReason: ""
         };
     },
@@ -79,7 +65,17 @@ export default {
     },
 
     created() {
-        
+        DigitalniZeleniertifikatService.getPodnetiSertifikati()
+        .then(response => {
+            let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+            console.log(data['ns2:listaZahteva']);
+            if (data['ns2:listaZahteva']['ns2:zahtevi'].length) {
+                this.zahtevi = data['ns2:listaZahteva']['ns2:zahtevi']
+            } else {
+                this.zahtevi = [];
+                this.zahtevi.push(data['ns2:listaZahteva']['ns2:zahtevi']);
+            }
+        })
     }
 };
 </script>

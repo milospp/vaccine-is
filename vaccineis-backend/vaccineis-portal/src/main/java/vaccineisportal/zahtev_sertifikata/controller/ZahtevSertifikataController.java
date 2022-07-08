@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vaccineisportal.authentication.service.AuthenticationService;
+import vaccineisportal.zahtev_sertifikata.model.ListaZahtjeva;
 import vaccineisportal.zahtev_sertifikata.model.Zahtjev;
 import vaccineisportal.zahtev_sertifikata.service.ZahtevSertifikataService;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +39,12 @@ public class ZahtevSertifikataController {
 
     @PermitAll
     @GetMapping(value = "/podneti-zahtevi", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<List<Zahtjev>> getZahteviByStatusPodnet() {
+    public ResponseEntity<ListaZahtjeva> getZahteviByStatusPodnet() {
 
         List<Zahtjev> zahtevi = zahtevSertifikataService.findZahteviByStatusPodnet();
-        return new ResponseEntity<>(zahtevi, HttpStatus.OK);
+        var retVal = new ListaZahtjeva();
+        retVal.setZahtevi(zahtevi);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
 

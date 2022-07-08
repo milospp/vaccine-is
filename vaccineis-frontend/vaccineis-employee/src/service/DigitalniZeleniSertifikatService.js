@@ -16,6 +16,17 @@ class DigitalniZeleniSertifikatService {
         });
     }
 
+    getPodnetiSertifikati() {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/podneti-zahtevi`,
+            headers: {
+                'Content-Type': 'application/xml',
+                'Authorization': undefined
+            },
+        });
+    }
+
     getSertifikatPdf(uuid) {
         return axios({
             method: 'GET',
