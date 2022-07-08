@@ -14,6 +14,8 @@ public interface InteresovanjeService {
 
     Interesovanje create(String xmlString) throws IOException;
 
+    List<Interesovanje> findAll();
+
     Interesovanje findOne(String id);
 
     void extractMetadataInteresovanje(Interesovanje interesovanje);

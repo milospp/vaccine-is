@@ -21,6 +21,9 @@ import zajednicko.service.MailService;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -87,5 +90,27 @@ public class InteresovanjeController {
         DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(korisnik.getId());
 
         return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/broj-primljenih", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> getBrojPrimljenih(@RequestParam String dateStart, @RequestParam String dateEnd) {
+
+        Integer retVal = (int) interesovanjeService.findAll().stream()
+                .filter(i ->
+                        LocalDate.of(i.getDatum().getYear(),
+                                i.getDatum().getMonth(),
+                                i.getDatum().getDay()
+                        ).isAfter(LocalDate.parse(dateStart)) &&
+                                LocalDate.of(i.getDatum().getYear(),
+                                        i.getDatum().getMonth(),
+                                        i.getDatum().getDay()
+                                ).isBefore(LocalDate.parse(dateEnd)))
+                .count();
+
+        System.out.println(retVal);
+
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }

@@ -70,6 +70,11 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
     }
 
     @Override
+    public List<Interesovanje> findAll() {
+        return interesovanjeExistRepository.findAll();
+    }
+
+    @Override
     public Interesovanje findOne(String id) {
         return interesovanjeExistRepository.findOne(id);
     }

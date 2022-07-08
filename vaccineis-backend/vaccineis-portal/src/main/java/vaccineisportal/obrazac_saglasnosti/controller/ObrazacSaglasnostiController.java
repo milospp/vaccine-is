@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vaccineisportal.authentication.service.AuthenticationService;
+import vaccineisportal.obrazac_saglasnosti.dto.BrojVakcinaPoTipu;
 import vaccineisportal.obrazac_saglasnosti.model.ListaSaglasnosti;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.service.ObrazacSaglasnostiService;
@@ -17,6 +18,7 @@ import zajednicko.service.UserService;
 
 import javax.annotation.security.PermitAll;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,6 +92,64 @@ public class ObrazacSaglasnostiController {
         ListaSaglasnosti retVal = new ListaSaglasnosti();
         retVal.setSaglasnosti(saglasnosti);
 
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @PermitAll
+    @GetMapping(value = "/broj-vakcina", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<BrojVakcinaPoTipu> getBrojPrimljenihVakcina(@RequestParam String dateStart, @RequestParam String dateEnd) {
+        List<Saglasnost> saglasnosti = obrazacSaglasnostiService.findAll().stream()
+                .filter(o -> o.getEvidencijaVakcinacije() != null &&
+
+                        LocalDate.of(o.getEvidencijaVakcinacije()
+                                        .getPodaciVakcinacija()
+                                        .getVakcinacija()
+                                        .get(0)
+                                        .getDatumDavanjaVakcine().getYear(),
+                                    o.getEvidencijaVakcinacije()
+                                        .getPodaciVakcinacija()
+                                        .getVakcinacija()
+                                        .get(0)
+                                        .getDatumDavanjaVakcine().getMonth(),
+                                    o.getEvidencijaVakcinacije()
+                                        .getPodaciVakcinacija()
+                                        .getVakcinacija()
+                                        .get(0)
+                                        .getDatumDavanjaVakcine().getDay()).isBefore(LocalDate.parse(dateEnd)) &&
+
+                            LocalDate.of(o.getEvidencijaVakcinacije()
+                                            .getPodaciVakcinacija()
+                                            .getVakcinacija()
+                                            .get(0)
+                                            .getDatumDavanjaVakcine().getYear(),
+                                    o.getEvidencijaVakcinacije()
+                                            .getPodaciVakcinacija()
+                                            .getVakcinacija()
+                                            .get(0)
+                                            .getDatumDavanjaVakcine().getMonth(),
+                                    o.getEvidencijaVakcinacije()
+                                            .getPodaciVakcinacija()
+                                            .getVakcinacija()
+                                            .get(0)
+                                            .getDatumDavanjaVakcine().getDay()).isAfter(LocalDate.parse(dateStart))
+                        ).collect(Collectors.toList());
+
+        BrojVakcinaPoTipu retVal = new BrojVakcinaPoTipu(0, 0, 0, 0, 0);
+
+        for (var el: saglasnosti) {
+            for (var vakcina: el.getEvidencijaVakcinacije().getPodaciVakcinacija().getVakcinacija()) {
+                if (vakcina.getNazivVakcine().value().equals("Pfizer-BioNTech"))
+                    retVal.setPfizer(retVal.getPfizer() + 1);
+                if (vakcina.getNazivVakcine().value().equals("Sputnik V (Gamaleya истраживачки центар)"))
+                    retVal.setSputnik(retVal.getSputnik() + 1);
+                if (vakcina.getNazivVakcine().value().equals("Sinopharm"))
+                    retVal.setSinopharm(retVal.getSinopharm() + 1);
+                if (vakcina.getNazivVakcine().value().equals("AstraZeneca"))
+                    retVal.setAstra(retVal.getAstra() + 1);
+                if (vakcina.getNazivVakcine().value().equals("Moderna"))
+                    retVal.setModerna(retVal.getModerna() + 1);
+            }
+        }
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 

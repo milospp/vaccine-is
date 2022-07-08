@@ -25,6 +25,16 @@ class VakcinaService {
         });
     }
 
+    getBrojVakcina(dateStart, dateEnd) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/broj-vakcina?dateStart=` + dateStart + "&dateEnd=" + dateEnd,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
+
 }
 
 export default new VakcinaService();
