@@ -1,17 +1,17 @@
 <template>
-<div>
-    <Navbar />
-        <h1>KARINA SAD ZA SAD</h1>
-
-</div>
+    <div>
+        <Navbar />
+        <ImmunizationConsentList />
+    </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import ImmunizationConsentList from "@/components/ImmunizationConsentList.vue";
 
 export default {
     name: "ImmunizationConsentRecords",
-    components: { Navbar },
+    components: { Navbar, ImmunizationConsentList },
 };
 </script>
 

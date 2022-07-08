@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.xml.sax.SAXException;
 import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.obrazac_saglasnosti.model.ListaSaglasnosti;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
@@ -17,7 +16,6 @@ import zajednicko.service.MarshallingService;
 import zajednicko.service.UserService;
 
 import javax.annotation.security.PermitAll;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,14 +87,14 @@ public class ObrazacSaglasnostiController {
         return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/podnete-saglasnosti")
-    public ResponseEntity<String> getPodnetiObrasciSaglasnosti() {
+    @GetMapping(value = "/podnete-saglasnosti", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ListaSaglasnosti> getPodnetiObrasciSaglasnosti() {
         List<Saglasnost> saglasnosti = obrazacSaglasnostiService.findAll().stream().filter(o -> o.getEvidencijaVakcinacije() == null).collect(Collectors.toList());
 
         ListaSaglasnosti retVal = new ListaSaglasnosti();
         retVal.setSaglasnosti(saglasnosti);
 
-        return new ResponseEntity<>(marshallingService.marshall(retVal, ListaSaglasnosti.class), HttpStatus.OK);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ZDRAVSTVENI_RADNIK')")
@@ -105,5 +103,12 @@ public class ObrazacSaglasnostiController {
 
         Saglasnost saglasnost = obrazacSaglasnostiService.update(id, obrazacSaglasnosti);
         return new ResponseEntity<>(saglasnost, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Saglasnost> getObrazacById(@PathVariable String id) {
+        System.out.println(id);
+        Saglasnost retVal = obrazacSaglasnostiService.findOne(id);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }

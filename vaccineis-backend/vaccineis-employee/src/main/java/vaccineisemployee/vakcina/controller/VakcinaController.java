@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vaccineisemployee.vakcina.dto.ListaVakcinaDTO;
 import vaccineisemployee.vakcina.dto.VakcinaDTO;
+import zajednicko.exception.BadRequestException;
 import zajednicko.service.MarshallingService;
 import zajednicko.service.VakcinaService;
 
@@ -20,8 +21,8 @@ public class VakcinaController {
     private final VakcinaService vakcinaService;
     private final MarshallingService marshallingService;
 
-    @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
-    @GetMapping(value = "", produces = MediaType.APPLICATION_XML_VALUE)
+//    @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ListaVakcinaDTO> getSveVakcine() {
 
         var retVal = new ListaVakcinaDTO();
@@ -29,10 +30,19 @@ public class VakcinaController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('SLUZBENIK')")
-    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_XML_VALUE)
-    public void addKolicin(@RequestBody VakcinaDTO vakcinaKolicina) {
+    @PutMapping(value = "/dodajKolicinu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addKolicina(@RequestBody VakcinaDTO vakcinaKolicina) {
 
         vakcinaService.addKolicina(vakcinaKolicina.getNaziv(), vakcinaKolicina.getKolicina());
+    }
+
+    @PutMapping(value = "/smanjiKolicinu", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VakcinaDTO> smanjiKolicinu(@RequestBody VakcinaDTO vakcinaDTO) {
+        if (vakcinaDTO.getKolicina() - 1 < 0)
+            throw new BadRequestException("Kolicina ne moze biti negativna");
+
+        var vakcina = vakcinaService.update(vakcinaDTO.getNaziv(), vakcinaDTO.getKolicina()-1);
+        var retVal = new VakcinaDTO(vakcina.getId(), vakcina.getNaziv(), vakcina.getKolicina());
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }

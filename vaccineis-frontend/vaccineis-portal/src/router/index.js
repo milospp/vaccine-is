@@ -56,6 +56,7 @@ const routes = [
     path: encodeURI("/образац-сагласности-за-имунизацију-одговор"),
     name: "ImmunizationConsentRequestPart2",
     component: () => import("@/views/ImmunizationConsentRequestPart2.vue"),
+    props: true,
     meta: {
         authorize: ['ZDRAVSTVENI_RADNIK']
     }

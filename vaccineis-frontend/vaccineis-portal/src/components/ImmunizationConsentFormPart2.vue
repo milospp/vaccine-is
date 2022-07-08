@@ -266,6 +266,10 @@ export default {
         ])
     },
 
+    props: {
+        id: String
+    },
+
     data() {
         return {
             drzavljanstvoIzbor: "1",
@@ -343,13 +347,11 @@ export default {
     },
 
     created() {
-        ObrazacSaglasnostiService.getPodnetiObrasciSaglasnosti()
+        ObrazacSaglasnostiService.getObrazacById(this.id)
             .then(response => {
                 let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4})); 
-                let saglasnosti = data["ns2:listasaglasnosti"]["ns2:saglasnosti"];
-                let test_saglasnost = saglasnosti;
+                this.saglasnost = data["ns2:saglasnost"];
 
-                this.saglasnost = test_saglasnost;
                 this.saglasnost['ns2:evidencijaVakcinacije'] = {};
 
                 this.saglasnost['ns2:evidencijaVakcinacije']['ns2:zdravstvenaUstanova'] = {

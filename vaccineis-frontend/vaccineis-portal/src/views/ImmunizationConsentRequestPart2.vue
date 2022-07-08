@@ -3,7 +3,7 @@
     <Navbar />
     <div class="modal-dialog">
         <div class="modal-content">
-            <ImmunizationConsentFormPart2 />
+            <ImmunizationConsentFormPart2 :id="id"/>
         </div>
     </div>
 </div>
@@ -12,18 +12,13 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ImmunizationConsentFormPart2 from "@/components/ImmunizationConsentFormPart2.vue";
-// import xmljs from "xml-js";
 
 export default {
     name: "ImmunizationConsentRequestPart2",
     components: { Navbar, ImmunizationConsentFormPart2 },
-    data() {
-
+    props: {
+        id: String
     },
-
-    created() {
-    },
-
 };
 </script>
 

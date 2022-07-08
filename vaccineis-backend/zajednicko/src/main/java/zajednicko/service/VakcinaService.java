@@ -12,4 +12,6 @@ public interface VakcinaService {
     Vakcina create(String xmlString);
 
     void addKolicina(STtipVakcine naziv, Integer kolicina);
+
+    Vakcina update(STtipVakcine naziv, Integer kolicina);
 }

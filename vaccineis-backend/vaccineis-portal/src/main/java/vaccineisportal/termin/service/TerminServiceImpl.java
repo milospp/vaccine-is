@@ -214,6 +214,5 @@ public class TerminServiceImpl implements TerminService{
 
         Termin termin = getTermin(terminId);
         return termin;
-
     }
 }

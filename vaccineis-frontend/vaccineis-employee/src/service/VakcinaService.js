@@ -9,7 +9,7 @@ class VakcinaService {
             method: 'PUT',
             url: `${API_URL}/dodajKolicinu`,
             headers: {
-                'Content-Type': 'application/xml'
+                'Content-Type': 'application/json'
             },
             data: data
         });
@@ -20,7 +20,7 @@ class VakcinaService {
             method: 'GET',
             url: `${API_URL}`,
             headers: {
-                'Content-Type': 'application/xml'
+                'Content-Type': 'application/json'
             },
         });
     }
