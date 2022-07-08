@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import xmljs from "xml-js";
 import NaprednaPretraga from "@/components/NaprednaPretraga";
 import Navbar from "@/components/Navbar";
 import DocumentsSearchResult from "@/components/DocumentsSearchResult";
@@ -33,7 +35,62 @@ export default {
     },
     methods: {
         doBasicSearch() {
-            console.log(this.basicSearchInput);
+
+            let query = this.getQueryForBasicSearch()
+            
+            console.log(query);
+            this.fetchSearch(query);
+        },
+
+        getQueryForBasicSearch() {
+            let tokens = this.basicSearchInput.split(" ");
+
+            let filterQueryTokens = []
+
+            tokens.forEach(element => {
+                filterQueryTokens.push("?o = \"" + element + "\"")
+            });
+
+            let filterQuery = filterQueryTokens.join(" || ")
+
+            return filterQuery;
+        },
+
+        async fetchSearch(query) {
+            let response = await axios({
+                method: 'GET',
+                url: `http://localhost:8081/api/izvestaj/napredna`,
+                headers: {
+                    'Content-Type': 'application/xml'
+                },
+                params: {'query': query }
+            });
+
+            this.$store.dispatch('setNaprednaList', {});
+
+
+            let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+            console.log(data);
+
+            let sparqlResults = await data["sparql"]?.["results"]?.["result"]
+            if (!sparqlResults) return;
+            let subjects = {}
+
+            sparqlResults.forEach(result => {
+                let id = result.binding[0].uri._text;
+                if (!subjects[id]) subjects[id] = {}
+                
+                let preds = result.binding[1].uri._text.split("/")
+                let pred = preds[preds.length - 1]
+
+                let obj = result.binding[2].literal._text;
+
+                subjects[id][pred] = obj
+
+            });
+
+            this.$store.dispatch('setNaprednaList', subjects);
+
         }
     }
 }

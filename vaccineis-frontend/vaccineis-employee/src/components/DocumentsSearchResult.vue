@@ -6,19 +6,26 @@
             <b-form-select v-model="filterSelected" :options="filterOptions" style="width: 30%"/>
         </div>
 
-        <div class="row card-group" v-for="n in Math.ceil(documents.length/4)" :key="n.id">
-            <div class="col-3" v-for="doc in documents.slice((n-1)*4, n*4)" :key="doc.id">
+        <div class="row card-group">
+            <div class="col-3 mb-3" v-for="(doc,index) in naprednaList" :key="index">
                 <div class="card">
                     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
+                        <small class="p-2">{{index}}</small>
+
                         <img class="card-img-top" src="@/assets/images/pharmacy.png" alt="Card image cap" v-on:click="viewIzvjestajPdf()">
-                        <div class="card-header"><b>{{ doc.name }}</b></div>
+                        <div class="card-header">
+                            <div v-for="(v,k) in doc" :key="k">
+                                <strong>{{k}}: </strong><span>{{v}}</span>
+                            </div>
+                            <!-- <b>{{ doc }}</b> -->
+                        </div>
                     </router-link>
                     <div class="card-body">
-                        <a v-on:click="getIzvjestajPdf()" class="card-link">PDF</a>
-                        <a v-on:click="getIzvjestajHtml()" class="card-link">XHTML</a>
-                        <a href="#" class="card-link">RDF</a>
-                        <a href="#" class="card-link">JSON</a>
+                        <a v-on:click="getDocPdf(index)" class="card-link">PDF</a>
+                        <a v-on:click="getDocHtml(index)" class="card-link">XHTML</a>
+                        <a v-on:click="getDocRdf(index)" class="card-link">RDF</a>
+                        <a v-on:click="getDocJson(index)" class="card-link">JSON</a>
                     </div>
                 </div>
             </div>
@@ -30,8 +37,18 @@
 <script>
 import IzvjestajService from '@/service/IzvjestajService';
 
+import InteresovanjeService from '@/service/InteresovanjeService';
+import DigitalniZeleniSertifikatService from "@/service/DigitalniZeleniSertifikatService";
+import ObrazacSaglasnostiService from "@/service/ObrazacSaglasnostiService";
+import ZahtjevZaSertifikatService from "@/service/ZahtjevZaSertifikatService";
+import PotvrdaVakcinacijeService from "@/service/PotvrdaVakcinacijeService";
+
+import {mapState} from 'vuex'
+
 export default {
     name: "DocumentsSearchResult",
+
+
 
     data() {
         return {
@@ -67,6 +84,14 @@ export default {
         };
     },
 
+    computed: {
+        ...mapState([
+            'naprednaList',
+        ]),
+
+    },
+
+
     methods: {
         filterDocuments() {
         },
@@ -84,7 +109,61 @@ export default {
                 var fileUrl = URL.createObjectURL(response.data);
                 window.open(fileUrl);
             });
+        },
+
+        getTypeAndId(uri) {
+            let uriToken = uri.split("/");
+
+            let docType = uriToken[uriToken.length -2]
+            let uuid = uriToken[uriToken.length - 1]
+
+            return [docType, uuid];
+        },
+
+        getDocPdf(uri) {
+            console.log(uri);
+            let [uriType, uuid] = this.getTypeAndId(uri);
+
+            if (uriType === "interesovanje") InteresovanjeService.getInteresovanjePdf(uuid);
+            else if (uriType === "saglasnost") ObrazacSaglasnostiService.getSaglasnostPdf(uuid);
+            else if (uriType === "zahtev") ZahtjevZaSertifikatService.getZahtevPdf(uuid);
+            else if (uriType === "digitalni-sertifikat") DigitalniZeleniSertifikatService.getSertifikatPdf(uuid);
+            else if (uriType === "potvrda") PotvrdaVakcinacijeService.getPotvrdaPdf(uuid);
+        },
+
+        getDocHtml(uri) {
+
+            let [uriType, uuid] = this.getTypeAndId(uri);
+
+            if (uriType === "interesovanje") InteresovanjeService.getInteresovanjeHtml(uuid);
+            else if (uriType === "saglasnost") ObrazacSaglasnostiService.getSaglasnostHtml(uuid);
+            else if (uriType === "zahtev") ZahtjevZaSertifikatService.getZahtevHtml(uuid);
+            else if (uriType === "digitalni-sertifikat") DigitalniZeleniSertifikatService.getSertifikatHtml(uuid);
+            else if (uriType === "potvrda") PotvrdaVakcinacijeService.getPotvrdaHtml(uuid);
+        },
+
+        getDocRdf(uri) {
+
+            let [uriType, uuid] = this.getTypeAndId(uri);
+
+            if (uriType === "interesovanje") InteresovanjeService.getInteresovanjeRdf(uuid);
+            else if (uriType === "saglasnost") ObrazacSaglasnostiService.getSaglasnostRdf(uuid);
+            else if (uriType === "zahtev") ZahtjevZaSertifikatService.getZahtevRdf(uuid);
+            else if (uriType === "digitalni-sertifikat") DigitalniZeleniSertifikatService.getSertifikatRdf(uuid);
+            else if (uriType === "potvrda") PotvrdaVakcinacijeService.getPotvrdaRdf(uuid);
+        },
+
+        getDocJson(uri) {
+
+            let [uriType, uuid] = this.getTypeAndId(uri);
+
+            if (uriType === "interesovanje") InteresovanjeService.getInteresovanjeJson(uuid);
+            else if (uriType === "saglasnost") ObrazacSaglasnostiService.getSaglasnostJson(uuid);
+            else if (uriType === "zahtev") ZahtjevZaSertifikatService.getZahtevJson(uuid);
+            else if (uriType === "digitalni-sertifikat") DigitalniZeleniSertifikatService.getSertifikatJson(uuid);
+            else if (uriType === "potvrda") PotvrdaVakcinacijeService.getPotvrdaJson(uuid);
         }
+
     },
 }
 </script>
@@ -121,5 +200,8 @@ p {
 }
 .filter {
     text-align: left;
+}
+a.card-link {
+    cursor: pointer;
 }
 </style>

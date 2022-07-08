@@ -25,6 +25,7 @@ public interface CRUDRDFRepository {
 
     void uploadTriplet(String graphUri, String resource, String property, String literal);
     void deleteTriplet(String graphUri, String resource, String property, String literal);
+    void deleteQuery(String graphUri, String query);
     void addStatement(String graphUri, Statement statement);
     void addStatement(String graphUri, Collection<Statement> statement);
 

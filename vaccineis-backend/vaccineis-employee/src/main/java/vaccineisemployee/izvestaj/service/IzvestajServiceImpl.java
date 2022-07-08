@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ import zajednicko.xmlTransformations.Xml2PdfTransformer;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 
 @AllArgsConstructor
@@ -131,5 +133,16 @@ public class IzvestajServiceImpl implements IzvestajService{
         }
         resultsCon.closeConnection();
         return a;
+    }
+
+    @Override
+    public String naprednaPretraga(String query) {
+
+        String where = "?s ?p ?o FILTER(" + query + ")";
+
+        ResultSetConnection resultSetConnection = crudrdfRepository.findWhere("metadates", where);
+        String xmlResult = ResultSetFormatter.asXMLString(resultSetConnection.getResultSet());
+        resultSetConnection.closeConnection();
+        return xmlResult;
     }
 }
