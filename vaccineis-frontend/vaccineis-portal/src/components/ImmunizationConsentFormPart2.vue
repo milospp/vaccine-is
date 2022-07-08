@@ -86,7 +86,7 @@
             <input v-model="saglasnost['ns2:podaciPacijenta']['ns2:zanimanjeZaposlenog']._text" id="zdravstvenaZastita" name="zanimanjeZaposlenog" value="здравствена заштита">
         </div>
     </div>
-    <div class="form-group">
+    <div v-if="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:korisnikSocijalnog']" class="form-group">
         <label for="socialSecurityBeneficiary">Корисник установе соц. зашт. </label>
         <div>
             <input name="socialSecurityBeneficiary" v-model="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:korisnikSocijalnog']._text">

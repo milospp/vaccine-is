@@ -27,7 +27,7 @@ public class PotvrdaController {
 //    @PreAuthorize("hasAuthority('SLUZBENIK')")
     @PermitAll
     @PostMapping(value = "", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<PotvrdaVakcinacije> createIzvjestaj(@RequestBody String potvrda) {
+    public ResponseEntity<PotvrdaVakcinacije> createIzvjestaj(@RequestBody String potvrda) throws IOException {
         PotvrdaVakcinacije potvrdaVakcinacije = potvrdaService.create(potvrda);
         return new ResponseEntity<>(potvrdaVakcinacije, HttpStatus.OK);
     }
