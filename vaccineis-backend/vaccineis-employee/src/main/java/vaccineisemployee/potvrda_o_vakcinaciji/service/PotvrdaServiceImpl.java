@@ -26,8 +26,12 @@ import zajednicko.xmlTransformations.Xml2PdfTransformer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -40,9 +44,24 @@ public class PotvrdaServiceImpl implements PotvrdaService{
     private final UserService userService;
 
     @Override
-    public PotvrdaVakcinacije create(String xmlString) {
+    public PotvrdaVakcinacije create(String xmlString) throws IOException {
         PotvrdaVakcinacije potvrdaVakcinacije = existRepository.create(xmlString);
         extractMetadataPotvrda(potvrdaVakcinacije);
+
+
+        Path path = Paths.get("potvrda.pdf");
+        Files.write(path, (byte[]) Objects.requireNonNull(getPdf(potvrdaVakcinacije.getId()).getBody()));
+
+        try {
+            mailService.sendMail("gradjanin@maildrop.cc",
+                    "Потврда за вакцинисање против COVID-19",
+                    "Успешно сте добили потврду за вакцинисање против COVID-19.<br><br>" +
+                            "У прилогу можете преузети поднети документ.",
+                    "potvrda.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return potvrdaVakcinacije;
     }
 
