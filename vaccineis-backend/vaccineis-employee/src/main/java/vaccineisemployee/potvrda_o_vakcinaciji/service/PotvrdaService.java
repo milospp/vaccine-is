@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface PotvrdaService {
-    PotvrdaVakcinacije create(String xmlString);
+    PotvrdaVakcinacije create(String xmlString) throws IOException;
 
     PotvrdaVakcinacije findOne(String id);
 
