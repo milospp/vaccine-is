@@ -130,6 +130,16 @@ class InteresovanjeService {
 
         });
     }
+
+    getBrojInteresovanja(dateStart, dateEnd) {
+        return axios({
+            method: 'GET',
+            url: "http://localhost:8081/api/interesovanje/broj-primljenih?dateStart=" + dateStart + "&dateEnd=" + dateEnd,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+    }
 }
 
 export default new InteresovanjeService();

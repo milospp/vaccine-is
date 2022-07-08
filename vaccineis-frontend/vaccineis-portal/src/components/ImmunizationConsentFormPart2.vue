@@ -89,20 +89,23 @@
     <div class="form-group">
         <label for="socialSecurityBeneficiary">Корисник установе соц. зашт. </label>
         <div>
-            <input name="socialSecurityBeneficiary" v-model="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:korisnikSocijalnog']">
+            <input name="socialSecurityBeneficiary" v-model="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:korisnikSocijalnog']._text">
         </div>
     </div>
 
     <div v-if="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:korisnikSocijalnog'] === 'ДА'" class="form-group">
         <div class="form-group">
             <label for="nazivUstanove">Назив установе</label>
-            <input v-model="['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:nazivUstanove']" type="text" id="nazivUstanove" class="form-control" required>
+            <input v-model="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:nazivUstanove']._text" type="text" id="nazivUstanove" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="sjedisteUstanove">Општина седишта</label>
-            <input v-model="['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:sjedisteUstanove']" type="text" id="sjedisteUstanove" class="form-control" required>
+            <input v-model="saglasnost['ns2:podaciPacijenta']['ns2:socijalnaZastita']['ns2:sjedisteUstanove']._text" type="text" id="sjedisteUstanove" class="form-control" required>
         </div>
-
+    </div>
+    <div class="form-group">
+        <label for="imeLijeka">Одабрана вакцина</label>
+        <input v-model="saglasnost['ns2:podaciPacijenta']['ns2:izjavaSaglasnosti']['ns2:imeLijeka']._text" type="text" id="sjedisteUstanove" class="form-control" required>
     </div>
 
     <br>

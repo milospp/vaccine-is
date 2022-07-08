@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import vaccineisemployee.vakcina.dto.BrojVakcinaPoTipu;
 import vaccineisemployee.vakcina.dto.ListaVakcinaDTO;
 import vaccineisemployee.vakcina.dto.VakcinaDTO;
 import zajednicko.exception.BadRequestException;
@@ -44,5 +45,19 @@ public class VakcinaController {
         var vakcina = vakcinaService.update(vakcinaDTO.getNaziv(), vakcinaDTO.getKolicina()-1);
         var retVal = new VakcinaDTO(vakcina.getId(), vakcina.getNaziv(), vakcina.getKolicina());
         return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/broj-vakcina", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<BrojVakcinaPoTipu> getBrojVakcina(@RequestParam String dateStart, @RequestParam String dateEnd) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8082/api/saglasnost/broj-vakcina?dateStart=" + dateStart + "&dateEnd=" + dateEnd;
+        System.out.println(url);
+
+        ResponseEntity<BrojVakcinaPoTipu> entity = restTemplate.getForEntity(url, BrojVakcinaPoTipu.class);
+        if (entity.getBody() == null)
+            throw new BadRequestException("Body is null");
+
+        return new ResponseEntity<>(entity.getBody(), HttpStatus.OK);
     }
 }
