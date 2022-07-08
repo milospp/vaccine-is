@@ -39,7 +39,7 @@ export default {
             let data = "<AuthenticationRequestDTO>" + xmljs.json2xml(this.authenticationData, {compact: true, spaces: 4}) + "</AuthenticationRequestDTO>";
             AuthenticationService.login(data)
                 .then(response => {
-                    this.toast("Логинован", "success");
+                    this.toast("Успешно пријавњивање!", "success");
                     let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
 
                     let user = data["AuthenticationResponseDTO"];
