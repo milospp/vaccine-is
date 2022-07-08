@@ -40,7 +40,7 @@ public class InteresovanjeController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-
+    @PermitAll
 //    @PreAuthorize("hasRole('GRADJANIN')")
     @GetMapping(value = "/get-pdf/{uuid}")
     public ResponseEntity<?> getInteresovanjePdf(@PathVariable("uuid") String uuid) throws IOException, ParserConfigurationException, SAXException {
@@ -53,12 +53,15 @@ public class InteresovanjeController {
         return interesovanjeService.getHtml(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-rdf/{uuid}")
     public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
         String xml = interesovanjeService.getRdfXml(uuid);
         return new ResponseEntity(xml, HttpStatus.OK);
     }
 
+
+    @PermitAll
     @GetMapping(value = "/get-json/{uuid}")
     public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
         String json = interesovanjeService.getRdfJson(uuid);
@@ -88,4 +91,5 @@ public class InteresovanjeController {
 
         return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }
+
 }

@@ -98,6 +98,11 @@ public class CRUDRDFRepositoryImpl implements CRUDRDFRepository {
     }
 
     @Override
+    public void deleteQuery(String graphUri, String query) {
+        fusekiManager.deleteRDFQuery(graphUri, query);
+    }
+
+    @Override
     public void addStatement(String graphUri, Statement statement) {
         Model model = fusekiManager.createRDFModel(statement);
         fusekiManager.uploadRDFModel(ZajednickoUtil.XML_PREFIX + graphUri, model);

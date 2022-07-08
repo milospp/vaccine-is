@@ -48,4 +48,12 @@ public class IzvestajController {
     public ResponseEntity<?> getIzvjestajHtml(@PathVariable("uuid") String uuid) throws IOException {
         return izvestajService.getHtml(uuid);
     }
+
+    @GetMapping(value = "/napredna")
+    public ResponseEntity<?> getNaprednaPretraga(@RequestParam("query") String query) {
+
+        String xmlResult = izvestajService.naprednaPretraga(query);
+
+        return new ResponseEntity(xmlResult, HttpStatus.OK);
+    }
 }

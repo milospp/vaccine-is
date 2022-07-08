@@ -10,6 +10,8 @@ export default new Vuex.Store({
         user: {
             rola: undefined
         },
+
+        naprednaList: []
     },
 
     getters: {
@@ -25,6 +27,11 @@ export default new Vuex.Store({
             state.user.email = user.email["_text"];
             state.user.rola = user.rola["_text"];
         },
+
+        SET_NAPREDNA_LIST (state, list) {
+            console.log(list);
+            state.naprednaList = list;
+        }
     },
 
     actions: {
@@ -41,6 +48,11 @@ export default new Vuex.Store({
                     commit('SET_AUTHORIZED_USER', user); 
                 })
                 .catch(error => { console.log(error); });
+        },
+
+        setNaprednaList({commit}, data) {
+            console.log(data);
+            commit('SET_NAPREDNA_LIST', data);
         }
     },
 

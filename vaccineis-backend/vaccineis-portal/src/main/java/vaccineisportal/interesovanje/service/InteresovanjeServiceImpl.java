@@ -86,7 +86,10 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
         crudrdfRepository.uploadTriplet("metadates", uriResource, "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
         crudrdfRepository.uploadTriplet("metadates", uriResource, "interesovanje_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId());
-        crudrdfRepository.uploadTriplet("metadates", uriResource, "lokacija", interesovanje.getLokacijaPrimanja());
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "ime", interesovanje.getLicneInformacije().getIme());
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "prezime", interesovanje.getLicneInformacije().getPrezime());
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "jmbg", interesovanje.getLicneInformacije().getJmbg());
+        crudrdfRepository.uploadTriplet("metadates", uriResource, "datum", LocalDateTime.now().toString());
 
     }
 

@@ -23,6 +23,7 @@ public class SparqlUtil {
 	private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 
 	private static final String DELETE_NAMED_GRAPH_TEMPLATE = "DELETE DATA { GRAPH <%1$s> { %2$s }}";
+	private static final String DELETE_WHERE_NAMED_GRAPH_TEMPLATE = "DELETE WHERE { GRAPH <%1$s> { %2$s }}";
 
 
 	/* Plain text RDF serialization format */
@@ -55,5 +56,8 @@ public class SparqlUtil {
 	public static String deleteData(String graphURI, String sparqlCondition) {
 		return String.format(DELETE_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
 	}
-	
+
+	public static String deleteWhere(String graphURI, String sparqlCondition) {
+		return String.format(DELETE_WHERE_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+	}
 }

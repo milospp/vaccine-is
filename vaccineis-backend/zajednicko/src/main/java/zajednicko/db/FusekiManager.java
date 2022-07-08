@@ -96,6 +96,20 @@ public class FusekiManager {
         processor.execute();
     }
 
+    public void deleteRDFQuery(String graphUri, String query) {
+        if (graphUri != null && !graphUri.startsWith("/")) graphUri = "/" + graphUri;
+
+        String sparqlUpdate = SparqlUtil.deleteWhere(conn.dataEndpoint + graphUri, query);
+
+        UpdateRequest update = UpdateFactory.create(sparqlUpdate);
+
+        // UpdateProcessor sends update request to a remote SPARQL update service.
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
+        ((UpdateProcessRemote)processor).setHttpContext(httpContext);
+        processor.execute();
+
+    }
+
     public Model createRDFModel (Statement statement) {
         Model model = ModelFactory.createDefaultModel();
         model.setNsPrefix("pred", ZajednickoUtil.RDF_PREDICATE);

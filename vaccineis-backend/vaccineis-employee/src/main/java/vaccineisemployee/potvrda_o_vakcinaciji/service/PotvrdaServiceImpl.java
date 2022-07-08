@@ -61,7 +61,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
     @Override
     public ResponseEntity<?> getPdf(String id) throws IOException {
-        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
+//        mailService.sendSomeMail("Skinut pdf", "Naslov", "Text text text text text text text text text text text text text");
 
         PotvrdaVakcinacije i = findOne(id);
         try {
@@ -74,7 +74,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
     @Override
     public ResponseEntity<?> getHtml(String id) throws IOException {
-        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
+//        mailService.sendSomeMail("Skinut html", "Naslov", "Text text text text text text text text text text text text text  ");
 
         PotvrdaVakcinacije i = findOne(id);
         return this.getHtmlDocument(i);

@@ -40,29 +40,34 @@ public class ObrazacSaglasnostiController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
+    @PermitAll
     //@PreAuthorize("hasRole('PACIJENT')")
     @GetMapping(value = "/get-pdf/{uuid}")
     public ResponseEntity<?> getInteresovanjePdf(@PathVariable("uuid") String uuid) throws IOException {
         return obrazacSaglasnostiService.getPdf(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-html/{uuid}")
     public ResponseEntity<?> getInteresovanjeHtml(@PathVariable("uuid") String uuid) throws IOException {
         return obrazacSaglasnostiService.getHtml(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-rdf/{uuid}")
     public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
         String xml = obrazacSaglasnostiService.getRdfXml(uuid);
         return new ResponseEntity(xml, HttpStatus.OK);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-json/{uuid}")
     public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
         String json = obrazacSaglasnostiService.getRdfJson(uuid);
         return new ResponseEntity(json, HttpStatus.OK);
     }
 
+    @PermitAll
     @GetMapping(value = "/moji-obrasci", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<DocDatas> getMojeSaglasnosti() {

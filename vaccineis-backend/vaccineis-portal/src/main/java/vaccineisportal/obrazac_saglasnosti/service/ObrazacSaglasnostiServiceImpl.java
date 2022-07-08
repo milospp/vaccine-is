@@ -121,6 +121,10 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "mobilniPodnosioca", saglasnost.getPodaciPacijenta().getKontaktPodaci().getMobilniTelefon());
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "emailPodnosioca", saglasnost.getPodaciPacijenta().getKontaktPodaci().getEmail());
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "saglasnost/" + saglasnost.getId(), "datumIzdavanja", String.valueOf(localDateTime));
+
+        crudrdfRepository.deleteQuery("rdf", "?s <" + ZajednickoUtil.RDF_PREDICATE + "termin_ceka_potvrdu>  <" + ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() + ">");
+
+
     }
 
     public ResponseEntity<?> getPdf(String id) throws IOException {

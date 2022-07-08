@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 
+import javax.annotation.security.PermitAll;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,16 +46,19 @@ public class ZahtevSertifikataController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-pdf/{uuid}")
     public ResponseEntity<?> getInteresovanjePdf(@PathVariable("uuid") String uuid) throws IOException {
         return zahtevSertifikataService.getPdf(uuid); // id za dok
     }
 
+    @PermitAll
     @GetMapping(value = "/get-html/{uuid}")
     public ResponseEntity<?> getInteresovanjeHtml(@PathVariable("uuid") String uuid) throws IOException {
         return zahtevSertifikataService.getHtml(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/moji-zahtjevi", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<DocDatas> getMojeZahteve() {

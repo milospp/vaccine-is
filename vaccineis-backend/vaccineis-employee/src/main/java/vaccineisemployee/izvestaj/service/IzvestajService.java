@@ -9,6 +9,7 @@ import zajednicko.model.docdatas.DocDatas;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.util.Collection;
 
 public interface IzvestajService {
     Izvjestaj create(String xmlString);
@@ -22,4 +23,6 @@ public interface IzvestajService {
     ResponseEntity<?> getHtml(String id) throws IOException;
 
     DocDatas getIzvjestajiByUser(String uuid);
+
+    String naprednaPretraga(String query);
 }
