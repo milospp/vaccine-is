@@ -48,7 +48,13 @@ export default {
                     return;
                     
                 this.documents = []
-                this.documents.push(data["ns2:saglasnosti"]);
+                if (data["ns2:saglasnosti"].length)
+                    this.documents = data["ns2:saglasnosti"];
+                else {
+                    this.documents = [];
+                    this.documents.push(data["ns2:saglasnosti"]);
+                }
+                
             }).catch(error => {
                 console.log(error.response.data.message) 
             });
