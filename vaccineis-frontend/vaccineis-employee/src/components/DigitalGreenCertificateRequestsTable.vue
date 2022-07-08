@@ -17,7 +17,7 @@
                     <td>{{ zahtev['ns2:podnosilac']['prezime']._text }}</td>
                     <td><button class="btn btn-info" v-on:click="viewDocs()">Прегледај документе</button></td>
                     <td style="border-left: 1px solid black; padding-left: 30px"><button class="btn btn-primary" v-on:click="acceptRequest">Прихвати захтев</button></td>
-                    <td><b-button class="btn btn-primary" style="background-color: red" v-b-modal.modal>Одбиј захтев</b-button></td>
+                    <td><button @click="odbij(zahtev['id'])" class="btn btn-primary" style="background-color: red" v-b-modal.modal>Одбиј захтев</button></td>
                 </tr>
             </tbody>
         </table>
@@ -61,6 +61,12 @@ export default {
             // slanje mejla sa declineReason u sadrzaju
             console.log(this.declineReason);
             DigitalniSertifikatService.respondToSertikatRequest("odbijeno", this.declineReason);
+        },
+
+        odbij(id) {
+            this.zahtevi = this.zahtevi.filter(x => {
+                return x['id'] != id;
+            })
         }
     },
 
