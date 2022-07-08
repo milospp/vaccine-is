@@ -13,6 +13,7 @@ import vaccineisemployee.digitalni_sertifikat.service.SertifikatService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 
+import javax.annotation.security.PermitAll;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -74,4 +75,29 @@ public class DigitalniSertifikatController {
     public ResponseEntity<?> getSertifikatiHtml(@PathVariable("uuid") String uuid) throws IOException {
         return sertifikatService.getHtml(uuid);
     }
+
+    @PermitAll
+    @GetMapping(value = "/get-rdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
+        String xml = sertifikatService.getRdfXml(uuid);
+        return new ResponseEntity(xml, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/get-json/{uuid}")
+    public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
+        String json = sertifikatService.getRdfJson(uuid);
+        return new ResponseEntity(json, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<DocDatas> getKorisnikInteresovanja (@PathVariable("uuid") String uuid) {
+        DocDatas interesovanjes = sertifikatService.getSertifikatiByUser(uuid);
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
+    }
+
 }

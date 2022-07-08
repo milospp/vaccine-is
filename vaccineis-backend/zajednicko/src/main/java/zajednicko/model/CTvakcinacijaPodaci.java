@@ -49,7 +49,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class CTvakcinacijaPodaci {
 
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     protected String id;
     @XmlElement(required = true)
     @XmlSchemaType(name = "date")

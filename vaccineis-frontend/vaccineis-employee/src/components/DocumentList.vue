@@ -211,60 +211,60 @@ export default {
                 }
             });
 
-            // ObrazacSaglasnostiService.mojiObrasci().then(response => {
-            //     if(response.data) {
-            //         let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
-            //         console.log(data);
-            //         data = data['docDatas']['docData'];
-            //         if (!data) return;
-            //         if (!(data instanceof Array)) data = [data];
+            ObrazacSaglasnostiService.korisnikObrasci(this.userUuid).then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!data) return;
+                    if (!(data instanceof Array)) data = [data];
 
-            //         this.docs.push.apply(this.docs, data);
-            //         this.docsObr = [...data];
+                    this.docs.push.apply(this.docs, data);
+                    this.docsObr = [...data];
 
-            //     }
-            // });
+                }
+            });
 
-            // ZahtjevZaSertifikatService.mojiZahtjevi().then(response => {
-            //     if(response.data) {
-            //         let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
-            //         console.log(data);
-            //         data = data['docDatas']['docData'];
-            //         if (!data) return;
-            //         if (!(data instanceof Array)) data = [data];
+            ZahtjevZaSertifikatService.korisnikZahtevi(this.userUuid).then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!data) return;
+                    if (!(data instanceof Array)) data = [data];
 
-            //         this.docs.push.apply(this.docs, data);
-            //         this.docsZah = [...data];
+                    this.docs.push.apply(this.docs, data);
+                    this.docsZah = [...data];
 
-            //     }
-            // });
+                }
+            });
 
-            // DigitalniZeleniSertifikatService.mojiDigitalniSertifikati().then(response => {
-            //     if(response.data) {
-            //         let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
-            //         console.log(data);
-            //         data = data['docDatas']['docData'];
-            //         if (!data) return;
-            //         if (!(data instanceof Array)) data = [data];
+            DigitalniZeleniSertifikatService.korisnikSertifikati(this.userUuid).then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!data) return;
+                    if (!(data instanceof Array)) data = [data];
 
-            //         this.docs.push.apply(this.docs, data);
-            //         this.docsDig = [...data];
-            //     }
-            // });
+                    this.docs.push.apply(this.docs, data);
+                    this.docsDig = [...data];
+                }
+            });
 
-            // PotvrdaVakcinacijeService.mojePotvrde().then(response => {
-            //     if(response.data) {
-            //         let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
-            //         console.log(data);
-            //         data = data['docDatas']['docData'];
-            //         if (!data) return;
-            //         if (!(data instanceof Array)) data = [data];
+            PotvrdaVakcinacijeService.korisnikPotvrde(this.userUuid).then(response => {
+                if(response.data) {
+                    let data = JSON.parse(xmljs.xml2json(response.data, {compact: true, spaces: 4}));
+                    console.log(data);
+                    data = data['docDatas']['docData'];
+                    if (!data) return;
+                    if (!(data instanceof Array)) data = [data];
 
-            //         this.docs.push.apply(this.docs, data);
-            //         this.docsPot = [...data];
+                    this.docs.push.apply(this.docs, data);
+                    this.docsPot = [...data];
                     
-            //     }
-            // });
+                }
+            });
         },
         getDocPdf(docs, uuid) {
             if (docs === "interesovanje") InteresovanjeService.getInteresovanjePdf(uuid);

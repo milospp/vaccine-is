@@ -21,4 +21,7 @@ public interface SertifikatService {
     ZeleniSertifikat findOne(String id);
 
     void extractMetadata(ZeleniSertifikat zeleniSertifikat) throws XPathExpressionException, ParserConfigurationException, IOException, SAXException;
+
+    String getRdfXml(String uuid);
+    String getRdfJson(String uuid);
 }

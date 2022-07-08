@@ -21,4 +21,7 @@ public interface PotvrdaService {
     ResponseEntity<?> getHtml(String id) throws IOException;
 
     DocDatas getPotvrdeByUser(String uuid);
+
+    String getRdfXml(String uuid);
+    String getRdfJson(String uuid);
 }

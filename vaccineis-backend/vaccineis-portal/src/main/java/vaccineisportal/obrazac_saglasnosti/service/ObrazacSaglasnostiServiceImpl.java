@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
@@ -16,9 +13,13 @@ import org.xml.sax.SAXException;
 import vaccineisportal.authentication.service.AuthenticationService;
 import vaccineisportal.obrazac_saglasnosti.model.Saglasnost;
 import vaccineisportal.obrazac_saglasnosti.repository.ObrazacSaglasnostiExistRepository;
+import vaccineisportal.potvrda_vakcinacije_bridge.model.CTvakcinacijaPodaciPotvrda;
+import vaccineisportal.potvrda_vakcinacije_bridge.model.PotvrdaVakcinacije;
 import vaccineisportal.util.dto.ListaVakcinaDTO;
 import vaccineisportal.util.dto.VakcinaDTO;
 import zajednicko.exception.BadRequestException;
+import zajednicko.model.CTpodaciVakcinisanog;
+import zajednicko.model.CTvakcinacijaPodaci;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.model.util.ResultSetConnection;
@@ -29,6 +30,10 @@ import zajednicko.util.ZajednickoUtil;
 import zajednicko.xmlTransformations.Xml2HtmlTransformer;
 import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
+import javax.xml.bind.JAXB;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -39,11 +44,10 @@ import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -57,7 +61,11 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
 
     @Override
     public Saglasnost create(String xmlString) {
+        Korisnik korisnik = authenticationService.getLoggedInUser();
+
+        xmlString = xmlString.replace("<podaciPacijenta>", "<podaciPacijenta><id xmlns=\"http://www.ftn.uns.ac.rs/zajednicka\">" + korisnik.getId() + "</id>");
         Saglasnost saglasnost = obrazacSaglasnostiExistRepository.create(xmlString);
+
         try {
             extractMetadata(saglasnost);
         } catch (XPathExpressionException | ParserConfigurationException | IOException | SAXException e) {
@@ -70,6 +78,31 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
     @Override
     public Saglasnost update(String id, String xmlString) {
         Saglasnost saglasnost = obrazacSaglasnostiExistRepository.update(id, xmlString);
+        try {
+            PotvrdaVakcinacije createPotvrda = createPotvrda(saglasnost);
+
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "http://localhost:8081/api/potvrda";
+
+//            StringWriter sw = new StringWriter();
+//
+//            JAXB.marshal(createPotvrda, sw);
+//            String xmlStringPotvrda = sw.toString();
+
+//            String str = marshallingService.marshall(createPotvrda, PotvrdaVakcinacije.class);
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setContentType(new MediaType("application","xml"));
+            HttpEntity<PotvrdaVakcinacije> requestEntity = new HttpEntity<PotvrdaVakcinacije>(createPotvrda, requestHeaders);
+
+            ResponseEntity<PotvrdaVakcinacije> entity = restTemplate.postForEntity(url, requestEntity, PotvrdaVakcinacije.class);
+
+
+
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+
 
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/api/vakcine";
@@ -85,6 +118,54 @@ public class ObrazacSaglasnostiServiceImpl implements ObrazacSaglasnostiService 
 
         restTemplate.put(url + "/smanjiKolicinu", vakcina.get());
         return saglasnost;
+    }
+
+    private PotvrdaVakcinacije createPotvrda(Saglasnost saglasnost) throws DatatypeConfigurationException {
+//        TODO GET LAST
+
+        PotvrdaVakcinacije potvrdaVakcinacije = new PotvrdaVakcinacije();
+
+        CTpodaciVakcinisanog cTpodaciVakcinisanog = new CTpodaciVakcinisanog();
+        cTpodaciVakcinisanog.setId(saglasnost.getPodaciPacijenta().getId());
+        cTpodaciVakcinisanog.setIme(saglasnost.getPodaciPacijenta().getIme());
+        cTpodaciVakcinisanog.setPrezime(saglasnost.getPodaciPacijenta().getPrezime());
+        cTpodaciVakcinisanog.setDatumRodjenja(saglasnost.getPodaciPacijenta().getDatumRodjenja());
+        cTpodaciVakcinisanog.setJmbg(saglasnost.getDrzavljanstvo().getJmbg());
+        cTpodaciVakcinisanog.setPol(saglasnost.getPodaciPacijenta().getPol());
+        potvrdaVakcinacije.setPodaciVakcinisanog(cTpodaciVakcinisanog);
+        potvrdaVakcinacije.setSifra(getRandom8DIgit());
+        potvrdaVakcinacije.setQRKod(String.valueOf(UUID.randomUUID()));
+
+//        GregorianCalendar c = new GregorianCalendar();
+//        c.setTimeZone(null);
+        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar("2022-07-19");
+
+        CTvakcinacijaPodaciPotvrda cTvakcinacijaPodaciPotvrda = new CTvakcinacijaPodaciPotvrda();
+        cTvakcinacijaPodaciPotvrda.setDatumIzdavanjaPotvrde(date2);
+
+        List<CTvakcinacijaPodaci> cTvakcinacijaPodaciList = new ArrayList<>();
+
+        CTvakcinacijaPodaci cTvakcinacijaPodaci = new CTvakcinacijaPodaci();
+        cTvakcinacijaPodaci.setId(String.valueOf(UUID.randomUUID()));
+        cTvakcinacijaPodaci.setBrojDoze(1);
+        cTvakcinacijaPodaci.setDatumDavanjaDoze(saglasnost.getEvidencijaVakcinacije().getPodaciVakcinacija().getVakcinacija().get(0).getDatumDavanjaVakcine());
+        cTvakcinacijaPodaci.setZdravstvenaUstanova(saglasnost.getEvidencijaVakcinacije().getZdravstvenaUstanova().getNazivZdravstveneUstanove());
+        cTvakcinacijaPodaci.setNazivVakcine(saglasnost.getEvidencijaVakcinacije().getPodaciVakcinacija().getVakcinacija().stream().findFirst().get().getNazivVakcine());
+
+        cTvakcinacijaPodaciList.add(cTvakcinacijaPodaci);
+
+        cTvakcinacijaPodaciPotvrda.setVakcinaPodaci(cTvakcinacijaPodaciList);
+        potvrdaVakcinacije.setPodaciVakcinacije(cTvakcinacijaPodaciPotvrda);
+
+        return potvrdaVakcinacije;
+    }
+
+
+    private String getRandom8DIgit() {
+        Random rnd = new Random();
+        int number = rnd. nextInt(99999999 - 90000000) + 90000000;
+        return "" + number;
+
     }
 
     @Override

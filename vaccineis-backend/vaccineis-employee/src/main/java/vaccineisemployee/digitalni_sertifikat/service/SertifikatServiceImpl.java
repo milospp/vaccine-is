@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ import zajednicko.model.CTvakcinacijaPodaci;
 import zajednicko.model.STpol;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -200,6 +202,28 @@ public class SertifikatServiceImpl implements SertifikatService{
     @Override
     public ZeleniSertifikat findOne(String id) {
         return digitalniSertifikatExistRepository.findOne(id);
+    }
+
+    @Override
+    public String getRdfXml(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "digitalni-sertifikat/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+        String asXml = ResultSetFormatter.asXMLString(resultSet);
+        resultSetConnection.closeConnection();
+
+        return asXml;    }
+
+    @Override
+    public String getRdfJson(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "digitalni-sertifikat/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ResultSetFormatter.outputAsJSON(out, resultSet);
+        resultSetConnection.closeConnection();
+        String finalString = out.toString();
+
+        return finalString;
     }
 
     @Override

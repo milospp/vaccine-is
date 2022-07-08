@@ -39,6 +39,7 @@
                     <xs:element name="podaciMjesta">
                         <xs:complexType>
                             <xs:sequence>
+                                <xs:element name="id" type="zaj:STid" minOccurs="0"/>
                                 <xs:element name="mjestoRodjenja"/>
                                 <xs:element name="adresa" type="zaj:CTadresa"/>
                                 <xs:element name="mjestoNaselje"/>

@@ -11,6 +11,7 @@ import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
 import zajednicko.service.UserService;
 
+import javax.annotation.security.PermitAll;
 import java.io.IOException;
 
 @RestController
@@ -33,6 +34,7 @@ public class PotvrdaVakcinacijeController {
         return potvrdaVakcinacijeService.getHtml(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/moje-potvrde", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<DocDatas> getMojiSertifikati() {
@@ -42,12 +44,13 @@ public class PotvrdaVakcinacijeController {
 
         return new ResponseEntity<>(potvrde, HttpStatus.OK);
     }
+
+    @PermitAll
     @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<DocDatas> getKorinsikSertifikati(@PathVariable("uuid") String uuid) {
-        Korisnik korisnik = userService.findUserByUuid(uuid);
 
-        DocDatas potvrde = potvrdaVakcinacijeService.getPotvrdeByUser(korisnik.getId());
+        DocDatas potvrde = potvrdaVakcinacijeService.getPotvrdeByUser(uuid);
 
         return new ResponseEntity<>(potvrde, HttpStatus.OK);
     }

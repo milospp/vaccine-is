@@ -85,9 +85,8 @@ public class InteresovanjeController {
     @PermitAll
     @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<DocDatas> getKorisnikInteresovanja (@PathVariable("uuid") String uuid) throws IOException, ParserConfigurationException, SAXException {
-        Korisnik korisnik = userService.findUserByUuid(uuid);
 
-        DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(korisnik.getId());
+        DocDatas interesovanjes = interesovanjeService.getInteresovanjaByUser(uuid);
 
         return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }

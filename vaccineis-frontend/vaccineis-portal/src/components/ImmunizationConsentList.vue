@@ -6,7 +6,7 @@
             <div class="card">
                 <router-link class="routerLink" :to="{ name: 'ImmunizationConsentRequestPart2', params: {id: doc.id._text} }">
                     <img class="card-img-top" src="@/assets/images/dok.png" alt="Card image cap" >
-                    <div class="card-header"><b>{{ doc["ns2:podaciPacijenta"]["ime"]["_text"] }} {{fromatDateTime(doc["ns2:podaciPacijenta"]["ns2:datumSaglasnosti"]["_text"])}}</b></div>
+                    <div class="card-header"><b>{{ doc["ns2:podaciPacijenta"]["ime"]["_text"] }} {{fromatDate(doc["ns2:podaciPacijenta"]["ns2:datumSaglasnosti"]["_text"])}}</b></div>
                 </router-link>
             </div>
         </div>
@@ -48,7 +48,12 @@ export default {
                     return;
                     
                 this.documents = []
-                this.documents.push(data["ns2:saglasnosti"]);
+                console.log(data);
+                if (data["ns2:saglasnosti"][0])
+                    this.documents = data["ns2:saglasnosti"];
+                else
+                    this.documents.push(data["ns2:saglasnosti"]);
+
             }).catch(error => {
                 console.log(error.response.data.message) 
             });

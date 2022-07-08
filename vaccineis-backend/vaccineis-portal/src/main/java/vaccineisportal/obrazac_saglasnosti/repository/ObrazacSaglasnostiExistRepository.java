@@ -42,7 +42,7 @@ public class ObrazacSaglasnostiExistRepository extends CRUDExistRepositoryImpl<S
     public Saglasnost update(String id, String xmlString) {
         try {
             Saglasnost entity = this.marshallingService.unmarshall(xmlString, getEntityClass(), schemaPath);
-
+            entity.setId(id);
             existManager.storeFromText(collectionId, id, marshallingService.marshall(entity, getEntityClass()));
             return entity;
 

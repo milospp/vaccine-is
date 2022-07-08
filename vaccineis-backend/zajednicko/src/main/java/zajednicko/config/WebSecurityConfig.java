@@ -57,6 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/interesovanje/**").permitAll()
                 .antMatchers("/api/saglasnost/**").permitAll()
                 .antMatchers("/api/vakcine/**").permitAll()
+                .antMatchers("/api/potvrda/**").permitAll()
+                .antMatchers("/api/digitalni-zeleni-sertifikat-zahtev/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);

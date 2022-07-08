@@ -33,7 +33,7 @@
             </div>
         </template>
         <template v-if="filterData === 'obrazac' || filterData === 'all' || filterData === ''">
-            <div class="col-3" v-for="doc in docsObr" :key="doc.id._text">
+            <div class="col-3" v-for="(doc,index) in docsObr" :key="index">
                 <div class="card">
     <!--                <router-link class="routerLink" :to="{ name: 'Home'}">-->
                     <router-link class="routerLink" :to="{}">
@@ -296,11 +296,11 @@ export default {
         },
         
         viewDoc(docs, uuid) {
-            if (docs === "interesovanje") InteresovanjeService.viewInteresovanje(uuid);
-            if (docs === "obrazac") ObrazacSaglasnostiService.viewSaglasnost(uuid);
-            if (docs === "zahtev") ZahtjevZaSertifikatService.viewZahtev(uuid);
-            if (docs === "zeleni") DigitalniZeleniSertifikatService.viewSertifikat(uuid);
-            if (docs === "potvrda") PotvrdaVakcinacijeService.viewPotvrda(uuid);        
+            if (docs === "interesovanje") InteresovanjeService.viewInteresovanjePdf(uuid);
+            if (docs === "obrazac") ObrazacSaglasnostiService.viewSaglasnostPdf(uuid);
+            if (docs === "zahtev") ZahtjevZaSertifikatService.viewZahtevPdf(uuid);
+            if (docs === "zeleni") DigitalniZeleniSertifikatService.viewSertifikatPdf(uuid);
+            if (docs === "potvrda") PotvrdaVakcinacijeService.viewPotvrdaPdf(uuid);        
         },
 
         fromatDate(string) {

@@ -6,7 +6,7 @@
 //
 
 
-package vaccineisportal.potvrda_vakcinacije_bridge.model;
+package zajednicko.model.potvrda;
 
 import zajednicko.model.CTvakcinacijaPodaci;
 
@@ -78,10 +78,6 @@ public class CTvakcinacijaPodaciPotvrda {
             vakcinaPodaci = new ArrayList<CTvakcinacijaPodaci>();
         }
         return this.vakcinaPodaci;
-    }
-
-    public void setVakcinaPodaci(List<CTvakcinacijaPodaci> vakcinaPodaci) {
-        this.vakcinaPodaci = vakcinaPodaci;
     }
 
     /**

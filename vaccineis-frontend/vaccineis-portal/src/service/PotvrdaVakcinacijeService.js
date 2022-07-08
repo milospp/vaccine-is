@@ -14,11 +14,25 @@ class PotvrdaService {
         });
     }
 
+    korisnikPotvrde(uuid) {
+        return axios({
+            method: 'GET',
+            url: `${API_URL}/korisnik/${uuid}`,
+            headers: {
+                'Content-Type': 'application/xml'
+            },
+        });
+    }
+
+
     getPotvrdaPdf(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            url: `http://localhost:8081/api/potvrda/get-pdf/${uuid}`,
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -34,8 +48,11 @@ class PotvrdaService {
     getPotvrdaHtml(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-html/${uuid}`,
-            responseType: 'blob'
+            url: `http://localhost:8081/api/potvrda/get-html/${uuid}`,
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -51,8 +68,11 @@ class PotvrdaService {
     getPotvrdaRdf(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-rdf/${uuid}`,
-            responseType: 'blob'
+            url: `http://localhost:8081/api/potvrda/get-rdf/${uuid}`,
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -68,8 +88,11 @@ class PotvrdaService {
     getPotvrdaJson(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-json/${uuid}`,
-            responseType: 'blob'
+            url: `http://localhost:8081/api/potvrda/get-json/${uuid}`,
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
@@ -86,8 +109,11 @@ class PotvrdaService {
     viewPotvrdaPdf(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/get-pdf/${uuid}`,
-            responseType: 'blob'
+            url: `http://localhost:8081/api/potvrda/get-pdf/${uuid}`,
+            responseType: 'blob',
+            headers: {
+                'Authorization': undefined
+            },
         }).then((response) => {
             var fileURL = URL.createObjectURL(response.data);
             window.open(fileURL);

@@ -136,7 +136,7 @@ class DigitalniZeleniSertifikatService {
     korisnikSertifikati(uuid) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/korisnik/${uuid}`,
+            url: `http://localhost:8081/api/digitalni-sertifikat/korisnik/${uuid}`,
             headers: {
                 'Content-Type': 'application/xml',
                 'Authorization': undefined

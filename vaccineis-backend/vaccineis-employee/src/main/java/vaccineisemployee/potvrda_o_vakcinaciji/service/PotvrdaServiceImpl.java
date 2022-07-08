@@ -3,6 +3,7 @@ package vaccineisemployee.potvrda_o_vakcinaciji.service;
 import lombok.AllArgsConstructor;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,10 +18,12 @@ import zajednicko.model.util.ResultSetConnection;
 import zajednicko.repository.CRUDRDFRepository;
 import zajednicko.service.MailService;
 import zajednicko.service.MarshallingService;
+import zajednicko.service.UserService;
 import zajednicko.util.ZajednickoUtil;
 import zajednicko.xmlTransformations.Xml2HtmlTransformer;
 import zajednicko.xmlTransformations.Xml2PdfTransformer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -34,6 +37,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
     private final CRUDRDFRepository crudrdfRepository;
     private final MarshallingService marshallingService;
     private final MailService mailService;
+    private final UserService userService;
 
     @Override
     public PotvrdaVakcinacije create(String xmlString) {
@@ -49,14 +53,22 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
     @Override
     public void extractMetadataPotvrda(PotvrdaVakcinacije potvrdaVakcinacije) {
-        Korisnik korisnik = authenticationService.getLoggedInUser();
         LocalDateTime localDateTime = LocalDateTime.now();
 
         cleanLastJmbg(potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
-        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", localDateTime.toString());
-        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
-        crudrdfRepository.uploadTriplet("rdf", "potvrda/" + potvrdaVakcinacije.getId(), "poslednja_potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
-        crudrdfRepository.uploadTriplet("metadates", "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", korisnik.getId() );
+
+        crudrdfRepository.deleteQuery("rdf", "?s <" + ZajednickoUtil.RDF_PREDICATE + "potvrda_korisnik_last>  <" + ZajednickoUtil.XML_PREFIX + "korisnik/" + potvrdaVakcinacije.getPodaciVakcinisanog().getId() + ">");
+
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", localDateTime.toString());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "poslednja_potvrda_jmbg", potvrdaVakcinacije.getPodaciVakcinisanog().getJmbg());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "potvrda_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + potvrdaVakcinacije.getPodaciVakcinisanog().getId() );
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "potvrda_korisnik_last", ZajednickoUtil.XML_PREFIX + "korisnik/" + potvrdaVakcinacije.getPodaciVakcinisanog().getId() );
+//        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "korisnik_potvrda", ZajednickoUtil.XML_PREFIX + "korisnik/" + potvrdaVakcinacije.getPodaciVakcinisanog().getId());
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "korisnik", potvrdaVakcinacije.getPodaciVakcinisanog().getId() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "ime", potvrdaVakcinacije.getPodaciVakcinisanog().getIme() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "prezime", potvrdaVakcinacije.getPodaciVakcinisanog().getPrezime() );
+        crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + potvrdaVakcinacije.getId(), "datum", LocalDateTime.now().toString() );
     }
 
     @Override
@@ -144,7 +156,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
     @Override
     public DocDatas getPotvrdeByUser(String uuid) {
-        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("metadates", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+        ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "potvrda_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
         ResultSet results = resultsCon.getResultSet();
         DocDatas a = new DocDatas();
 
@@ -164,5 +176,28 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
         resultsCon.closeConnection();
         return a;
+    }
+
+    @Override
+    public String getRdfXml(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+        String asXml = ResultSetFormatter.asXMLString(resultSet);
+        resultSetConnection.closeConnection();
+
+        return asXml;
+    }
+
+    @Override
+    public String getRdfJson(String uuid) {
+        ResultSetConnection resultSetConnection = crudrdfRepository.findBySubject("metadates", ZajednickoUtil.XML_PREFIX + "potvrda/" + uuid);
+        ResultSet resultSet = resultSetConnection.getResultSet();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ResultSetFormatter.outputAsJSON(out, resultSet);
+        resultSetConnection.closeConnection();
+        String finalString = out.toString();
+
+        return finalString;
     }
 }

@@ -36,13 +36,21 @@ public class ZahtevSertifikataController {
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('SLUZBENI')")
-    @GetMapping(value = "/podneti-zahtevi")
+
+    @PermitAll
+    @GetMapping(value = "/podneti-zahtevi", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<List<Zahtjev>> getZahteviByStatusPodnet() {
 
-        for (var el : zahtevSertifikataService.findZahteviByStatusPodnet())
-            System.out.println(el.getId());
+        List<Zahtjev> zahtevi = zahtevSertifikataService.findZahteviByStatusPodnet();
+        return new ResponseEntity<>(zahtevi, HttpStatus.OK);
+    }
 
+
+    @PermitAll
+    @GetMapping(value = "/odbij-zahtev/{uuid}")
+    public ResponseEntity<?> odbijZahtev(@PathVariable("uuid") String uuid) {
+
+        zahtevSertifikataService.odbijZahtev(uuid);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -65,6 +73,16 @@ public class ZahtevSertifikataController {
         Korisnik korisnik = authenticationService.getLoggedInUser();
 
         DocDatas zahtjevi = zahtevSertifikataService.getZahtjeviByUser(korisnik.getId());
+
+        return new ResponseEntity<>(zahtjevi, HttpStatus.OK);
+    }
+
+    @PermitAll
+    @GetMapping(value = "/korisnik-zahtjevi/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public ResponseEntity<DocDatas> getKorisnikZahteve(@PathVariable("uuid") String uuid) {
+
+        DocDatas zahtjevi = zahtevSertifikataService.getZahtjeviByUser(uuid);
 
         return new ResponseEntity<>(zahtjevi, HttpStatus.OK);
     }

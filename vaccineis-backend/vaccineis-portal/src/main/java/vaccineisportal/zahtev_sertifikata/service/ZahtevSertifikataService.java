@@ -24,4 +24,6 @@ public interface ZahtevSertifikataService {
     ResponseEntity<?> getHtml(String id) throws IOException;
 
     DocDatas getZahtjeviByUser(String uuid);
+
+    void odbijZahtev(String uuid);
 }

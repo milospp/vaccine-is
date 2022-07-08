@@ -11,7 +11,9 @@ import vaccineisemployee.potvrda_o_vakcinaciji.model.PotvrdaVakcinacije;
 import vaccineisemployee.potvrda_o_vakcinaciji.service.PotvrdaService;
 import zajednicko.model.docdatas.DocDatas;
 import zajednicko.model.korisnik.Korisnik;
+import zajednicko.service.UserService;
 
+import javax.annotation.security.PermitAll;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -20,9 +22,11 @@ import java.io.IOException;
 public class PotvrdaController {
     private final PotvrdaService potvrdaService;
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
-    @PreAuthorize("hasAuthority('SLUZBENIK')")
-    @PostMapping(value = "", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+//    @PreAuthorize("hasAuthority('SLUZBENIK')")
+    @PermitAll
+    @PostMapping(value = "", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<PotvrdaVakcinacije> createIzvjestaj(@RequestBody String potvrda) {
         PotvrdaVakcinacije potvrdaVakcinacije = potvrdaService.create(potvrda);
         return new ResponseEntity<>(potvrdaVakcinacije, HttpStatus.OK);
@@ -38,13 +42,39 @@ public class PotvrdaController {
         return new ResponseEntity<>(sertifikati, HttpStatus.OK);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-pdf/{uuid}")
     public ResponseEntity<?> getSertifikatiPdf(@PathVariable("uuid") String uuid) throws IOException {
         return potvrdaService.getPdf(uuid);
     }
 
+    @PermitAll
     @GetMapping(value = "/get-html/{uuid}")
     public ResponseEntity<?> getSertifikatiHtml(@PathVariable("uuid") String uuid) throws IOException {
         return potvrdaService.getHtml(uuid);
+    }
+
+    @PermitAll
+    @GetMapping(value = "/get-rdf/{uuid}")
+    public ResponseEntity<?> getInteresovanjeRdf(@PathVariable("uuid") String uuid) {
+        String xml = potvrdaService.getRdfXml(uuid);
+        return new ResponseEntity(xml, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/get-json/{uuid}")
+    public ResponseEntity<?> getInteresovanjeJson(@PathVariable("uuid") String uuid) {
+        String json = potvrdaService.getRdfJson(uuid);
+        return new ResponseEntity(json, HttpStatus.OK);
+    }
+
+
+    @PermitAll
+    @GetMapping(value = "/korisnik/{uuid}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<DocDatas> getKorisnikInteresovanja (@PathVariable("uuid") String uuid) {
+        DocDatas interesovanjes = potvrdaService.getPotvrdeByUser(uuid);
+
+        return new ResponseEntity<>(interesovanjes, HttpStatus.OK);
     }
 }

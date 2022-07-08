@@ -79,7 +79,8 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
         LocalDateTime localDateTime = LocalDateTime.now();
         crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
         crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId() );
-        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "status", ZajednickoUtil.XML_PREFIX + "zahtev/" + ZahtevZaSertifikatStatus.PODNET.name());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "status", ZahtevZaSertifikatStatus.PODNET.name());
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "zahtev_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + korisnik.getId());
 
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "korisnik", korisnik.getId() );
         crudrdfRepository.uploadTriplet("metadates", ZajednickoUtil.XML_PREFIX + "zahtev/" + zahtevSertifikata.getId(), "imePodnosioca", zahtevSertifikata.getPodnosilac().getIme() );
@@ -143,7 +144,7 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
 
     @Override
     public DocDatas getZahtjeviByUser(String uuid) {
-            ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
+            ResultSetConnection resultsCon = crudrdfRepository.findByPredicateAndObject("rdf", "zahtev_korisnik", ZajednickoUtil.XML_PREFIX + "korisnik/" + uuid);
             ResultSet results = resultsCon.getResultSet();
         try {
 
@@ -169,6 +170,17 @@ public class ZahtevSertifikataServiceImpl implements ZahtevSertifikataService {
         } finally {
             resultsCon.closeConnection();
         }
+    }
+
+    @Override
+    public void odbijZahtev(String uuid) {
+//        String korisnik = crudrdfRepository.findFirstBySubjectAndPred("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + uuid, "status");
+//        List<String> splits = Arrays.asList(korisnik.split("/"));
+//        String korisnikId = splits.get(splits.size() - 1);
+
+        crudrdfRepository.deleteQuery("rdf", "?s <" + ZajednickoUtil.XML_PREFIX + "zahtev/" + uuid + ">  <" + ZajednickoUtil.RDF_PREDICATE + "status> ?o" );
+        crudrdfRepository.uploadTriplet("rdf", ZajednickoUtil.XML_PREFIX + "zahtev/" + uuid, "status", ZahtevZaSertifikatStatus.ODBIJEN.name());
+
     }
 
     @Override
